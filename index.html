@@ -4,73 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Falcon | David Miron</title>
-    <!-- Inizializzazione Favicon: Tema scuro di default -->
+    <!-- Favicon -->
     <link id="favicon" rel="icon" href="dark1.png" type="image/png">
     <!-- Icone FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     
     <style>
-        /* --- VARIABILI & SETUP --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
-            --bg-color: #050505;
-            --bg-grid: rgba(255, 255, 255, 0.03);
-            --text-color: #f0f0f0;
-            --secondary-color: #a0a0a0;
-            --accent-color: #ffffff;
-            --card-bg: #111111;
-            --border-color: #333333;
-            --hover-glow: rgba(255, 255, 255, 0.15);
-            --spark-color: rgba(200, 200, 200, 0.6);
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-mono: 'Courier New', monospace;
+            --bg-color: #030303;
+            --accent-primary: #ffffff;
+            --accent-secondary: #707070;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --glow: rgba(255, 255, 255, 0.05);
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --mouse-x: 50%;
+            --mouse-y: 50%;
         }
 
         [data-theme="light"] {
-            --bg-color: #ffffff;
-            --bg-grid: rgba(0, 0, 0, 0.03);
-            --text-color: #1a1a1a;
-            --secondary-color: #666666;
-            --accent-color: #000000;
-            --card-bg: #f8f9fa;
-            --border-color: #e0e0e0;
-            --hover-glow: rgba(0, 0, 0, 0.1);
-            --spark-color: rgba(100, 100, 100, 0.4);
-        }
-
-        /* MATRIX MODE (Easter Egg) */
-        body.matrix-mode {
-            --bg-color: #000000 !important;
-            --text-color: #00ff00 !important;
-            --secondary-color: #008f11 !important;
-            --accent-color: #00ff00 !important;
-            --card-bg: #001100 !important;
-            --border-color: #003300 !important;
-            --hover-glow: rgba(0, 255, 0, 0.2) !important;
-            font-family: 'Courier New', monospace !important;
+            --bg-color: #fdfdfd;
+            --accent-primary: #000000;
+            --accent-secondary: #888888;
+            --card-bg: rgba(245, 245, 245, 0.7);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --text-main: #121212;
+            --text-muted: #666666;
+            --glow: rgba(0, 0, 0, 0.03);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
-            background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px),
-            linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
-            background-size: 40px 40px;
-            color: var(--text-color);
-            font-family: var(--font-main);
-            transition: all 0.4s ease;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            transition: background-color 0.5s ease;
             overflow-x: hidden;
             line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--glow) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 25px;
-            flex: 1;
+            padding: 0 30px;
         }
 
         /* --- HEADER --- */
@@ -78,382 +71,305 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 50px 0;
-            position: relative;
-            z-index: 10;
+            padding: 40px 0;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Logo dimensionato per corrispondere al testo David Miron */
+        .logo { display: flex; align-items: center; }
         .logo img { 
             height: 72px; 
             width: auto;
-            max-width: 300px;
             object-fit: contain;
-            cursor: pointer; 
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.05));
         }
+        .logo img:hover { transform: scale(1.05) rotate(-2deg); }
 
-        .logo img:hover {
-            transform: scale(1.03);
-        }
+        .controls { display: flex; gap: 12px; }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-icon {
+        .btn-ui {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 12px 18px;
-            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 100px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
-        
-        .btn-icon img {
-            width: 22px;
-            height: auto;
-            object-fit: contain;
+        .btn-ui:hover { 
+            background: var(--accent-primary);
+            color: var(--bg-color);
+            transform: translateY(-2px);
         }
-        
-        .btn-icon:hover { 
-            transform: translateY(-2px); 
-            border-color: var(--accent-color);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .btn-ui img { width: 18px; height: 18px; border-radius: 50%; }
 
         /* --- HERO --- */
-        .hero { padding: 20px 0 60px; }
+        .hero { padding: 80px 0 100px; }
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem); /* Questa dimensione guida l'altezza del logo */
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
+            letter-spacing: -3px;
             margin-bottom: 20px;
-            cursor: help;
-            line-height: 1.1;
+            background: linear-gradient(to bottom, var(--text-main) 40%, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .typewriter {
             font-family: var(--font-mono);
-            color: var(--secondary-color);
-            min-height: 1.6em;
-            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 40px;
         }
-        .cursor { width: 8px; height: 1.2em; background-color: var(--accent-color); animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor { width: 6px; height: 1.2em; background: var(--accent-primary); animation: blink 1s infinite; }
 
-        /* --- STATS --- */
-        .stats-container {
+        /* --- BENTO STATS --- */
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-top: 40px;
+            margin-bottom: 80px;
         }
-        .stat-box {
+        .bento-item {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            padding: 25px;
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .bento-item:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
+        .bento-item i { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-muted); }
+        .bento-item strong { display: block; font-size: 1.2rem; margin-top: 5px; }
+        .bento-item span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+
+        /* --- PROJECTS --- */
+        .section-header {
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
+            gap: 20px;
         }
+        .section-header h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); }
+        .line { flex: 1; height: 1px; background: var(--card-border); }
 
-        /* --- PROJECTS & ICON EFFECTS --- */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 80px 0 30px;
-            color: var(--secondary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-        }
-        .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
-
-        .project-grid {
+        .project-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
         }
 
         .project-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            padding: 40px;
             position: relative;
-            transition: all 0.4s ease;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
         .project-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-5px);
-            background: linear-gradient(145deg, var(--card-bg), rgba(255,255,255,0.02));
+            transform: scale(1.02);
+            border-color: var(--accent-primary);
+        }
+        .project-card:hover::before { opacity: 1; }
+
+        .card-icon-wrap {
+            width: 50px; height: 50px;
+            background: var(--bg-color);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            border: 1px solid var(--card-border);
         }
 
-        .icon-container {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .project-card h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
+        .project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
 
-        .icon-container img, .card-icon {
-            max-width: 100%;
-            max-height: 100%;
-            font-size: 2.2rem;
-            color: var(--text-color);
-            z-index: 2;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            object-fit: contain;
-        }
-
-        .project-card:hover .card-icon, 
-        .project-card:hover .icon-container img {
-            transform: rotateY(360deg) scale(1.1);
-        }
-
-        .fire-glow {
-            position: absolute;
-            width: 45px;
-            height: 45px;
-            background: radial-gradient(circle, var(--spark-color) 0%, transparent 70%);
-            filter: blur(10px);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 1;
-        }
-        .project-card:hover .fire-glow {
-            opacity: 1;
-            animation: pulse 1.5s infinite;
-        }
-
-        .spark {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--text-color);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 3;
-        }
-
-        .project-card:hover .spark {
-            animation: fly-spark 1s infinite linear;
-        }
-
-        @keyframes fly-spark {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 0.8; }
-        }
-
-        .card-content h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .card-content p { font-size: 0.95rem; color: var(--secondary-color); margin-bottom: 25px; flex-grow: 1; }
-
-        .card-btn {
+        .btn-arrow {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
+            color: var(--text-main);
+            font-weight: 700;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
-        .card-btn:hover { gap: 12px; color: var(--accent-color); }
+        .btn-arrow:hover { gap: 15px; color: var(--accent-primary); }
 
         /* --- FOOTER --- */
         footer {
-            margin-top: 100px;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
+            padding: 80px 0 40px;
             text-align: center;
-            color: var(--secondary-color);
-        }
-        
-        #version-tag {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 10px;
-            opacity: 0.3;
+            opacity: 0.5;
+            font-size: 0.9rem;
         }
 
-        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s forwards; }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        /* --- ANIMATIONS --- */
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3.5rem; }
+        }
     </style>
 </head>
 <body data-theme="dark">
 
+    <div class="bg-glow"></div>
+
     <div class="container">
         
-        <header class="fade-in-up">
+        <header>
             <div class="logo">
-                <!-- Logo inizializzato con dark.png per il tema scuro -->
                 <img id="main-logo" src="dark.png" alt="Falcon Logo">
             </div>
             <div class="controls">
-                <button class="btn-icon" id="lang-btn">
+                <button class="btn-ui" id="lang-btn">
                     <img src="en.png" alt="English"> <span id="lang-text">EN</span>
                 </button>
-                <button class="btn-icon" id="theme-btn">
+                <button class="btn-ui" id="theme-btn">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
                 </button>
             </div>
         </header>
 
-        <section class="hero">
-            <h1 class="fade-in-up" id="hero-name" style="animation-delay: 0.1s;">David Miron</h1>
-            <div class="typewriter fade-in-up" style="animation-delay: 0.2s;">
-                <i class="fa-solid fa-angle-right"></i>
+        <section class="hero reveal">
+            <h1 id="hero-name">David Miron</h1>
+            <div class="typewriter">
+                <i class="fa-solid fa-terminal"></i>
                 <span id="type-text"></span><span class="cursor"></span>
             </div>
 
-            <div class="stats-container fade-in-up" style="animation-delay: 0.3s;">
-                <div class="stat-box">
-                    <div class="stat-icon"><i class="fa-brands fa-python"></i></div>
-                    <div class="stat-info"><span id="l-s">Script</span><strong>62 Programmi</strong></div>
+            <div class="bento-grid">
+                <div class="bento-item">
+                    <i class="fa-brands fa-python"></i>
+                    <span id="l-s">Script</span>
+                    <strong>62 Programmi</strong>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="stat-info"><span id="l-f">Focus</span><strong>Cyber Security</strong></div>
+                <div class="bento-item">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span id="l-f">Focus</span>
+                    <strong>Cyber Security</strong>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="stat-info"><span id="l-g">Obiettivo</span><strong>Fermi (CS)</strong></div>
+                <div class="bento-item">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span id="l-g">Obiettivo</span>
+                    <strong>Fermi (CS)</strong>
                 </div>
             </div>
         </section>
 
-        <!-- Sezione Commerciale -->
-        <div class="section-divider fade-in-up" style="animation-delay: 0.4s;">
-            <i class="fa-solid fa-briefcase"></i> <span id="cat-c">Clienti / Commerciale</span>
+        <!-- Progetti Commerciali -->
+        <div class="section-header reveal">
+            <h2 id="cat-c">Commerciale</h2>
+            <div class="line"></div>
         </div>
 
-        <div class="project-grid fade-in-up" style="animation-delay: 0.5s;">
+        <div class="project-list reveal">
             <article class="project-card">
-                <div class="icon-container">
-                    <div class="fire-glow"></div>
-                    <i class="fa-solid fa-spa card-icon"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Glam Estetica</h3>
-                    <p id="d-glam">Sito web moderno realizzato per il business di famiglia.</p>
-                </div>
-                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="card-btn">
-                    <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right"></i>
+                <div class="card-icon-wrap"><i class="fa-solid fa-leaf"></i></div>
+                <h3>Glam Estetica</h3>
+                <p id="d-glam">Identità digitale moderna per un salone di bellezza d'avanguardia.</p>
+                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="btn-arrow">
+                    <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
         </div>
 
-        <!-- Sezione Ricerca -->
-        <div class="section-divider fade-in-up" style="animation-delay: 0.6s;">
-            <i class="fa-solid fa-flask"></i> <span id="cat-s">Scuola / Ricerca</span>
+        <!-- Progetti Ricerca -->
+        <div class="section-header reveal" style="margin-top: 100px;">
+            <h2 id="cat-s">Ricerca & Studio</h2>
+            <div class="line"></div>
         </div>
 
-        <div class="project-grid fade-in-up" style="animation-delay: 0.7s;">
+        <div class="project-list reveal">
             <article class="project-card">
-                <div class="icon-container">
-                    <div class="fire-glow"></div>
-                    <i class="fa-solid fa-calculator card-icon"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Matematica Croccante</h3>
-                    <p id="d-math">Piattaforma interattiva per lo studio della matematica.</p>
-                </div>
-                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="card-btn">
-                    <span class="v-text">Vedi Progetto</span> <i class="fa-solid fa-arrow-right"></i>
+                <div class="card-icon-wrap"><i class="fa-solid fa-brain"></i></div>
+                <h3>Matematica Croccante</h3>
+                <p id="d-math">Rendere lo studio dei numeri un'esperienza visiva e interattiva.</p>
+                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="btn-arrow">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
 
             <article class="project-card">
-                <div class="icon-container">
-                    <div class="fire-glow"></div>
-                    <i class="fa-solid fa-flag-usa card-icon"></i>
-                </div>
-                <div class="card-content">
-                    <h3>USA Project</h3>
-                    <p id="d-usa">Ricerca approfondita digitale sugli Stati Uniti.</p>
-                </div>
-                <a href="https://kibrisky1.github.io/USA/" target="_blank" class="card-btn">
-                    <span class="v-text">Vedi Progetto</span> <i class="fa-solid fa-arrow-right"></i>
+                <div class="card-icon-wrap"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h3>USA Project</h3>
+                <p id="d-usa">Analisi digitale strutturata sulla storia e cultura americana.</p>
+                <a href="https://kibrisky1.github.io/USA/" target="_blank" class="btn-arrow">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
 
             <article class="project-card">
-                <div class="icon-container">
-                    <div class="fire-glow"></div>
-                    <i class="fa-solid fa-scroll card-icon"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Rivoluzione</h3>
-                    <p id="d-rev">Esperienza storica digitale e interattiva.</p>
-                </div>
-                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="card-btn">
-                    <span class="v-text">Vedi Progetto</span> <i class="fa-solid fa-arrow-right"></i>
+                <div class="card-icon-wrap"><i class="fa-solid fa-landmark"></i></div>
+                <h3>Rivoluzione</h3>
+                <p id="d-rev">Un viaggio interattivo attraverso i grandi cambiamenti della storia.</p>
+                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="btn-arrow">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
         </div>
 
         <footer>
-            <p>"la tua vita è più di un corpo - David Miron"</p>
-            <div id="version-tag">v.2.1.4</div>
+            <p>&copy; 2026 David Miron &bull; <span id="v-tag">v.3.0.0</span></p>
+            <p style="margin-top: 10px; font-style: italic;">"la tua vita è più di un corpo"</p>
         </footer>
     </div>
 
     <script>
+        // --- DATA ---
         const data = {
             it: {
-                typewriter: ["Appassionato di Tech dal 2013.", "Sviluppatore Python.", "Focus Cyber Security."],
+                typewriter: ["Esploratore del mondo digitale.", "Sviluppatore Python.", "Focus Cyber Security."],
                 labels: { s: "Script", f: "Focus", g: "Obiettivo" },
-                cats: { c: "Clienti / Commerciale", s: "Scuola / Ricerca" },
+                cats: { c: "Commerciale", s: "Ricerca & Studio" },
                 descs: { 
-                    glam: "Sito web moderno realizzato per il business di famiglia.",
-                    math: "Piattaforma interattiva per lo studio della matematica.",
-                    usa: "Ricerca approfondita digitale sugli Stati Uniti.",
-                    rev: "Esperienza storica digitale e interattiva."
+                    glam: "Identità digitale moderna per un salone di bellezza d'avanguardia.",
+                    math: "Rendere lo studio dei numeri un'esperienza visiva e interattiva.",
+                    usa: "Analisi digitale strutturata sulla storia e cultura americana.",
+                    rev: "Un viaggio interattivo attraverso i grandi cambiamenti della storia."
                 },
-                btns: { visit: "Visita Sito", view: "Vedi Progetto", lang: "EN" }
+                btns: { visit: "Visita Sito", view: "Esplora", lang: "EN" }
             },
             en: {
-                typewriter: ["Tech Enthusiast since 2013.", "Python Developer.", "Cyber Security Focus."],
+                typewriter: ["Digital world explorer.", "Python Developer.", "Cyber Security Focus."],
                 labels: { s: "Scripts", f: "Focus", g: "Target" },
-                cats: { c: "Clients / Commercial", s: "School / Research" },
+                cats: { c: "Commercial", s: "Research & Study" },
                 descs: {
-                    glam: "Modern website created for the family business.",
-                    math: "Interactive platform for mathematics study.",
-                    usa: "In-depth digital research on the USA.",
-                    rev: "Interactive digital historical experience."
+                    glam: "Modern digital identity for a cutting-edge beauty salon.",
+                    math: "Making number study a visual and interactive experience.",
+                    usa: "Structured digital analysis of American history and culture.",
+                    rev: "An interactive journey through the great changes of history."
                 },
-                btns: { visit: "Visit Site", view: "View Project", lang: "IT" }
+                btns: { visit: "Visit Site", view: "Explore", lang: "IT" }
             }
         };
 
@@ -463,53 +379,40 @@
         let isDeleting = false;
         const typeTextElement = document.getElementById('type-text');
 
+        // --- INTERACTIVITY ---
+        document.addEventListener('mousemove', e => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.documentElement.style.setProperty('--mouse-x', x + '%');
+            document.documentElement.style.setProperty('--mouse-y', y + '%');
+        });
+
         function typeWriter() {
             const currentText = data[currentLang].typewriter[typeIndex];
             typeTextElement.textContent = isDeleting ? currentText.substring(0, charIndex - 1) : currentText.substring(0, charIndex + 1);
             charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
 
-            let speed = isDeleting ? 50 : 100;
-            if (!isDeleting && charIndex === currentText.length) { speed = 2000; isDeleting = true; }
+            let speed = isDeleting ? 30 : 60;
+            if (!isDeleting && charIndex === currentText.length) { speed = 2500; isDeleting = true; }
             else if (isDeleting && charIndex === 0) { isDeleting = false; typeIndex = (typeIndex + 1) % data[currentLang].typewriter.length; speed = 500; }
             setTimeout(typeWriter, speed);
         }
         typeWriter();
 
-        // Generatore di scintille
-        document.querySelectorAll('.icon-container').forEach(container => {
-            for (let i = 0; i < 8; i++) {
-                const spark = document.createElement('div');
-                spark.className = 'spark';
-                const tx = (Math.random() - 0.5) * 80 + 'px';
-                const ty = (Math.random() * -70 - 20) + 'px';
-                spark.style.setProperty('--tx', tx);
-                spark.style.setProperty('--ty', ty);
-                spark.style.left = '50%';
-                spark.style.top = '50%';
-                spark.style.animationDelay = (Math.random() * 1.5) + 's';
-                container.appendChild(spark);
-            }
-        });
-
-        // Gestione Temi e Favicon (Inversione logica applicata)
+        // --- THEME & LANG ---
         const body = document.body;
         const mainLogo = document.getElementById('main-logo');
         const favicon = document.getElementById('favicon');
 
         document.getElementById('theme-btn').addEventListener('click', () => {
-            const isCurrentlyDark = body.getAttribute('data-theme') === 'dark';
-            const newTheme = isCurrentlyDark ? 'light' : 'dark';
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
             body.setAttribute('data-theme', newTheme);
-            
-            // Aggiornamento Icona Tema
             document.getElementById('theme-icon').className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            
-            // Inversione logica: dark carica dark, light carica light
             mainLogo.src = newTheme === 'dark' ? 'dark.png' : 'light.png';
             favicon.href = newTheme === 'dark' ? 'dark1.png' : 'light1.png';
         });
 
-        // Cambio Lingua
         document.getElementById('lang-btn').addEventListener('click', () => {
             currentLang = currentLang === 'it' ? 'en' : 'it';
             const t = data[currentLang];
@@ -528,17 +431,24 @@
             });
         });
 
-        // Easter Eggs
-        const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-        let kIdx = 0;
-        document.addEventListener('keydown', e => {
-            if (e.key === konami[kIdx]) { kIdx++; if(kIdx===konami.length) { body.classList.toggle('matrix-mode'); kIdx=0; } } else kIdx=0;
-        });
+        // --- REVEAL ON SCROLL ---
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(r => {
+                const windowHeight = window.innerHeight;
+                const elementTop = r.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) r.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        window.onload = reveal;
 
+        // --- EASTER EGGS ---
         const heroName = document.getElementById('hero-name');
         heroName.addEventListener('dblclick', () => {
-            heroName.textContent = heroName.textContent === 'David Miron' ? '01000100 01001101' : 'David Miron';
-            heroName.style.fontFamily = heroName.textContent.includes('0') ? 'monospace' : 'var(--font-main)';
+            heroName.textContent = heroName.textContent === 'David Miron' ? '<D.MIRON />' : 'David Miron';
+            heroName.style.fontFamily = heroName.textContent.includes('<') ? 'var(--font-mono)' : 'var(--font-sans)';
         });
     </script>
 </body>
