@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Falcon | David Miron</title>
-    <!-- Favicon dinamica -->
-    <link id="favicon" rel="icon" href="light.png" type="image/png">
+    <!-- Favicon dinamica aggiornata -->
+    <link id="favicon" rel="icon" href="light1.png" type="image/png">
     <!-- Icone FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -49,15 +49,6 @@
             font-family: 'Courier New', monospace !important;
         }
 
-        /* SHAKE ANIMATION (Easter Egg) */
-        .shake-screen { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -87,50 +78,63 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 0;
+            padding: 40px 0; /* Aumentato padding */
             position: relative;
             z-index: 10;
         }
 
-        /* FIX: Limitiamo la dimensione del logo nell'header */
+        /* LOGO: Dimensioni aumentate per renderlo visibile */
         .logo {
             display: flex;
             align-items: center;
-            max-width: 150px; /* Larghezza massima logo header */
         }
         
         .logo img { 
-            height: 45px;
+            height: 75px; /* Ingrandito da 45px a 75px */
             width: auto;
-            max-width: 100%;
+            max-width: 250px; /* Più spazio per il logo */
             object-fit: contain;
             cursor: pointer; 
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
         }
 
         .btn-icon {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.3s ease;
         }
-        /* FIX: Immagini pulsanti (bandiere) limitate */
+        
         .btn-icon img {
-            width: 20px;
+            width: 22px;
             height: auto;
             object-fit: contain;
         }
-        .btn-icon:hover { transform: translateY(-2px); border-color: var(--accent-color); }
+        
+        .btn-icon:hover { 
+            transform: translateY(-2px); 
+            border-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
 
         /* --- HERO --- */
-        .hero { padding: 80px 0 60px; }
+        .hero { padding: 60px 0; }
         .hero h1 {
             font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 800;
@@ -177,6 +181,7 @@
             color: var(--secondary-color);
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-size: 0.85rem;
         }
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
 
@@ -205,7 +210,7 @@
             background: linear-gradient(145deg, var(--card-bg), rgba(255,255,255,0.02));
         }
 
-        /* --- ICON CONTAINER FIX --- */
+        /* ICON CONTAINER */
         .icon-container {
             position: relative;
             width: 60px;
@@ -214,10 +219,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: visible; /* Per far vedere le scintille fuori, ma limitiamo l'img */
         }
 
-        /* FIX: Se usi un'immagine invece di un'icona fa-solid */
+        /* Limitiamo solo l'immagine se usata come icona di progetto */
         .icon-container img, .card-icon {
             max-width: 100%;
             max-height: 100%;
@@ -233,13 +237,13 @@
             transform: rotateY(360deg) scale(1.1);
         }
 
-        /* Il "Fuoco Grigio" (Glow) */
+        /* Effetto Fuoco Grigio (Glow) */
         .fire-glow {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: radial-gradient(circle, var(--spark-color) 0%, transparent 70%);
-            filter: blur(8px);
+            filter: blur(10px);
             opacity: 0;
             transition: opacity 0.4s;
             z-index: 1;
@@ -285,7 +289,7 @@
             color: var(--text-color);
             font-weight: 600;
             font-size: 0.9rem;
-            transition: gap 0.3s;
+            transition: all 0.3s ease;
         }
         .card-btn:hover { gap: 12px; color: var(--accent-color); }
 
@@ -316,12 +320,12 @@
         
         <header class="fade-in-up">
             <div class="logo">
-                <!-- Se questa immagine è gigante su GitHub, ora verrà contenuta -->
-                <img id="main-logo" src="light.png" alt="Falcon">
+                <!-- Il logo ora ha più spazio e visibilità -->
+                <img id="main-logo" src="light.png" alt="Falcon Logo">
             </div>
             <div class="controls">
                 <button class="btn-icon" id="lang-btn">
-                    <img src="en.png" alt=""> <span id="lang-text">EN</span>
+                    <img src="en.png" alt="English"> <span id="lang-text">EN</span>
                 </button>
                 <button class="btn-icon" id="theme-btn">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
@@ -352,6 +356,7 @@
             </div>
         </section>
 
+        <!-- Sezione Commerciale -->
         <div class="section-divider fade-in-up" style="animation-delay: 0.4s;">
             <i class="fa-solid fa-briefcase"></i> <span id="cat-c">Clienti / Commerciale</span>
         </div>
@@ -361,7 +366,6 @@
                 <div class="icon-container">
                     <div class="fire-glow"></div>
                     <i class="fa-solid fa-spa card-icon"></i>
-                    <!-- Se volessi usare un'immagine qui: <img src="path.png"> -->
                 </div>
                 <div class="card-content">
                     <h3>Glam Estetica</h3>
@@ -373,6 +377,7 @@
             </article>
         </div>
 
+        <!-- Sezione Ricerca -->
         <div class="section-divider fade-in-up" style="animation-delay: 0.6s;">
             <i class="fa-solid fa-flask"></i> <span id="cat-s">Scuola / Ricerca</span>
         </div>
@@ -423,7 +428,7 @@
 
         <footer>
             <p>"la tua vita è più di un corpo - David Miron"</p>
-            <div id="version-tag">v.2.1.1</div>
+            <div id="version-tag">v.2.1.2</div>
         </footer>
     </div>
 
@@ -473,32 +478,42 @@
         }
         typeWriter();
 
-        // Generatore di scintille per le card
+        // Generatore di scintille per le card (ora leggermente più grandi)
         document.querySelectorAll('.icon-container').forEach(container => {
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 8; i++) {
                 const spark = document.createElement('div');
                 spark.className = 'spark';
-                const tx = (Math.random() - 0.5) * 60 + 'px';
-                const ty = (Math.random() * -60 - 20) + 'px';
+                const tx = (Math.random() - 0.5) * 80 + 'px';
+                const ty = (Math.random() * -70 - 20) + 'px';
                 spark.style.setProperty('--tx', tx);
                 spark.style.setProperty('--ty', ty);
                 spark.style.left = '50%';
                 spark.style.top = '50%';
-                spark.style.animationDelay = (Math.random() * 1) + 's';
+                spark.style.animationDelay = (Math.random() * 1.5) + 's';
                 container.appendChild(spark);
             }
         });
 
-        // Temi e Lingue
+        // Gestione Temi e Favicon
         const body = document.body;
+        const mainLogo = document.getElementById('main-logo');
+        const favicon = document.getElementById('favicon');
+
         document.getElementById('theme-btn').addEventListener('click', () => {
             const isDark = body.getAttribute('data-theme') === 'dark';
             body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            
+            // Cambio Icona Tema
             document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-            document.getElementById('main-logo').src = isDark ? 'dark.png' : 'light.png';
-            document.getElementById('favicon').href = isDark ? 'dark.png' : 'light.png';
+            
+            // Cambio Logo Principale
+            mainLogo.src = isDark ? 'dark.png' : 'light.png';
+            
+            // Cambio Favicon (Nuove immagini light1.png e dark1.png)
+            favicon.href = isDark ? 'dark1.png' : 'light1.png';
         });
 
+        // Cambio Lingua
         document.getElementById('lang-btn').addEventListener('click', () => {
             currentLang = currentLang === 'it' ? 'en' : 'it';
             const t = data[currentLang];
