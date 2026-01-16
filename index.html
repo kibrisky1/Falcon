@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Falcon | David Miron</title>
-    <!-- Favicon dinamica aggiornata -->
+    <!-- Favicon dinamica aggiornata con light1.png e dark1.png -->
     <link id="favicon" rel="icon" href="light1.png" type="image/png">
     <!-- Icone FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -78,28 +78,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 0; /* Aumentato padding */
+            padding: 50px 0; /* Padding aumentato per il logo più grande */
             position: relative;
             z-index: 10;
         }
 
-        /* LOGO: Dimensioni aumentate per renderlo visibile */
+        /* LOGO: Dimensioni ulteriormente aumentate */
         .logo {
             display: flex;
             align-items: center;
         }
         
         .logo img { 
-            height: 75px; /* Ingrandito da 45px a 75px */
+            height: 110px; /* Ingrandito da 75px a 110px */
             width: auto;
-            max-width: 250px; /* Più spazio per il logo */
+            max-width: 350px; /* Aumentato per evitare tagli */
             object-fit: contain;
             cursor: pointer; 
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo img:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .controls {
@@ -134,7 +134,7 @@
         }
 
         /* --- HERO --- */
-        .hero { padding: 60px 0; }
+        .hero { padding: 40px 0 60px; }
         .hero h1 {
             font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 800;
@@ -210,7 +210,6 @@
             background: linear-gradient(145deg, var(--card-bg), rgba(255,255,255,0.02));
         }
 
-        /* ICON CONTAINER */
         .icon-container {
             position: relative;
             width: 60px;
@@ -221,7 +220,6 @@
             justify-content: center;
         }
 
-        /* Limitiamo solo l'immagine se usata come icona di progetto */
         .icon-container img, .card-icon {
             max-width: 100%;
             max-height: 100%;
@@ -237,7 +235,6 @@
             transform: rotateY(360deg) scale(1.1);
         }
 
-        /* Effetto Fuoco Grigio (Glow) */
         .fire-glow {
             position: absolute;
             width: 45px;
@@ -253,7 +250,6 @@
             animation: pulse 1.5s infinite;
         }
 
-        /* Scintille animate */
         .spark {
             position: absolute;
             width: 2px;
@@ -320,7 +316,7 @@
         
         <header class="fade-in-up">
             <div class="logo">
-                <!-- Il logo ora ha più spazio e visibilità -->
+                <!-- Il logo è ora ancora più grande e visibile -->
                 <img id="main-logo" src="light.png" alt="Falcon Logo">
             </div>
             <div class="controls">
@@ -343,7 +339,7 @@
             <div class="stats-container fade-in-up" style="animation-delay: 0.3s;">
                 <div class="stat-box">
                     <div class="stat-icon"><i class="fa-brands fa-python"></i></div>
-                    <div class="stat-info"><span id="l-s">Scripts</span><strong>62 Programs</strong></div>
+                    <div class="stat-info"><span id="l-s">Script</span><strong>62 Programmi</strong></div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
@@ -351,7 +347,7 @@
                 </div>
                 <div class="stat-box">
                     <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="stat-info"><span id="l-g">Target</span><strong>Fermi (CS)</strong></div>
+                    <div class="stat-info"><span id="l-g">Obiettivo</span><strong>Fermi (CS)</strong></div>
                 </div>
             </div>
         </section>
@@ -428,7 +424,7 @@
 
         <footer>
             <p>"la tua vita è più di un corpo - David Miron"</p>
-            <div id="version-tag">v.2.1.2</div>
+            <div id="version-tag">v.2.1.3</div>
         </footer>
     </div>
 
@@ -436,7 +432,7 @@
         const data = {
             it: {
                 typewriter: ["Appassionato di Tech dal 2013.", "Sviluppatore Python.", "Focus Cyber Security."],
-                labels: { s: "Scripts", f: "Focus", g: "Obiettivo" },
+                labels: { s: "Script", f: "Focus", g: "Obiettivo" },
                 cats: { c: "Clienti / Commerciale", s: "Scuola / Ricerca" },
                 descs: { 
                     glam: "Sito web moderno realizzato per il business di famiglia.",
@@ -478,7 +474,7 @@
         }
         typeWriter();
 
-        // Generatore di scintille per le card (ora leggermente più grandi)
+        // Generatore di scintille per le card
         document.querySelectorAll('.icon-container').forEach(container => {
             for (let i = 0; i < 8; i++) {
                 const spark = document.createElement('div');
@@ -506,10 +502,10 @@
             // Cambio Icona Tema
             document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
             
-            // Cambio Logo Principale
+            // Cambio Logo Principale (light.png / dark.png)
             mainLogo.src = isDark ? 'dark.png' : 'light.png';
             
-            // Cambio Favicon (Nuove immagini light1.png e dark1.png)
+            // Cambio Favicon (light1.png / dark1.png)
             favicon.href = isDark ? 'dark1.png' : 'light1.png';
         });
 
