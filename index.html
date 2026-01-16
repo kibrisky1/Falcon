@@ -71,40 +71,58 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 0;
+            padding: 20px 0; /* Ridotto padding verticale per compensare logo più grande */
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .logo { display: flex; align-items: center; }
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            min-width: 200px; /* Assicura spazio per il logo */
+        }
+        
         .logo img { 
-            height: 72px; 
+            height: 140px; /* Aumentata dimensione logo */
             width: auto;
             object-fit: contain;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.05));
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.1));
+            display: block;
         }
+        .logo img:hover { transform: scale(1.05); }
 
-        .controls { display: flex; gap: 12px; }
+        .controls { display: flex; gap: 15px; align-items: center; }
 
         .btn-ui {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 100px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             z-index: 101;
         }
+        
+        /* FIX ICONA LINGUA GIGANTE */
+        .btn-ui img { 
+            width: 20px !important; 
+            height: 20px !important; 
+            min-width: 20px;
+            border-radius: 50%; 
+            object-fit: cover;
+            display: block;
+        }
+
         .btn-ui:hover { 
             background: var(--accent-primary);
             color: var(--bg-color);
@@ -112,7 +130,7 @@
         }
 
         /* --- HERO --- */
-        .hero { padding: 80px 0 100px; position: relative; z-index: 10; }
+        .hero { padding: 60px 0 100px; position: relative; z-index: 10; }
         .hero h1 {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
@@ -201,7 +219,6 @@
         .project-card h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
         .project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; flex-grow: 1; }
 
-        /* LINK CLICCABILE REALE */
         .btn-real-link {
             display: inline-flex;
             align-items: center;
@@ -212,7 +229,7 @@
             font-size: 1rem;
             transition: 0.3s;
             position: relative;
-            z-index: 50; /* Superiore a tutto nella card */
+            z-index: 50;
             padding: 10px 0;
             width: fit-content;
         }
@@ -239,6 +256,7 @@
         @media (max-width: 768px) {
             .bento-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 3.5rem; }
+            .logo img { height: 100px; } /* Logo leggermente più piccolo su mobile */
         }
     </style>
 </head>
@@ -254,7 +272,7 @@
             </div>
             <div class="controls">
                 <button class="btn-ui" id="lang-btn">
-                    <img src="en.png" alt="English"> <span id="lang-text">EN</span>
+                    <img id="lang-img" src="en.png" alt="English"> <span id="lang-text">EN</span>
                 </button>
                 <button class="btn-ui" id="theme-btn">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
@@ -341,7 +359,7 @@
         </div>
 
         <footer>
-            <p>&copy; 2026 David Miron &bull; <span id="v-tag">v.3.0.2</span></p>
+            <p>&copy; 2026 David Miron &bull; <span id="v-tag">v.3.0.3</span></p>
             <p style="margin-top: 10px; font-style: italic;">"la tua vita è più di un corpo"</p>
         </footer>
     </div>
@@ -359,7 +377,7 @@
                     usa: "Analisi digitale strutturata sulla storia e cultura americana.",
                     rev: "Un viaggio interattivo attraverso i grandi cambiamenti della storia."
                 },
-                btns: { visit: "Visita Sito", view: "Esplora", lang: "EN" }
+                btns: { visit: "Visita Sito", view: "Esplora", lang: "EN", flag: "en.png" }
             },
             en: {
                 typewriter: ["Digital world explorer.", "Python Developer.", "Cyber Security Focus."],
@@ -371,7 +389,7 @@
                     usa: "Structured digital analysis of American history and culture.",
                     rev: "An interactive journey through the great changes of history."
                 },
-                btns: { visit: "Visit Site", view: "Explore", lang: "IT" }
+                btns: { visit: "Visit Site", view: "Explore", lang: "IT", flag: "it.png" }
             }
         };
 
@@ -404,6 +422,7 @@
         // --- THEME & LANG ---
         const body = document.body;
         const mainLogo = document.getElementById('main-logo');
+        const langImg = document.getElementById('lang-img');
 
         document.getElementById('theme-btn').addEventListener('click', () => {
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -426,6 +445,7 @@
             document.getElementById('d-usa').textContent = t.descs.usa;
             document.getElementById('d-rev').textContent = t.descs.rev;
             document.getElementById('lang-text').textContent = t.btns.lang;
+            langImg.src = t.btns.flag;
             document.querySelectorAll('.v-text').forEach((span, i) => {
                 span.textContent = i === 0 ? t.btns.visit : t.btns.view;
             });
