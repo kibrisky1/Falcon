@@ -86,7 +86,6 @@
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.05));
         }
-        .logo img:hover { transform: scale(1.05) rotate(-2deg); }
 
         .controls { display: flex; gap: 12px; }
 
@@ -104,16 +103,16 @@
             gap: 8px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            z-index: 101;
         }
         .btn-ui:hover { 
             background: var(--accent-primary);
             color: var(--bg-color);
             transform: translateY(-2px);
         }
-        .btn-ui img { width: 18px; height: 18px; border-radius: 50%; }
 
         /* --- HERO --- */
-        .hero { padding: 80px 0 100px; }
+        .hero { padding: 80px 0 100px; position: relative; z-index: 10; }
         .hero h1 {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
@@ -149,7 +148,6 @@
             border-radius: 24px;
             transition: all 0.4s ease;
         }
-        .bento-item:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
         .bento-item i { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-muted); }
         .bento-item strong { display: block; font-size: 1.2rem; margin-top: 5px; }
         .bento-item span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
@@ -168,6 +166,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
+            position: relative;
+            z-index: 20;
         }
 
         .project-card {
@@ -178,22 +178,15 @@
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent);
-            opacity: 0;
-            transition: opacity 0.5s;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
             transform: scale(1.02);
             border-color: var(--accent-primary);
+            background: rgba(30, 30, 30, 0.7);
         }
-        .project-card:hover::before { opacity: 1; }
 
         .card-icon-wrap {
             width: 50px; height: 50px;
@@ -206,19 +199,28 @@
         }
 
         .project-card h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
-        .project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
+        .project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; flex-grow: 1; }
 
-        .btn-arrow {
+        /* LINK CLICCABILE REALE */
+        .btn-real-link {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             color: var(--text-main);
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: 0.3s;
+            position: relative;
+            z-index: 50; /* Superiore a tutto nella card */
+            padding: 10px 0;
+            width: fit-content;
         }
-        .btn-arrow:hover { gap: 15px; color: var(--accent-primary); }
+        
+        .btn-real-link:hover {
+            gap: 15px;
+            color: var(--accent-primary);
+        }
 
         /* --- FOOTER --- */
         footer {
@@ -297,7 +299,7 @@
                 <div class="card-icon-wrap"><i class="fa-solid fa-leaf"></i></div>
                 <h3>Glam Estetica</h3>
                 <p id="d-glam">Identità digitale moderna per un salone di bellezza d'avanguardia.</p>
-                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="btn-arrow">
+                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="btn-real-link">
                     <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
@@ -314,7 +316,7 @@
                 <div class="card-icon-wrap"><i class="fa-solid fa-brain"></i></div>
                 <h3>Matematica Croccante</h3>
                 <p id="d-math">Rendere lo studio dei numeri un'esperienza visiva e interattiva.</p>
-                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="btn-arrow">
+                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
@@ -323,7 +325,7 @@
                 <div class="card-icon-wrap"><i class="fa-solid fa-map-location-dot"></i></div>
                 <h3>USA Project</h3>
                 <p id="d-usa">Analisi digitale strutturata sulla storia e cultura americana.</p>
-                <a href="https://kibrisky1.github.io/USA/" target="_blank" class="btn-arrow">
+                <a href="https://kibrisky1.github.io/USA/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
@@ -332,14 +334,14 @@
                 <div class="card-icon-wrap"><i class="fa-solid fa-landmark"></i></div>
                 <h3>Rivoluzione</h3>
                 <p id="d-rev">Un viaggio interattivo attraverso i grandi cambiamenti della storia.</p>
-                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="btn-arrow">
+                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
                 </a>
             </article>
         </div>
 
         <footer>
-            <p>&copy; 2026 David Miron &bull; <span id="v-tag">v.3.0.0</span></p>
+            <p>&copy; 2026 David Miron &bull; <span id="v-tag">v.3.0.2</span></p>
             <p style="margin-top: 10px; font-style: italic;">"la tua vita è più di un corpo"</p>
         </footer>
     </div>
@@ -402,7 +404,6 @@
         // --- THEME & LANG ---
         const body = document.body;
         const mainLogo = document.getElementById('main-logo');
-        const favicon = document.getElementById('favicon');
 
         document.getElementById('theme-btn').addEventListener('click', () => {
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -410,7 +411,6 @@
             body.setAttribute('data-theme', newTheme);
             document.getElementById('theme-icon').className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
             mainLogo.src = newTheme === 'dark' ? 'dark.png' : 'light.png';
-            favicon.href = newTheme === 'dark' ? 'dark1.png' : 'light1.png';
         });
 
         document.getElementById('lang-btn').addEventListener('click', () => {
@@ -443,13 +443,6 @@
         }
         window.addEventListener('scroll', reveal);
         window.onload = reveal;
-
-        // --- EASTER EGGS ---
-        const heroName = document.getElementById('hero-name');
-        heroName.addEventListener('dblclick', () => {
-            heroName.textContent = heroName.textContent === 'David Miron' ? '<D.MIRON />' : 'David Miron';
-            heroName.style.fontFamily = heroName.textContent.includes('<') ? 'var(--font-mono)' : 'var(--font-sans)';
-        });
     </script>
 </body>
 </html>
