@@ -3,7 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falcon | David Miron</title>
+    
+    <!-- Meta Tag per l'Embed (Open Graph / Social Media) -->
+    <title>Falcon | David</title>
+    <meta name="title" content="Falcon | David">
+    <meta name="description" content="Portfolio di David: Sviluppatore Python, esperto di Bot Discord e Cyber Security. Esplora i miei progetti e script.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vostrosito.it/"> <!-- Sostituisci con il tuo URL reale se lo hai -->
+    <meta property="og:title" content="Falcon | David">
+    <meta property="og:description" content="Sviluppatore Python & Discord Specialist.">
+    <meta property="og:image" content="dark.png"> <!-- Immagine che apparirà nell'embed -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Falcon | David">
+    <meta property="twitter:description" content="Portfolio di David: Sviluppatore Python & Discord Specialist.">
+    <meta property="twitter:image" content="dark.png">
+
     <link id="favicon" rel="icon" href="dark1.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
@@ -22,12 +40,10 @@
             --font-mono: 'JetBrains Mono', monospace;
             --discord-color: #5865F2;
             
-            /* Scrollbar Colors - Dark */
             --sb-track: #050505;
             --sb-thumb: #333333;
             --sb-thumb-hover: #444444;
 
-            /* Animazioni */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -41,35 +57,22 @@
             --text-main: #1a1a1a;
             --text-muted: #666666;
             
-            /* Scrollbar Colors - Light */
             --sb-track: #eef0f4;
             --sb-thumb: #cccccc;
             --sb-thumb-hover: #aaaaaa;
         }
 
         /* --- MODERN SCROLLBAR --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--sb-track);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--sb-track); }
         ::-webkit-scrollbar-thumb {
             background: var(--sb-thumb);
             border: 2px solid var(--sb-track);
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--sb-thumb-hover);
-        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--sb-thumb-hover); }
 
-        /* Supporto Firefox */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--sb-thumb) var(--sb-track);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scrollbar-width: thin; scrollbar-color: var(--sb-thumb) var(--sb-track); }
         html { scroll-behavior: smooth; }
 
         body {
@@ -93,7 +96,6 @@
             opacity: 0.5;
         }
         body.hovering .cursor-outline { width: 70px; height: 70px; background-color: rgba(255,255,255,0.05); border-color: transparent; }
-        body.active-click .cursor-outline { transform: translate(-50%, -50%) scale(0.8); }
 
         /* --- PRELOADER --- */
         #preloader {
@@ -131,7 +133,6 @@
             animation: float 6s ease-in-out infinite;
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .logo img:hover { transform: scale(1.05); }
 
         .controls { display: flex; gap: 15px; align-items: center; }
         
@@ -140,18 +141,27 @@
             color: var(--text-main); padding: 10px 20px; border-radius: 50px;
             font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px;
             transition: transform 0.4s var(--ease-elastic), background 0.4s, color 0.4s;
+            outline: none;
         }
-        .btn-ui img { width: 20px !important; height: 20px !important; border-radius: 50%; object-fit: cover; }
+        
+        .btn-ui .btn-img-container { 
+            width: 24px; 
+            height: 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+        }
+        .btn-ui img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .btn-ui .emoji-flag { font-size: 20px; line-height: 1; }
         .btn-ui:hover { background: var(--accent-primary); color: var(--bg-color); }
 
         /* --- HERO --- */
         .hero { padding: 60px 0 80px; position: relative; }
-        
         .hero h1 {
             font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px;
             opacity: 0; animation: blurIn 1.5s var(--ease-out-expo) forwards 0.5s;
         }
-        
         @keyframes blurIn {
             0% { opacity: 0; filter: blur(20px); transform: translateY(20px); }
             100% { opacity: 1; filter: blur(0); transform: translateY(0); }
@@ -166,7 +176,6 @@
 
         /* --- BENTO GRID --- */
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 80px; }
-        
         .tilt-card {
             background: var(--card-bg); border: 1px solid var(--card-border);
             border-radius: 24px; padding: 30px; 
@@ -175,20 +184,17 @@
             backdrop-filter: blur(10px);
             position: relative; overflow: hidden;
         }
-
-        /* Shine Effect */
         .tilt-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.1), transparent 40%);
             pointer-events: none; opacity: 0; transition: opacity 0.5s;
         }
         .tilt-card:hover::before { opacity: 1; }
-        
         .bento-item i { font-size: 1.8rem; margin-bottom: 15px; color: var(--text-main); }
         .bento-item strong { display: block; font-size: 1.2rem; margin-top: 5px; }
         .bento-item span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
 
-        /* --- SKILLS MARQUEE --- */
+        /* --- MARQUEE --- */
         .marquee-container {
             width: 100%; overflow: hidden; padding: 25px 0; 
             border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);
@@ -207,7 +213,6 @@
         .line { flex: 1; height: 1px; background: var(--card-border); }
 
         .project-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-
         .project-card {
             background: var(--card-bg); border: 1px solid var(--card-border);
             border-radius: 32px; padding: 40px; position: relative; overflow: hidden;
@@ -239,7 +244,6 @@
         }
         .contact-title { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
         .contact-text { color: var(--text-muted); margin-bottom: 30px; }
-        
         .discord-btn {
             display: inline-flex; align-items: center; gap: 10px;
             padding: 15px 35px; background: var(--discord-color); color: white;
@@ -256,16 +260,10 @@
             border-top: 1px solid var(--card-border); margin-top: 50px;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes blink { 50% { opacity: 0; } }
         @keyframes fadeUp { to { opacity: 1; } }
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease-out-expo); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        .click-particle {
-            position: fixed; pointer-events: none; border-radius: 50%;
-            background: var(--text-main); z-index: 9999;
-        }
 
         @media (max-width: 768px) {
             .bento-grid { grid-template-columns: 1fr; }
@@ -281,24 +279,24 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- PRELOADER -->
     <div id="preloader">
         <div class="loader-text">FALCON SYSTEM v5.0</div>
         <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
 
-    <!-- CANVAS PARTICLES -->
     <canvas id="particles-canvas"></canvas>
 
     <div class="container">
-        
         <header>
             <div class="logo">
                 <img id="main-logo" src="dark.png" alt="Falcon">
             </div>
             <div class="controls">
                 <button class="btn-ui magnetic" id="lang-btn">
-                    <img id="lang-img" src="en.png" alt="EN"> <span id="lang-text">EN</span>
+                    <div class="btn-img-container" id="lang-img-cont">
+                        <img id="lang-img" src="en.png" alt="EN">
+                    </div>
+                    <span id="lang-text">EN</span>
                 </button>
                 <button class="btn-ui magnetic" id="theme-btn">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
@@ -307,7 +305,7 @@
         </header>
 
         <section class="hero reveal">
-            <h1 id="hero-name">David Miron</h1>
+            <h1 id="hero-name">David</h1>
             <div class="typewriter">
                 <i class="fa-solid fa-terminal"></i>
                 <span id="type-text"></span><span class="cursor-bar"></span>
@@ -317,17 +315,17 @@
                 <div class="bento-item tilt-card">
                     <i class="fa-brands fa-python"></i>
                     <span id="l-s">Script</span>
-                    <strong>62 Programmi</strong>
+                    <strong id="bento-script">62 Programmi</strong>
                 </div>
                 <div class="bento-item tilt-card">
-                    <i class="fa-solid fa-user-shield"></i>
+                    <i class="fa-brands fa-discord"></i>
                     <span id="l-f">Focus</span>
-                    <strong>Cyber Security</strong>
+                    <strong id="bento-focus">Bot & Server</strong>
                 </div>
                 <div class="bento-item tilt-card">
                     <i class="fa-solid fa-rocket"></i>
                     <span id="l-g">Obiettivo</span>
-                    <strong>Fermi (CS)</strong>
+                    <strong id="bento-target">Fermi (CS)</strong>
                 </div>
             </div>
         </section>
@@ -338,10 +336,12 @@
                 <div class="skill-item"><i class="fa-solid fa-code"></i> LUA</div>
                 <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
                 <div class="skill-item"><i class="fa-brands fa-css3"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-brands fa-discord"></i> DISCORD API</div>
                 <div class="skill-item"><i class="fa-brands fa-python"></i> PYTHON</div>
                 <div class="skill-item"><i class="fa-solid fa-code"></i> LUA</div>
                 <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
                 <div class="skill-item"><i class="fa-brands fa-css3"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-brands fa-discord"></i> DISCORD API</div>
             </div>
         </div>
 
@@ -353,7 +353,7 @@
         <div class="project-list reveal">
             <article class="project-card tilt-card">
                 <div class="card-icon-wrap"><i class="fa-solid fa-leaf"></i></div>
-                <h3>Glam Estetica</h3>
+                <h3 id="t-glam">Glam Estetica</h3>
                 <p id="d-glam">Identità digitale moderna per un salone di bellezza d'avanguardia.</p>
                 <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="btn-real-link">
                     <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right-long"></i>
@@ -369,7 +369,7 @@
         <div class="project-list reveal">
             <article class="project-card tilt-card">
                 <div class="card-icon-wrap"><i class="fa-solid fa-brain"></i></div>
-                <h3>Matematica Croccante</h3>
+                <h3 id="t-math">Matematica Croccante</h3>
                 <p id="d-math">Rendere lo studio dei numeri un'esperienza visiva e interattiva.</p>
                 <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
@@ -378,7 +378,7 @@
 
             <article class="project-card tilt-card">
                 <div class="card-icon-wrap"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h3>USA Project</h3>
+                <h3 id="t-usa">USA Project</h3>
                 <p id="d-usa">Analisi digitale strutturata sulla storia e cultura americana.</p>
                 <a href="https://kibrisky1.github.io/USA/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
@@ -387,7 +387,7 @@
 
             <article class="project-card tilt-card">
                 <div class="card-icon-wrap"><i class="fa-solid fa-landmark"></i></div>
-                <h3>Rivoluzione</h3>
+                <h3 id="t-rev">Rivoluzione</h3>
                 <p id="d-rev">Un viaggio interattivo attraverso i grandi cambiamenti della storia.</p>
                 <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="btn-real-link">
                     <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
@@ -405,8 +405,8 @@
         </section>
 
         <footer>
-            <div>&copy; 2026 David Miron &bull; v.5.0.0</div>
-            <div>"la tua vita è più di un corpo"</div>
+            <div id="footer-copy">&copy; 2026 David &bull; v.5.0.0</div>
+            <div id="footer-quote">"la tua vita è più di un corpo"</div>
         </footer>
     </div>
 
@@ -423,28 +423,18 @@
         // --- CURSOR ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
-
         window.addEventListener('mousemove', (e) => {
             cursorDot.style.left = `${e.clientX}px`;
             cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 400, fill: "forwards" });
-
-            const target = e.target;
-            if (target.closest('a') || target.closest('button')) {
-                document.body.classList.add('hovering');
-            } else {
-                document.body.classList.remove('hovering');
-            }
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 400, fill: "forwards" });
+            if (e.target.closest('a') || e.target.closest('button')) document.body.classList.add('hovering');
+            else document.body.classList.remove('hovering');
         });
 
         // --- PARTICLES ---
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        
         function initParticles() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -460,64 +450,40 @@
                 });
             }
         }
-
         function drawParticles() {
             ctx.clearRect(0,0, canvas.width, canvas.height);
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)';
             ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
-            
             particles.forEach((p, i) => {
-                p.x += p.vx;
-                p.y += p.vy;
+                p.x += p.vx; p.y += p.vy;
                 if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                ctx.fill();
-
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
                 for(let j=i+1; j<particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if(dist < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
+                    if(dist < 100) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
                 }
             });
             requestAnimationFrame(drawParticles);
         }
-        initParticles();
-        drawParticles();
+        initParticles(); drawParticles();
         window.addEventListener('resize', initParticles);
 
         // --- TILT & REVEAL ---
         document.querySelectorAll('.tilt-card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-                const rx = (y - rect.height/2) / (rect.height/2) * -5;
-                const ry = (x - rect.width/2) / (rect.width/2) * 5;
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`); card.style.setProperty('--mouse-y', `${y}px`);
+                const rx = (y - rect.height/2) / (rect.height/2) * -5, ry = (x - rect.width/2) / (rect.width/2) * 5;
                 card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
             });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `none`;
-            });
+            card.addEventListener('mouseleave', () => card.style.transform = `none`);
         });
-
-        const reveal = () => {
-            document.querySelectorAll('.reveal').forEach(r => {
-                if(r.getBoundingClientRect().top < window.innerHeight - 100) r.classList.add('active');
-            });
-        };
-        window.addEventListener('scroll', reveal);
-        reveal();
+        const reveal = () => document.querySelectorAll('.reveal').forEach(r => { if(r.getBoundingClientRect().top < window.innerHeight - 100) r.classList.add('active'); });
+        window.addEventListener('scroll', reveal); reveal();
 
         // --- MAGNETIC ---
         document.querySelectorAll('.magnetic').forEach(m => {
@@ -528,32 +494,96 @@
             m.addEventListener('mouseleave', () => m.style.transform = '');
         });
 
-        // --- LANG & THEME ---
+        // --- TRANSLATION LOGIC ---
         const translations = {
             it: {
-                tw: ["Esploratore del mondo digitale.", "Sviluppatore Python.", "Focus Cyber Security."],
+                tw: ["Esploratore digitale.", "Sviluppatore Python.", "Creatore di Bot & Server Discord.", "Focus Cyber Security."],
                 labels: { s: "Script", f: "Focus", g: "Obiettivo" },
+                bento: { s: "62 Programmi", f: "Bot & Server", g: "Fermi (CS)" },
                 cats: { c: "Commerciale", s: "Ricerca & Studio" },
-                descs: { glam: "Identità digitale moderna...", math: "Studio dei numeri...", usa: "Analisi cultura USA...", rev: "Viaggio nella storia..." },
-                btn: "EN", flag: "en.png"
+                titles: { glam: "Glam Estetica", math: "Matematica Croccante", usa: "USA Project", rev: "Rivoluzione" },
+                descs: { 
+                    glam: "Identità digitale moderna per un salone di bellezza d'avanguardia.", 
+                    math: "Rendere lo studio dei numeri un'esperienza visiva e interattiva.", 
+                    usa: "Analisi digitale strutturata sulla storia e cultura americana.", 
+                    rev: "Un viaggio interattivo attraverso i grandi cambiamenti della storia." 
+                },
+                contact: "Contattami direttamente su Discord.",
+                btnText: "Visita Sito", btnExplore: "Esplora",
+                copy: "Copiato negli appunti!",
+                quote: '"la tua vita è più di un corpo"',
+                langBtn: "EN",
+                flag: '<img src="en.png" alt="EN">'
             },
             en: {
-                tw: ["Digital world explorer.", "Python Developer.", "Cyber Security Focus."],
+                tw: ["Digital explorer.", "Python Developer.", "Discord Bot & Server Creator.", "Cyber Security Focus."],
                 labels: { s: "Scripts", f: "Focus", g: "Target" },
-                cats: { c: "Commercial", s: "Research" },
-                btn: "IT", flag: "it.png"
+                bento: { s: "62 Programs", f: "Bots & Servers", g: "Fermi (CS)" },
+                cats: { c: "Commercial", s: "Research & Study" },
+                titles: { glam: "Glam Estetica", math: "Crunchy Math", usa: "USA Project", rev: "Revolution" },
+                descs: { 
+                    glam: "Modern digital identity for a cutting-edge beauty salon.", 
+                    math: "Making the study of numbers a visual and interactive experience.", 
+                    usa: "Structured digital analysis of American history and culture.", 
+                    rev: "An interactive journey through the great changes in history." 
+                },
+                contact: "Contact me directly on Discord.",
+                btnText: "Visit Site", btnExplore: "Explore",
+                copy: "Copied to clipboard!",
+                quote: '"your life is more than a body"',
+                langBtn: "IT",
+                flag: '<span class="emoji-flag">🇮🇹</span>'
             }
         };
 
         let lang = 'it';
+        function updateLanguage() {
+            const t = translations[lang];
+            document.getElementById('lang-text').textContent = t.langBtn;
+            document.getElementById('lang-img-cont').innerHTML = t.flag;
+            
+            // Bento
+            document.getElementById('l-s').textContent = t.labels.s;
+            document.getElementById('l-f').textContent = t.labels.f;
+            document.getElementById('l-g').textContent = t.labels.g;
+            document.getElementById('bento-script').textContent = t.bento.s;
+            document.getElementById('bento-focus').textContent = t.bento.f;
+            document.getElementById('bento-target').textContent = t.bento.g;
+
+            // Categories
+            document.getElementById('cat-c').textContent = t.cats.c;
+            document.getElementById('cat-s').textContent = t.cats.s;
+
+            // Projects
+            document.getElementById('t-glam').textContent = t.titles.glam;
+            document.getElementById('d-glam').textContent = t.descs.glam;
+            document.getElementById('t-math').textContent = t.titles.math;
+            document.getElementById('d-math').textContent = t.descs.math;
+            document.getElementById('t-usa').textContent = t.titles.usa;
+            document.getElementById('d-usa').textContent = t.descs.usa;
+            document.getElementById('t-rev').textContent = t.titles.rev;
+            document.getElementById('d-rev').textContent = t.descs.rev;
+
+            // Common
+            document.querySelectorAll('.v-text').forEach(btn => {
+                if(btn.closest('article').querySelector('h3').id === 't-glam') btn.textContent = t.btnText;
+                else btn.textContent = t.btnExplore;
+            });
+
+            document.getElementById('contact-desc').textContent = t.contact;
+            document.getElementById('copy-feedback').textContent = t.copy;
+            document.getElementById('footer-quote').textContent = t.quote;
+
+            // Restart typewriter with new phrases
+            tIdx = 0; cIdx = 0; del = false;
+        }
+
         document.getElementById('lang-btn').addEventListener('click', () => {
             lang = lang === 'it' ? 'en' : 'it';
-            const t = translations[lang];
-            document.getElementById('lang-text').textContent = t.btn;
-            document.getElementById('lang-img').src = t.flag;
-            // Altri aggiornamenti testi qui...
+            updateLanguage();
         });
 
+        // --- THEME ---
         document.getElementById('theme-btn').addEventListener('click', () => {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             const next = isDark ? 'light' : 'dark';
