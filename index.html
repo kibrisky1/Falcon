@@ -200,6 +200,7 @@
             border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 16/9; 
             border: 1px solid var(--card-border); transform-style: preserve-3d;
             cursor: pointer; /* Indica che è cliccabile */
+            background: #111; /* Background per quando l'immagine non carica */
         }
         .gfx-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out-expo); }
         .gfx-item:hover img { transform: scale(1.15) rotate(1deg); }
@@ -320,7 +321,7 @@
     <div class="cursor-outline"></div>
 
     <div id="preloader">
-        <div class="loader-text">FALCON SYSTEM v5.4</div>
+        <div class="loader-text">FALCON SYSTEM v5.5</div>
         <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
 
@@ -382,10 +383,22 @@
             <div class="line"></div>
         </div>
         <div class="gfx-grid reveal">
-            <div class="gfx-item tilt-card"><img src="gfx1.png" alt="GFX 1"><div class="gfx-overlay"><span>Artwork #01</span></div></div>
-            <div class="gfx-item tilt-card"><img src="gfx2.png" alt="GFX 2"><div class="gfx-overlay"><span>Artwork #02</span></div></div>
-            <div class="gfx-item tilt-card"><img src="gfx3.png" alt="GFX 3"><div class="gfx-overlay"><span>Artwork #03</span></div></div>
-            <div class="gfx-item tilt-card"><img src="gfx4.png" alt="GFX 4"><div class="gfx-overlay"><span>Artwork #04</span></div></div>
+            <div class="gfx-item tilt-card">
+                <img src="gfx1.png" alt="GFX 1" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+1+Missing';">
+                <div class="gfx-overlay"><span>Artwork #01</span></div>
+            </div>
+            <div class="gfx-item tilt-card">
+                <img src="gfx2.png" alt="GFX 2" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+2+Missing';">
+                <div class="gfx-overlay"><span>Artwork #02</span></div>
+            </div>
+            <div class="gfx-item tilt-card">
+                <img src="gfx3.png" alt="GFX 3" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+3+Missing';">
+                <div class="gfx-overlay"><span>Artwork #03</span></div>
+            </div>
+            <div class="gfx-item tilt-card">
+                <img src="gfx4.png" alt="GFX 4" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+4+Missing';">
+                <div class="gfx-overlay"><span>Artwork #04</span></div>
+            </div>
         </div>
 
         <div class="marquee-container reveal">
@@ -577,7 +590,6 @@
                 tw: ["Esploratore digitale.", "Sviluppatore Python.", "Creatore di Bot & Server Discord.", "Focus Cyber Security."],
                 labels: { s: "Script", f: "Focus", g: "Obiettivo" },
                 bento: { s: "62 Programmi", f: "Bot & Server", g: "Fermi (CS)" },
-                catGfx: "Roblox GFX Gallery",
                 cats: { c: "Commerciale", s: "Ricerca & Studio" },
                 titles: { glam: "Glam Estetica", math: "Matematica Croccante", usa: "USA Project", rev: "Rivoluzione" },
                 descs: { 
@@ -597,7 +609,6 @@
                 tw: ["Digital explorer.", "Python Developer.", "Discord Bot & Server Creator.", "Cyber Security Focus."],
                 labels: { s: "Scripts", f: "Focus", g: "Target" },
                 bento: { s: "62 Programs", f: "Bots & Servers", g: "Fermi (CS)" },
-                catGfx: "Roblox GFX Gallery",
                 cats: { c: "Commercial", s: "Research & Study" },
                 titles: { glam: "Glam Estetica", math: "Crunchy Math", usa: "USA Project", rev: "Revolution" },
                 descs: { 
