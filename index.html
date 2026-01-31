@@ -7,19 +7,19 @@
     <!-- Meta Tag per l'Embed (Open Graph / Social Media) -->
     <title>Falcon | David</title>
     <meta name="title" content="Falcon | David">
-    <meta name="description" content="Portfolio di David: Sviluppatore Python, esperto di Bot Discord e Cyber Security. Esplora i miei progetti e script.">
+    <meta name="description" content="Portfolio di David: Sviluppatore Python, GFX Artist, esperto di Bot Discord e Cyber Security.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vostrosito.it/"> <!-- Sostituisci con il tuo URL reale se lo hai -->
+    <meta property="og:url" content="https://kibrisky1.github.io/Falcon/">
     <meta property="og:title" content="Falcon | David">
-    <meta property="og:description" content="Sviluppatore Python & Discord Specialist.">
-    <meta property="og:image" content="dark.png"> <!-- Immagine che apparirà nell'embed -->
+    <meta property="og:description" content="Sviluppatore Python, GFX Artist & Discord Specialist.">
+    <meta property="og:image" content="dark.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Falcon | David">
-    <meta property="twitter:description" content="Portfolio di David: Sviluppatore Python & Discord Specialist.">
+    <meta property="twitter:description" content="Portfolio di David: Sviluppatore Python, GFX Artist & Discord Specialist.">
     <meta property="twitter:image" content="dark.png">
 
     <link id="favicon" rel="icon" href="dark1.png" type="image/png">
@@ -194,6 +194,46 @@
         .bento-item strong { display: block; font-size: 1.2rem; margin-top: 5px; }
         .bento-item span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
 
+        /* --- GFX GALLERY --- */
+        .gfx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 80px; }
+        .gfx-item { 
+            border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 16/9; 
+            border: 1px solid var(--card-border); transform-style: preserve-3d;
+            cursor: pointer; /* Indica che è cliccabile */
+        }
+        .gfx-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out-expo); }
+        .gfx-item:hover img { transform: scale(1.15) rotate(1deg); }
+        .gfx-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex; align-items: flex-end; padding: 20px; opacity: 0; transition: 0.4s; pointer-events: none;
+        }
+        .gfx-item:hover .gfx-overlay { opacity: 1; }
+
+        /* --- IMAGE MODAL (LIGHTBOX) --- */
+        #image-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 11000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s;
+            cursor: zoom-out;
+        }
+        #image-modal.active { opacity: 1; visibility: visible; }
+        #modal-img {
+            max-width: 90%; max-height: 90%;
+            border-radius: 12px; box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            transform: scale(0.9); transition: transform 0.4s var(--ease-out-expo);
+            cursor: default;
+        }
+        #image-modal.active #modal-img { transform: scale(1); }
+        #modal-close {
+            position: absolute; top: 30px; right: 30px;
+            color: white; font-size: 2rem; cursor: pointer;
+            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+            transition: 0.3s;
+        }
+        #modal-close:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
         /* --- MARQUEE --- */
         .marquee-container {
             width: 100%; overflow: hidden; padding: 25px 0; 
@@ -280,8 +320,14 @@
     <div class="cursor-outline"></div>
 
     <div id="preloader">
-        <div class="loader-text">FALCON SYSTEM v5.0</div>
+        <div class="loader-text">FALCON SYSTEM v5.4</div>
         <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+
+    <!-- MODAL PER IMMAGINI GFX -->
+    <div id="image-modal">
+        <div id="modal-close"><i class="fa-solid fa-xmark"></i></div>
+        <img id="modal-img" src="" alt="Enlarged GFX">
     </div>
 
     <canvas id="particles-canvas"></canvas>
@@ -329,6 +375,18 @@
                 </div>
             </div>
         </section>
+
+        <!-- SEZIONE GFX -->
+        <div class="section-header reveal">
+            <h2 id="cat-gfx">Roblox GFX Gallery</h2>
+            <div class="line"></div>
+        </div>
+        <div class="gfx-grid reveal">
+            <div class="gfx-item tilt-card"><img src="gfx1.png" alt="GFX 1"><div class="gfx-overlay"><span>Artwork #01</span></div></div>
+            <div class="gfx-item tilt-card"><img src="gfx2.png" alt="GFX 2"><div class="gfx-overlay"><span>Artwork #02</span></div></div>
+            <div class="gfx-item tilt-card"><img src="gfx3.png" alt="GFX 3"><div class="gfx-overlay"><span>Artwork #03</span></div></div>
+            <div class="gfx-item tilt-card"><img src="gfx4.png" alt="GFX 4"><div class="gfx-overlay"><span>Artwork #04</span></div></div>
+        </div>
 
         <div class="marquee-container reveal">
             <div class="marquee-content">
@@ -399,7 +457,7 @@
             <h2 class="contact-title">Discord</h2>
             <p class="contact-text" id="contact-desc">Contattami direttamente su Discord.</p>
             <button class="discord-btn magnetic" onclick="copyDiscord()">
-                <i class="fa-brands fa-discord"></i> <span id="discord-username">kibrisky</span>
+                <i class="fa-brands fa-discord"></i> <span id="discord-username">for_david_k</span>
             </button>
             <div class="copy-feedback" id="copy-feedback">Copiato negli appunti!</div>
         </section>
@@ -427,8 +485,27 @@
             cursorDot.style.left = `${e.clientX}px`;
             cursorDot.style.top = `${e.clientY}px`;
             cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 400, fill: "forwards" });
-            if (e.target.closest('a') || e.target.closest('button')) document.body.classList.add('hovering');
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.gfx-item')) document.body.classList.add('hovering');
             else document.body.classList.remove('hovering');
+        });
+
+        // --- GFX MODAL LOGIC ---
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeBtn = document.getElementById('modal-close');
+
+        document.querySelectorAll('.gfx-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                modalImg.src = img.src;
+                modal.classList.add('active');
+            });
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target !== modalImg) {
+                modal.classList.remove('active');
+            }
         });
 
         // --- PARTICLES ---
@@ -500,6 +577,7 @@
                 tw: ["Esploratore digitale.", "Sviluppatore Python.", "Creatore di Bot & Server Discord.", "Focus Cyber Security."],
                 labels: { s: "Script", f: "Focus", g: "Obiettivo" },
                 bento: { s: "62 Programmi", f: "Bot & Server", g: "Fermi (CS)" },
+                catGfx: "Roblox GFX Gallery",
                 cats: { c: "Commerciale", s: "Ricerca & Studio" },
                 titles: { glam: "Glam Estetica", math: "Matematica Croccante", usa: "USA Project", rev: "Rivoluzione" },
                 descs: { 
@@ -519,6 +597,7 @@
                 tw: ["Digital explorer.", "Python Developer.", "Discord Bot & Server Creator.", "Cyber Security Focus."],
                 labels: { s: "Scripts", f: "Focus", g: "Target" },
                 bento: { s: "62 Programs", f: "Bots & Servers", g: "Fermi (CS)" },
+                catGfx: "Roblox GFX Gallery",
                 cats: { c: "Commercial", s: "Research & Study" },
                 titles: { glam: "Glam Estetica", math: "Crunchy Math", usa: "USA Project", rev: "Revolution" },
                 descs: { 
@@ -551,6 +630,7 @@
             document.getElementById('bento-target').textContent = t.bento.g;
 
             // Categories
+            document.getElementById('cat-gfx').textContent = t.catGfx;
             document.getElementById('cat-c').textContent = t.cats.c;
             document.getElementById('cat-s').textContent = t.cats.s;
 
@@ -606,7 +686,7 @@
         type();
 
         function copyDiscord() {
-            navigator.clipboard.writeText("kibrisky");
+            navigator.clipboard.writeText("for_david_k");
             const fb = document.getElementById('copy-feedback');
             fb.style.opacity = 1;
             setTimeout(() => fb.style.opacity = 0, 2000);
