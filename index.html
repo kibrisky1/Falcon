@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#050505" id="meta-theme-color">
+
     <!-- Meta Tag per l'Embed (Open Graph / Social Media) -->
     <title>Falcon | David</title>
     <meta name="title" content="Falcon | David">
     <meta name="description" content="Portfolio di David: Sviluppatore Python, GFX Artist, esperto di Bot Discord e Cyber Security.">
-    
+    <link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kibrisky1.github.io/Falcon/">
@@ -25,7 +28,10 @@
     <link id="favicon" rel="icon" href="dark1.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    
+
+    <!-- If JS is disabled, don't let the preloader block the whole site forever -->
+    <noscript><style>#preloader{display:none!important;}</style></noscript>
+
     <style>
         /* --- DESIGN SYSTEM --- */
         :root {
@@ -39,7 +45,7 @@
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
             --discord-color: #5865F2;
-            
+
             --sb-track: #050505;
             --sb-thumb: #333333;
             --sb-thumb-hover: #444444;
@@ -56,7 +62,7 @@
             --card-border: rgba(0, 0, 0, 0.08);
             --text-main: #1a1a1a;
             --text-muted: #666666;
-            
+
             --sb-track: #eef0f4;
             --sb-thumb: #cccccc;
             --sb-thumb-hover: #aaaaaa;
@@ -72,8 +78,16 @@
         }
         ::-webkit-scrollbar-thumb:hover { background: var(--sb-thumb-hover); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scrollbar-width: thin; scrollbar-color: var(--sb-thumb) var(--sb-track); }
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--sb-thumb) var(--sb-track); }
         html { scroll-behavior: smooth; }
+
+        /* Custom cursor only where a real mouse is present, so touch/tablet users keep the native pointer */
+        @media (hover: hover) and (pointer: fine) {
+            * { cursor: none; }
+        }
+        @media not all and (hover: hover) and (pointer: fine) {
+            .cursor-dot, .cursor-outline { display: none; }
+        }
 
         body {
             background-color: var(--bg-color);
@@ -82,6 +96,20 @@
             transition: background-color 0.8s var(--ease-out-expo);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        /* --- SKIP LINK --- */
+        .skip-link {
+            position: absolute; top: -60px; left: 20px; z-index: 12000;
+            background: var(--accent-primary); color: var(--bg-color);
+            padding: 12px 22px; border-radius: 8px; font-weight: 700; font-size: 14px;
+            text-decoration: none; transition: top 0.3s var(--ease-out-expo);
+        }
+        .skip-link:focus { top: 20px; }
+
+        /* --- KEYBOARD FOCUS --- */
+        a:focus-visible, button:focus-visible, .gfx-item:focus-visible {
+            outline: 2px solid var(--accent-primary); outline-offset: 4px; border-radius: 8px;
         }
 
         /* --- CUSTOM CURSOR --- */
@@ -125,7 +153,7 @@
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255,255,255,0.02);
         }
-        
+
         .logo img { 
             height: 120px; width: auto; object-fit: contain; display: block;
             transition: transform 0.8s var(--ease-out-expo);
@@ -135,7 +163,7 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         .controls { display: flex; gap: 15px; align-items: center; }
-        
+
         .btn-ui {
             background: var(--card-bg); border: 1px solid var(--card-border);
             color: var(--text-main); padding: 10px 20px; border-radius: 50px;
@@ -143,7 +171,7 @@
             transition: transform 0.4s var(--ease-elastic), background 0.4s, color 0.4s;
             outline: none;
         }
-        
+
         .btn-ui .btn-img-container { 
             width: 24px; 
             height: 24px; 
@@ -199,7 +227,6 @@
         .gfx-item { 
             border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 16/9; 
             border: 1px solid var(--card-border); transform-style: preserve-3d;
-            cursor: pointer;
             background: #111;
         }
         .gfx-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out-expo); }
@@ -208,7 +235,7 @@
             position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             display: flex; align-items: flex-end; padding: 20px; opacity: 0; transition: 0.4s; pointer-events: none;
         }
-        .gfx-item:hover .gfx-overlay { opacity: 1; }
+        .gfx-item:hover .gfx-overlay, .gfx-item:focus-visible .gfx-overlay { opacity: 1; }
 
         /* --- IMAGE MODAL (LIGHTBOX) --- */
         #image-modal {
@@ -216,22 +243,20 @@
             background: rgba(0, 0, 0, 0.95); z-index: 11000;
             display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s;
-            cursor: zoom-out;
         }
         #image-modal.active { opacity: 1; visibility: visible; }
         #modal-img {
             max-width: 90%; max-height: 90%;
             border-radius: 12px; box-shadow: 0 0 50px rgba(0,0,0,0.8);
             transform: scale(0.9); transition: transform 0.4s var(--ease-out-expo);
-            cursor: default;
         }
         #image-modal.active #modal-img { transform: scale(1); }
         #modal-close {
             position: absolute; top: 30px; right: 30px;
-            color: white; font-size: 2rem; cursor: pointer;
+            color: white; font-size: 2rem;
             width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
-            background: rgba(255,255,255,0.1); border-radius: 50%;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.1); border: none; border-radius: 50%;
+            transition: 0.3s; font-family: inherit;
         }
         #modal-close:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 
@@ -311,14 +336,26 @@
             .hero h1 { font-size: 3.2rem; }
             .logo img { height: 90px; }
             footer { flex-direction: column; gap: 20px; }
-            .cursor-dot, .cursor-outline { display: none; }
+        }
+
+        /* --- REDUCED MOTION --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #particles-canvas { display: none; }
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <a href="#main-content" class="skip-link" id="skip-link">Vai al contenuto principale</a>
+
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-outline" aria-hidden="true"></div>
 
     <div id="preloader">
         <div class="loader-text">FALCON SYSTEM v5.5</div>
@@ -327,16 +364,16 @@
 
     <!-- MODAL PER IMMAGINI GFX -->
     <div id="image-modal">
-        <div id="modal-close"><i class="fa-solid fa-xmark"></i></div>
-        <img id="modal-img" src="" alt="Galleria GFX">
+        <button id="modal-close" type="button" aria-label="Chiudi"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        <img id="modal-img" src="" alt="" decoding="async">
     </div>
 
-    <canvas id="particles-canvas"></canvas>
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
     <div class="container">
         <header>
             <div class="logo">
-                <img id="main-logo" src="dark.png" alt="Falcon">
+                <img id="main-logo" src="dark.png" alt="Falcon" onerror="this.onerror=null; this.src='https://placehold.co/200x120/1a1a1a/FFF?text=FALCON';">
             </div>
             <div class="controls">
                 <button class="btn-ui magnetic" id="lang-btn">
@@ -345,32 +382,33 @@
                     </div>
                     <span id="lang-text">EN</span>
                 </button>
-                <button class="btn-ui magnetic" id="theme-btn">
-                    <i class="fa-solid fa-moon" id="theme-icon"></i>
+                <button class="btn-ui magnetic" id="theme-btn" aria-label="Cambia tema">
+                    <i class="fa-solid fa-moon" id="theme-icon" aria-hidden="true"></i>
                 </button>
             </div>
         </header>
 
+        <main id="main-content">
         <section class="hero reveal">
             <h1 id="hero-name">David</h1>
             <div class="typewriter">
-                <i class="fa-solid fa-terminal"></i>
-                <span id="type-text"></span><span class="cursor-bar"></span>
+                <i class="fa-solid fa-terminal" aria-hidden="true"></i>
+                <span id="type-text"></span><span class="cursor-bar" aria-hidden="true"></span>
             </div>
 
             <div class="bento-grid">
                 <div class="bento-item tilt-card">
-                    <i class="fa-brands fa-python"></i>
+                    <i class="fa-brands fa-python" aria-hidden="true"></i>
                     <span id="l-s">Script</span>
                     <strong id="bento-script">62 Programmi</strong>
                 </div>
                 <div class="bento-item tilt-card">
-                    <i class="fa-brands fa-discord"></i>
+                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
                     <span id="l-f">Focus</span>
                     <strong id="bento-focus">Bot & Server</strong>
                 </div>
                 <div class="bento-item tilt-card">
-                    <i class="fa-solid fa-rocket"></i>
+                    <i class="fa-solid fa-rocket" aria-hidden="true"></i>
                     <span id="l-g">Obiettivo</span>
                     <strong id="bento-target">Fermi (CS)</strong>
                 </div>
@@ -383,36 +421,36 @@
             <div class="line"></div>
         </div>
         <div class="gfx-grid reveal">
-            <div class="gfx-item tilt-card">
-                <img src="davidgfx.png" alt="David GFX" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=DAVIDGFX+Missing';">
-                <div class="gfx-overlay"><span>Artwork #01</span></div>
+            <div class="gfx-item tilt-card" tabindex="0" role="button" aria-label="David GFX">
+                <img src="davidgfx.png" alt="David GFX" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=DAVIDGFX+Missing';">
+                <div class="gfx-overlay" aria-hidden="true"><span>Artwork #01</span></div>
             </div>
-            <div class="gfx-item tilt-card">
-                <img src="bloodwar.png" alt="Blood War" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=BLOODWAR+Missing';">
-                <div class="gfx-overlay"><span>Artwork #02</span></div>
+            <div class="gfx-item tilt-card" tabindex="0" role="button" aria-label="Blood War">
+                <img src="bloodwar.png" alt="Blood War" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=BLOODWAR+Missing';">
+                <div class="gfx-overlay" aria-hidden="true"><span>Artwork #02</span></div>
             </div>
-            <div class="gfx-item tilt-card">
-                <img src="gfx3.png" alt="GFX 3" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+3+Missing';">
-                <div class="gfx-overlay"><span>Artwork #03</span></div>
+            <div class="gfx-item tilt-card" tabindex="0" role="button" aria-label="GFX 3">
+                <img src="gfx3.png" alt="GFX 3" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+3+Missing';">
+                <div class="gfx-overlay" aria-hidden="true"><span>Artwork #03</span></div>
             </div>
-            <div class="gfx-item tilt-card">
-                <img src="gfx4.png" alt="GFX 4" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+4+Missing';">
-                <div class="gfx-overlay"><span>Artwork #04</span></div>
+            <div class="gfx-item tilt-card" tabindex="0" role="button" aria-label="GFX 4">
+                <img src="gfx4.png" alt="GFX 4" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/FFF?text=GFX+4+Missing';">
+                <div class="gfx-overlay" aria-hidden="true"><span>Artwork #04</span></div>
             </div>
         </div>
 
         <div class="marquee-container reveal">
             <div class="marquee-content">
-                <div class="skill-item"><i class="fa-brands fa-python"></i> PYTHON</div>
-                <div class="skill-item"><i class="fa-solid fa-code"></i> LUA</div>
-                <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
-                <div class="skill-item"><i class="fa-brands fa-css3"></i> CSS3</div>
-                <div class="skill-item"><i class="fa-brands fa-discord"></i> DISCORD API</div>
-                <div class="skill-item"><i class="fa-brands fa-python"></i> PYTHON</div>
-                <div class="skill-item"><i class="fa-solid fa-code"></i> LUA</div>
-                <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
-                <div class="skill-item"><i class="fa-brands fa-css3"></i> CSS3</div>
-                <div class="skill-item"><i class="fa-brands fa-discord"></i> DISCORD API</div>
+                <div class="skill-item"><i class="fa-brands fa-python" aria-hidden="true"></i> PYTHON</div>
+                <div class="skill-item"><i class="fa-solid fa-code" aria-hidden="true"></i> LUA</div>
+                <div class="skill-item"><i class="fa-brands fa-html5" aria-hidden="true"></i> HTML5</div>
+                <div class="skill-item"><i class="fa-brands fa-css3" aria-hidden="true"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-brands fa-discord" aria-hidden="true"></i> DISCORD API</div>
+                <div class="skill-item"><i class="fa-brands fa-python" aria-hidden="true"></i> PYTHON</div>
+                <div class="skill-item"><i class="fa-solid fa-code" aria-hidden="true"></i> LUA</div>
+                <div class="skill-item"><i class="fa-brands fa-html5" aria-hidden="true"></i> HTML5</div>
+                <div class="skill-item"><i class="fa-brands fa-css3" aria-hidden="true"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-brands fa-discord" aria-hidden="true"></i> DISCORD API</div>
             </div>
         </div>
 
@@ -420,14 +458,13 @@
             <h2 id="cat-c">Commerciale</h2>
             <div class="line"></div>
         </div>
-
         <div class="project-list reveal">
             <article class="project-card tilt-card">
-                <div class="card-icon-wrap"><i class="fa-solid fa-leaf"></i></div>
+                <div class="card-icon-wrap"><i class="fa-solid fa-leaf" aria-hidden="true"></i></div>
                 <h3 id="t-glam">Glam Estetica</h3>
                 <p id="d-glam">Identità digitale moderna per un salone di bellezza d'avanguardia.</p>
-                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" class="btn-real-link">
-                    <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right-long"></i>
+                <a href="https://glam-estetica-144239c8.base44.app/" target="_blank" rel="noopener noreferrer" class="btn-real-link">
+                    <span class="v-text">Visita Sito</span> <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
                 </a>
             </article>
         </div>
@@ -436,32 +473,29 @@
             <h2 id="cat-s">Ricerca & Studio</h2>
             <div class="line"></div>
         </div>
-
         <div class="project-list reveal">
             <article class="project-card tilt-card">
-                <div class="card-icon-wrap"><i class="fa-solid fa-brain"></i></div>
+                <div class="card-icon-wrap"><i class="fa-solid fa-brain" aria-hidden="true"></i></div>
                 <h3 id="t-math">Matematica Croccante</h3>
                 <p id="d-math">Rendere lo studio dei numeri un'esperienza visiva e interattiva.</p>
-                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" class="btn-real-link">
-                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
+                <a href="https://kibrisky1.github.io/matematica-croccante/" target="_blank" rel="noopener noreferrer" class="btn-real-link">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
                 </a>
             </article>
-
             <article class="project-card tilt-card">
-                <div class="card-icon-wrap"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div class="card-icon-wrap"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></div>
                 <h3 id="t-usa">USA Project</h3>
                 <p id="d-usa">Analisi digitale strutturata sulla storia e cultura americana.</p>
-                <a href="https://kibrisky1.github.io/USA/" target="_blank" class="btn-real-link">
-                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
+                <a href="https://kibrisky1.github.io/USA/" target="_blank" rel="noopener noreferrer" class="btn-real-link">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
                 </a>
             </article>
-
             <article class="project-card tilt-card">
-                <div class="card-icon-wrap"><i class="fa-solid fa-landmark"></i></div>
+                <div class="card-icon-wrap"><i class="fa-solid fa-landmark" aria-hidden="true"></i></div>
                 <h3 id="t-rev">Rivoluzione</h3>
                 <p id="d-rev">Un viaggio interattivo attraverso i grandi cambiamenti della storia.</p>
-                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" class="btn-real-link">
-                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long"></i>
+                <a href="https://kibrisky1.github.io/rivoluzione/" target="_blank" rel="noopener noreferrer" class="btn-real-link">
+                    <span class="v-text">Esplora</span> <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
                 </a>
             </article>
         </div>
@@ -469,241 +503,325 @@
         <section class="contact-section reveal">
             <h2 class="contact-title">Discord</h2>
             <p class="contact-text" id="contact-desc">Contattami direttamente su Discord.</p>
-            <button class="discord-btn magnetic" onclick="copyDiscord()">
-                <i class="fa-brands fa-discord"></i> <span id="discord-username">for_david_k</span>
+            <button class="discord-btn magnetic" onclick="copyDiscord()" type="button">
+                <i class="fa-brands fa-discord" aria-hidden="true"></i> <span id="discord-username">for_david_k</span>
             </button>
-            <div class="copy-feedback" id="copy-feedback">Copiato negli appunti!</div>
+            <div class="copy-feedback" id="copy-feedback" role="status" aria-live="polite">Copiato negli appunti!</div>
         </section>
+        </main>
 
         <footer>
-            <div id="footer-copy">&copy; 2026 David &bull; v.5.0.0</div>
+            <div id="footer-copy">&copy; <span id="footer-year">2026</span> David &bull; v.5.0.0</div>
             <div id="footer-quote">"la tua vita è più di un corpo"</div>
         </footer>
     </div>
 
     <script>
-        // --- PRELOADER ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-            }, 800);
-        });
+    // --- MOTION / INPUT PREFERENCES ---
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-        // --- CURSOR ---
+    // --- PRELOADER (with a safety net in case 'load' never settles) ---
+    function hidePreloader() {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+    }
+    window.addEventListener('load', () => setTimeout(hidePreloader, 800));
+    setTimeout(hidePreloader, 4000);
+
+    // --- FOOTER YEAR ---
+    const footerYear = document.getElementById('footer-year');
+    if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+    // --- CUSTOM CURSOR (fine-pointer devices only) ---
+    if (supportsFinePointer) {
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         window.addEventListener('mousemove', (e) => {
             cursorDot.style.left = `${e.clientX}px`;
             cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 400, fill: "forwards" });
-            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.gfx-item')) document.body.classList.add('hovering');
-            else document.body.classList.remove('hovering');
-        });
-
-        // --- GFX MODAL LOGIC ---
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById('modal-img');
-        const closeBtn = document.getElementById('modal-close');
-
-        document.querySelectorAll('.gfx-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const img = item.querySelector('img');
-                modalImg.src = img.src;
-                modal.classList.add('active');
-            });
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target !== modalImg) {
-                modal.classList.remove('active');
+            cursorOutline.animate(
+                { left: `${e.clientX}px`, top: `${e.clientY}px` },
+                { duration: prefersReducedMotion ? 0 : 400, fill: 'forwards' }
+            );
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.gfx-item')) {
+                document.body.classList.add('hovering');
+            } else {
+                document.body.classList.remove('hovering');
             }
         });
+    }
 
-        // --- PARTICLES ---
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function initParticles() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            particles = [];
-            const count = (canvas.width * canvas.height) / 10000;
-            for(let i=0; i<count; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2
-                });
+    // --- GFX MODAL (mouse + keyboard accessible, with focus management) ---
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.getElementById('modal-close');
+    let lastFocusedEl = null;
+
+    function openModal(item) {
+        const img = item.querySelector('img');
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        lastFocusedEl = document.activeElement;
+        modal.classList.add('active');
+        closeBtn.focus();
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+        if (lastFocusedEl) lastFocusedEl.focus();
+    }
+
+    document.querySelectorAll('.gfx-item').forEach(item => {
+        item.addEventListener('click', () => openModal(item));
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal(item);
             }
-        }
-        function drawParticles() {
-            ctx.clearRect(0,0, canvas.width, canvas.height);
-            const isDark = document.body.getAttribute('data-theme') === 'dark';
-            ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)';
-            ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
-                for(let j=i+1; j<particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if(dist < 100) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
-                }
+        });
+    });
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target !== modalImg) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    // --- PARTICLES (off for reduced-motion users, paused when the tab is hidden) ---
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    let particles = [];
+    let particlesRAF = null;
+
+    function initParticles() {
+        if (!ctx) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 150);
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2
             });
-            requestAnimationFrame(drawParticles);
         }
-        initParticles(); drawParticles();
+    }
+    function drawParticles() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)';
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+        particles.forEach((p, i) => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if (dist < 100) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
+            }
+        });
+        particlesRAF = requestAnimationFrame(drawParticles);
+    }
+    if (ctx && !prefersReducedMotion) {
+        initParticles();
+        drawParticles();
         window.addEventListener('resize', initParticles);
-
-        // --- TILT & REVEAL ---
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`); card.style.setProperty('--mouse-y', `${y}px`);
-                const rx = (y - rect.height/2) / (rect.height/2) * -5, ry = (x - rect.width/2) / (rect.width/2) * 5;
-                card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-            });
-            card.addEventListener('mouseleave', () => card.style.transform = `none`);
-        });
-        const reveal = () => document.querySelectorAll('.reveal').forEach(r => { if(r.getBoundingClientRect().top < window.innerHeight - 100) r.classList.add('active'); });
-        window.addEventListener('scroll', reveal); reveal();
-
-        // --- MAGNETIC ---
-        document.querySelectorAll('.magnetic').forEach(m => {
-            m.addEventListener('mousemove', e => {
-                const r = m.getBoundingClientRect();
-                m.style.transform = `translate(${(e.clientX - r.left - r.width/2)*0.3}px, ${(e.clientY - r.top - r.height/2)*0.3}px)`;
-            });
-            m.addEventListener('mouseleave', () => m.style.transform = '');
-        });
-
-        // --- TRANSLATION LOGIC ---
-        const translations = {
-            it: {
-                tw: ["Esploratore digitale.", "Sviluppatore Python.", "Creatore di Bot & Server Discord.", "Focus Cyber Security."],
-                labels: { s: "Script", f: "Focus", g: "Obiettivo" },
-                bento: { s: "62 Programmi", f: "Bot & Server", g: "Fermi (CS)" },
-                catGfx: "Roblox GFX Gallery",
-                cats: { c: "Commerciale", s: "Ricerca & Studio" },
-                titles: { glam: "Glam Estetica", math: "Matematica Croccante", usa: "USA Project", rev: "Rivoluzione" },
-                descs: { 
-                    glam: "Identità digitale moderna per un salone di bellezza d'avanguardia.", 
-                    math: "Rendere lo studio dei numeri un'esperienza visiva e interattiva.", 
-                    usa: "Analisi digitale strutturata sulla storia e cultura americana.", 
-                    rev: "Un viaggio interattivo attraverso i grandi cambiamenti della storia." 
-                },
-                contact: "Contattami direttamente su Discord.",
-                btnText: "Visita Sito", btnExplore: "Esplora",
-                copy: "Copiato negli appunti!",
-                quote: '"la tua vita è più di un corpo"',
-                langBtn: "EN",
-                flag: '<img src="en.png" alt="EN">'
-            },
-            en: {
-                tw: ["Digital explorer.", "Python Developer.", "Discord Bot & Server Creator.", "Cyber Security Focus."],
-                labels: { s: "Scripts", f: "Focus", g: "Target" },
-                bento: { s: "62 Programs", f: "Bots & Servers", g: "Fermi (CS)" },
-                catGfx: "Roblox GFX Gallery",
-                cats: { c: "Commercial", s: "Research & Study" },
-                titles: { glam: "Glam Estetica", math: "Crunchy Math", usa: "USA Project", rev: "Revolution" },
-                descs: { 
-                    glam: "Modern digital identity for a cutting-edge beauty salon.", 
-                    math: "Making the study of numbers a visual and interactive experience.", 
-                    usa: "Structured digital analysis of American history and culture.", 
-                    rev: "An interactive journey through the great changes in history." 
-                },
-                contact: "Contact me directly on Discord.",
-                btnText: "Visit Site", btnExplore: "Explore",
-                copy: "Copied to clipboard!",
-                quote: '"your life is more than a body"',
-                langBtn: "IT",
-                flag: '<span class="emoji-flag">🇮🇹</span>'
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (particlesRAF) cancelAnimationFrame(particlesRAF);
+            } else {
+                drawParticles();
             }
-        };
+        });
+    }
 
-        let lang = 'it';
-        function updateLanguage() {
-            const t = translations[lang];
-            document.getElementById('lang-text').textContent = t.langBtn;
-            document.getElementById('lang-img-cont').innerHTML = t.flag;
-            
-            // Bento
-            document.getElementById('l-s').textContent = t.labels.s;
-            document.getElementById('l-f').textContent = t.labels.f;
-            document.getElementById('l-g').textContent = t.labels.g;
-            document.getElementById('bento-script').textContent = t.bento.s;
-            document.getElementById('bento-focus').textContent = t.bento.f;
-            document.getElementById('bento-target').textContent = t.bento.g;
+    // --- TILT & REVEAL ---
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left, y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+            if (prefersReducedMotion) return;
+            const rx = (y - rect.height / 2) / (rect.height / 2) * -5;
+            const ry = (x - rect.width / 2) / (rect.width / 2) * 5;
+            card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener('mouseleave', () => card.style.transform = 'none');
+    });
 
-            // Categories
-            document.getElementById('cat-gfx').textContent = t.catGfx;
-            document.getElementById('cat-c').textContent = t.cats.c;
-            document.getElementById('cat-s').textContent = t.cats.s;
+    const reveal = () => document.querySelectorAll('.reveal').forEach(r => {
+        if (r.getBoundingClientRect().top < window.innerHeight - 100) r.classList.add('active');
+    });
+    window.addEventListener('scroll', reveal);
+    reveal();
 
-            // Projects
-            document.getElementById('t-glam').textContent = t.titles.glam;
-            document.getElementById('d-glam').textContent = t.descs.glam;
-            document.getElementById('t-math').textContent = t.titles.math;
-            document.getElementById('d-math').textContent = t.descs.math;
-            document.getElementById('t-usa').textContent = t.titles.usa;
-            document.getElementById('d-usa').textContent = t.descs.usa;
-            document.getElementById('t-rev').textContent = t.titles.rev;
-            document.getElementById('d-rev').textContent = t.descs.rev;
+    // --- MAGNETIC BUTTONS ---
+    document.querySelectorAll('.magnetic').forEach(m => {
+        m.addEventListener('mousemove', e => {
+            const r = m.getBoundingClientRect();
+            m.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.3}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`;
+        });
+        m.addEventListener('mouseleave', () => m.style.transform = '');
+    });
 
-            // Common
-            document.querySelectorAll('.v-text').forEach(btn => {
-                if(btn.closest('article').querySelector('h3').id === 't-glam') btn.textContent = t.btnText;
-                else btn.textContent = t.btnExplore;
-            });
-
-            document.getElementById('contact-desc').textContent = t.contact;
-            document.getElementById('copy-feedback').textContent = t.copy;
-            document.getElementById('footer-quote').textContent = t.quote;
-
-            // Restart typewriter with new phrases
-            tIdx = 0; cIdx = 0; del = false;
+    // --- TRANSLATION LOGIC ---
+    const translations = {
+        it: {
+            tw: ["Esploratore digitale.", "Sviluppatore Python.", "Creatore di Bot & Server Discord.", "Focus Cyber Security."],
+            labels: { s: "Script", f: "Focus", g: "Obiettivo" },
+            bento: { s: "62 Programmi", f: "Bot & Server", g: "Fermi (CS)" },
+            catGfx: "Roblox GFX Gallery",
+            cats: { c: "Commerciale", s: "Ricerca & Studio" },
+            titles: { glam: "Glam Estetica", math: "Matematica Croccante", usa: "USA Project", rev: "Rivoluzione" },
+            descs: {
+                glam: "Identità digitale moderna per un salone di bellezza d'avanguardia.",
+                math: "Rendere lo studio dei numeri un'esperienza visiva e interattiva.",
+                usa: "Analisi digitale strutturata sulla storia e cultura americana.",
+                rev: "Un viaggio interattivo attraverso i grandi cambiamenti della storia."
+            },
+            contact: "Contattami direttamente su Discord.",
+            btnText: "Visita Sito", btnExplore: "Esplora",
+            copy: "Copiato negli appunti!",
+            quote: '"la tua vita è più di un corpo"',
+            langBtn: "EN",
+            flag: '<img src="en.png" alt="EN">',
+            skip: "Vai al contenuto principale",
+            themeBtnLabel: "Cambia tema",
+            modalClose: "Chiudi"
+        },
+        en: {
+            tw: ["Digital explorer.", "Python Developer.", "Discord Bot & Server Creator.", "Cyber Security Focus."],
+            labels: { s: "Scripts", f: "Focus", g: "Target" },
+            bento: { s: "62 Programs", f: "Bots & Servers", g: "Fermi (CS)" },
+            catGfx: "Roblox GFX Gallery",
+            cats: { c: "Commercial", s: "Research & Study" },
+            titles: { glam: "Glam Estetica", math: "Crunchy Math", usa: "USA Project", rev: "Revolution" },
+            descs: {
+                glam: "Modern digital identity for a cutting-edge beauty salon.",
+                math: "Making the study of numbers a visual and interactive experience.",
+                usa: "Structured digital analysis of American history and culture.",
+                rev: "An interactive journey through the great changes in history."
+            },
+            contact: "Contact me directly on Discord.",
+            btnText: "Visit Site", btnExplore: "Explore",
+            copy: "Copied to clipboard!",
+            quote: '"your life is more than a body"',
+            langBtn: "IT",
+            flag: '<span class="emoji-flag">🇮🇹</span>',
+            skip: "Skip to main content",
+            themeBtnLabel: "Toggle theme",
+            modalClose: "Close"
         }
+    };
 
-        document.getElementById('lang-btn').addEventListener('click', () => {
-            lang = lang === 'it' ? 'en' : 'it';
-            updateLanguage();
+    let lang = 'it';
+    function updateLanguage() {
+        const t = translations[lang];
+        document.documentElement.lang = lang;
+        document.getElementById('lang-text').textContent = t.langBtn;
+        document.getElementById('lang-img-cont').innerHTML = t.flag;
+
+        document.getElementById('l-s').textContent = t.labels.s;
+        document.getElementById('l-f').textContent = t.labels.f;
+        document.getElementById('l-g').textContent = t.labels.g;
+        document.getElementById('bento-script').textContent = t.bento.s;
+        document.getElementById('bento-focus').textContent = t.bento.f;
+        document.getElementById('bento-target').textContent = t.bento.g;
+
+        document.getElementById('cat-gfx').textContent = t.catGfx;
+        document.getElementById('cat-c').textContent = t.cats.c;
+        document.getElementById('cat-s').textContent = t.cats.s;
+
+        document.getElementById('t-glam').textContent = t.titles.glam;
+        document.getElementById('d-glam').textContent = t.descs.glam;
+        document.getElementById('t-math').textContent = t.titles.math;
+        document.getElementById('d-math').textContent = t.descs.math;
+        document.getElementById('t-usa').textContent = t.titles.usa;
+        document.getElementById('d-usa').textContent = t.descs.usa;
+        document.getElementById('t-rev').textContent = t.titles.rev;
+        document.getElementById('d-rev').textContent = t.descs.rev;
+
+        document.querySelectorAll('.v-text').forEach(btn => {
+            if (btn.closest('article').querySelector('h3').id === 't-glam') btn.textContent = t.btnText;
+            else btn.textContent = t.btnExplore;
         });
 
-        // --- THEME ---
-        document.getElementById('theme-btn').addEventListener('click', () => {
-            const isDark = document.body.getAttribute('data-theme') === 'dark';
-            const next = isDark ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', next);
-            document.getElementById('theme-icon').className = next === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            document.getElementById('main-logo').src = next === 'dark' ? 'dark.png' : 'light.png';
-        });
+        document.getElementById('contact-desc').textContent = t.contact;
+        document.getElementById('copy-feedback').textContent = t.copy;
+        document.getElementById('footer-quote').textContent = t.quote;
+        document.getElementById('skip-link').textContent = t.skip;
+        document.getElementById('theme-btn').setAttribute('aria-label', t.themeBtnLabel);
+        document.getElementById('modal-close').setAttribute('aria-label', t.modalClose);
 
-        // --- TYPEWRITER ---
-        let tIdx = 0, cIdx = 0, del = false;
-        function type() {
-            const cur = translations[lang].tw[tIdx];
-            document.getElementById('type-text').textContent = cur.substring(0, cIdx);
-            if(!del && cIdx < cur.length) cIdx++;
-            else if(del && cIdx > 0) cIdx--;
-            else if(!del) { del = true; setTimeout(type, 2000); return; }
-            else { del = false; tIdx = (tIdx + 1) % translations[lang].tw.length; }
-            setTimeout(type, del ? 50 : 100);
-        }
-        type();
+        // Restart typewriter with new phrases
+        tIdx = 0; cIdx = 0; del = false;
+    }
+    document.getElementById('lang-btn').addEventListener('click', () => {
+        lang = lang === 'it' ? 'en' : 'it';
+        updateLanguage();
+    });
 
-        function copyDiscord() {
-            navigator.clipboard.writeText("for_david_k");
+    // --- THEME ---
+    const themeColorMeta = document.getElementById('meta-theme-color');
+    function setTheme(next) {
+        document.body.setAttribute('data-theme', next);
+        document.getElementById('theme-icon').className = next === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        document.getElementById('main-logo').src = next === 'dark' ? 'dark.png' : 'light.png';
+        if (themeColorMeta) themeColorMeta.setAttribute('content', next === 'dark' ? '#050505' : '#eef0f4');
+    }
+    document.getElementById('theme-btn').addEventListener('click', () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        setTheme(isDark ? 'light' : 'dark');
+    });
+
+    // --- TYPEWRITER ---
+    let tIdx = 0, cIdx = 0, del = false;
+    function type() {
+        const cur = translations[lang].tw[tIdx];
+        document.getElementById('type-text').textContent = cur.substring(0, cIdx);
+        if (!del && cIdx < cur.length) cIdx++;
+        else if (del && cIdx > 0) cIdx--;
+        else if (!del) { del = true; setTimeout(type, 2000); return; }
+        else { del = false; tIdx = (tIdx + 1) % translations[lang].tw.length; }
+        setTimeout(type, del ? 50 : 100);
+    }
+    type();
+
+    // --- DISCORD COPY (with fallback for non-secure/older contexts) ---
+    function copyDiscord() {
+        const username = document.getElementById('discord-username').textContent;
+        const showFeedback = () => {
             const fb = document.getElementById('copy-feedback');
             fb.style.opacity = 1;
             setTimeout(() => fb.style.opacity = 0, 2000);
+        };
+        const fallbackCopy = () => {
+            const ta = document.createElement('textarea');
+            ta.value = username;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try { document.execCommand('copy'); } catch (err) { /* no-op */ }
+            document.body.removeChild(ta);
+            showFeedback();
+        };
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(username).then(showFeedback).catch(fallbackCopy);
+        } else {
+            fallbackCopy();
         }
+    }
     </script>
 </body>
 </html>
