@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="dark">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
 
     <title>Falcon | David</title>
 
-    <meta name="description" content="Portfolio di David — Python Developer, GFX Artist, Discord Specialist e Creative Developer.">
-    <meta name="theme-color" content="#07090c">
-
-    <link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
+    <meta name="description"
+          content="Portfolio di David — Python, GFX, Discord e tecnologia.">
+    <meta name="theme-color" content="#07090c" id="meta-theme-color">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kibrisky1.github.io/Falcon/">
@@ -17,4676 +17,3811 @@
     <meta property="og:description" content="Python Developer, GFX Artist & Discord Specialist.">
     <meta property="og:image" content="https://kibrisky1.github.io/Falcon/dark.png">
 
-    <link rel="icon" href="dark1.png" type="image/png">
+    <link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
 
+    <link rel="icon" href="dark.png" type="image/png" id="favicon">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet">
 
+    <!-- Icons -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <style>
-
-        /* =========================================================
-           FALCON — VISUAL SYSTEM
-           ========================================================= */
-
-        :root {
-            --bg: #06080b;
-            --bg-2: #0b0f14;
-            --panel: rgba(14, 19, 26, .68);
-            --panel-solid: #10151c;
-
-            --text: #f4f7fa;
-            --muted: #8995a3;
-            --muted-2: #5e6874;
-
-            --amber: #f2a93c;
-            --amber-light: #ffd58c;
-            --amber-rgb: 242,169,60;
-
-            --cyan: #72d7ff;
-            --cyan-rgb: 114,215,255;
-
-            --green: #53e58a;
-
-            --border: rgba(255,255,255,.085);
-            --border-strong: rgba(255,255,255,.16);
-
-            --radius-sm: 12px;
-            --radius-md: 20px;
-            --radius-lg: 28px;
-            --radius-xl: 38px;
-
-            --display: "Space Grotesk", sans-serif;
-            --body: "Inter", sans-serif;
-            --mono: "JetBrains Mono", monospace;
-
-            --ease: cubic-bezier(.16,1,.3,1);
-            --elastic: cubic-bezier(.34,1.56,.64,1);
-
-            --shadow:
-                0 30px 80px rgba(0,0,0,.45);
-
-            --header-height: 78px;
-        }
-
-        [data-theme="light"] {
-            --bg: #edf1f5;
-            --bg-2: #e5eaf0;
-            --panel: rgba(255,255,255,.68);
-            --panel-solid: #ffffff;
-
-            --text: #10151b;
-            --muted: #596472;
-            --muted-2: #89929d;
-
-            --amber: #bd741d;
-            --amber-light: #e49b45;
-            --amber-rgb: 189,116,29;
-
-            --cyan: #1687c2;
-            --cyan-rgb: 22,135,194;
-
-            --border: rgba(10,15,20,.09);
-            --border-strong: rgba(10,15,20,.17);
-
-            --shadow:
-                0 30px 70px rgba(30,40,55,.12);
-        }
-
-
-        /* =========================================================
-           RESET
-           ========================================================= */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--body);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition:
-                background .6s var(--ease),
-                color .6s var(--ease);
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button {
-            font: inherit;
-            color: inherit;
-        }
-
-        ::selection {
-            background: rgba(var(--amber-rgb), .28);
-        }
-
-
-        /* =========================================================
-           BACKGROUND
-           ========================================================= */
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -10;
-
-            background:
-                linear-gradient(
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                );
-
-            background-size: 48px 48px;
-
-            mask-image:
-                radial-gradient(
-                    ellipse 90% 70% at 50% 0%,
-                    black 25%,
-                    transparent 90%
-                );
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -9;
-
-            background:
-                radial-gradient(
-                    circle at 15% 10%,
-                    rgba(var(--amber-rgb),.08),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 85% 20%,
-                    rgba(var(--cyan-rgb),.07),
-                    transparent 28%
-                );
-        }
-
-        #ambient-light {
-            position: fixed;
-            width: 650px;
-            height: 650px;
-            border-radius: 50%;
-
-            pointer-events: none;
-            z-index: -8;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(var(--amber-rgb),.075),
-                    transparent 68%
-                );
-
-            transform: translate(-50%,-50%);
-            transition: left .18s ease-out, top .18s ease-out;
-        }
-
-        .aurora {
-            position: fixed;
-            inset: -30%;
-            z-index: -7;
-            pointer-events: none;
-
-            background:
-                radial-gradient(
-                    ellipse at 30% 20%,
-                    rgba(var(--amber-rgb),.06),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    ellipse at 70% 35%,
-                    rgba(var(--cyan-rgb),.055),
-                    transparent 35%
-                );
-
-            filter: blur(60px);
-
-            animation: auroraMove 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes auroraMove {
-            from {
-                transform: translate3d(-3%, -2%, 0) scale(1);
+    <noscript>
+        <style>
+            #preloader {
+                display: none !important;
             }
+        </style>
+    </noscript>
 
-            to {
-                transform: translate3d(4%, 3%, 0) scale(1.08);
-            }
-        }
-
-
-        /* =========================================================
-           PARTICLES
-           ========================================================= */
-
-        #particles {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -6;
-            opacity: .55;
-        }
-
-
-        /* =========================================================
-           CURSOR
-           ========================================================= */
-
-        @media (hover:hover) and (pointer:fine) {
-
-            * {
-                cursor: none;
-            }
-
-            #cursor-dot {
-                position: fixed;
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background: var(--text);
-                pointer-events: none;
-                z-index: 99999;
-
-                transform: translate(-50%,-50%);
-            }
-
-            #cursor-ring {
-                position: fixed;
-                width: 38px;
-                height: 38px;
-                border-radius: 50%;
-                border: 1px solid rgba(255,255,255,.45);
-
-                pointer-events: none;
-                z-index: 99998;
-
-                transform: translate(-50%,-50%);
-                transition:
-                    width .35s var(--elastic),
-                    height .35s var(--elastic),
-                    border-color .3s,
-                    background .3s;
-            }
-
-            body.cursor-hover #cursor-ring {
-                width: 66px;
-                height: 66px;
-
-                border-color: var(--amber);
-                background: rgba(var(--amber-rgb),.06);
-            }
-        }
-
-        @media not all and (hover:hover) and (pointer:fine) {
-            #cursor-dot,
-            #cursor-ring {
-                display: none;
-            }
-        }
-
-
-        /* =========================================================
-           SCROLL PROGRESS
-           ========================================================= */
-
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 3px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--amber),
-                    var(--cyan)
-                );
-
-            transform-origin: left;
-            transform: scaleX(0);
-
-            z-index: 9999;
-        }
+<style>
 
+/* =========================================================
+   FALCON
+   Complete single-file portfolio
+   ========================================================= */
 
-        /* =========================================================
-           PRELOADER
-           ========================================================= */
+:root {
+    --bg: #05070a;
+    --bg2: #090d12;
+    --surface: rgba(15, 20, 27, .68);
+    --surface-strong: rgba(18, 24, 32, .9);
 
-        #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 100000;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-
-            background: #06080b;
-
-            transition:
-                opacity .8s var(--ease),
-                visibility .8s;
-        }
-
-        #preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-logo {
-            width: 72px;
-            height: 72px;
-            object-fit: contain;
-
-            filter:
-                drop-shadow(
-                    0 0 25px
-                    rgba(var(--amber-rgb),.5)
-                );
-
-            animation: loaderFloat 2s ease-in-out infinite;
-        }
-
-        @keyframes loaderFloat {
-            0%,100% {
-                transform: translateY(0) scale(1);
-            }
-
-            50% {
-                transform: translateY(-7px) scale(1.04);
-            }
-        }
+    --text: #f5f7fa;
+    --muted: #8d98a5;
+
+    --border: rgba(255,255,255,.09);
+    --border-strong: rgba(255,255,255,.16);
 
-        .loader-ring {
-            position: absolute;
-            width: 105px;
-            height: 105px;
+    --amber: #f3a63b;
+    --amber-light: #ffd487;
+    --amber-rgb: 243,166,59;
+
+    --blue: #7fd5ff;
+    --blue-rgb: 127,213,255;
+
+    --green: #48e28b;
+
+    --discord: #5865f2;
+
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --radius-xl: 36px;
+    --pill: 999px;
+
+    --container: 1180px;
+
+    --display: "Space Grotesk", sans-serif;
+    --sans: "Inter", sans-serif;
+    --mono: "JetBrains Mono", monospace;
+
+    --ease: cubic-bezier(.16,1,.3,1);
+}
 
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,.12);
-            border-top-color: var(--amber);
+[data-theme="light"] {
+    --bg: #eef1f5;
+    --bg2: #e5e9ef;
 
-            animation: spin 1s linear infinite;
-        }
+    --surface: rgba(255,255,255,.68);
+    --surface-strong: rgba(255,255,255,.92);
+
+    --text: #11151b;
+    --muted: #596371;
+
+    --border: rgba(10,15,20,.09);
+    --border-strong: rgba(10,15,20,.17);
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loader-label {
-            margin-top: 30px;
+    --amber: #c77b22;
+    --amber-light: #efb56b;
+    --amber-rgb: 199,123,34;
 
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: .25em;
+    --blue: #1689ca;
+    --blue-rgb: 22,137,202;
+}
 
-            color: #8995a3;
-        }
+/* =========================================================
+   RESET
+   ========================================================= */
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    color: var(--text);
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(var(--amber-rgb), .10),
+            transparent 42%
+        ),
+        var(--bg);
+
+    font-family: var(--sans);
+    line-height: 1.6;
 
-        /* =========================================================
-           HUD CORNERS
-           ========================================================= */
-
-        .hud {
-            position: fixed;
-            width: 27px;
-            height: 27px;
-
-            border-color: var(--border-strong);
+    transition:
+        background .6s var(--ease),
+        color .6s var(--ease);
+}
+
+/* =========================================================
+   AMBIENT BACKGROUND
+   ========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
 
-            z-index: 100;
-            pointer-events: none;
-            opacity: .55;
-        }
-
-        .hud.tl {
-            top: 14px;
-            left: 14px;
-            border-top: 1px solid;
-            border-left: 1px solid;
-        }
-
-        .hud.tr {
-            top: 14px;
-            right: 14px;
-            border-top: 1px solid;
-            border-right: 1px solid;
-        }
-
-        .hud.bl {
-            bottom: 14px;
-            left: 14px;
-            border-bottom: 1px solid;
-            border-left: 1px solid;
-        }
-
-        .hud.br {
-            bottom: 14px;
-            right: 14px;
-            border-bottom: 1px solid;
-            border-right: 1px solid;
-        }
-
-
-        /* =========================================================
-           CONTAINER
-           ========================================================= */
-
-        .container {
-            width: min(1160px, calc(100% - 40px));
-            margin: auto;
-        }
-
-
-        /* =========================================================
-           HEADER
-           ========================================================= */
-
-        header {
-            position: sticky;
-            top: 0;
-
-            height: var(--header-height);
-
-            z-index: 500;
-
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-
-            border-bottom: 1px solid transparent;
-
-            transition:
-                background .4s,
-                border .4s,
-                box-shadow .4s;
-        }
-
-        header.scrolled {
-            background: rgba(6,8,11,.72);
-            border-color: var(--border);
-
-            box-shadow:
-                0 15px 40px rgba(0,0,0,.15);
-        }
-
-        [data-theme="light"] header.scrolled {
-            background: rgba(237,241,245,.76);
-        }
-
-        .nav {
-            height: 100%;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
-        .brand img {
-            width: 42px;
-            height: 42px;
-
-            object-fit: contain;
-
-            filter:
-                drop-shadow(
-                    0 0 13px
-                    rgba(var(--amber-rgb),.3)
-                );
-        }
-
-        .brand-text {
-            font-family: var(--display);
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -.03em;
-        }
-
-        .brand-text span {
-            color: var(--amber);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size: 48px 48px;
+
+    mask-image:
+        radial-gradient(
+            ellipse 90% 70% at 50% 0%,
+            black 20%,
+            transparent 85%
+        );
+}
 
-        .nav-link {
-            padding: 9px 13px;
+[data-theme="light"] body::before {
+    background-image:
+        linear-gradient(rgba(10,20,30,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,20,30,.035) 1px, transparent 1px);
+}
+
+/* ambient glow */
+
+.ambient-glow {
+    position: fixed;
+    width: 700px;
+    height: 700px;
+
+    left: 50%;
+    top: -400px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .10),
+            transparent 65%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+    z-index: -4;
+}
+
+/* =========================================================
+   SCROLL BAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.18);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,.3);
+}
+
+/* =========================================================
+   CURSOR
+   ========================================================= */
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    left: 0;
+    top: 0;
 
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
+    pointer-events: none;
+    z-index: 99999;
 
-            border-radius: 10px;
+    border-radius: 50%;
 
-            transition:
-                color .3s,
-                background .3s;
-        }
+    transform: translate(-50%, -50%);
+}
 
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--panel);
-        }
+.cursor-dot {
+    width: 6px;
+    height: 6px;
 
-        .nav-actions {
-            display: flex;
-            gap: 8px;
-        }
+    background: var(--text);
+}
 
-        .icon-btn {
-            width: 40px;
-            height: 40px;
+.cursor-ring {
+    width: 38px;
+    height: 38px;
 
-            display: grid;
-            place-items: center;
+    border: 1px solid rgba(255,255,255,.45);
 
-            border: 1px solid var(--border);
-            background: var(--panel);
+    transition:
+        width .3s var(--ease),
+        height .3s var(--ease),
+        border-color .3s,
+        background .3s;
+}
 
-            border-radius: 50%;
+body.cursor-hover .cursor-ring {
+    width: 64px;
+    height: 64px;
 
-            transition:
-                transform .4s var(--elastic),
-                border-color .3s,
-                background .3s;
-        }
+    border-color: var(--amber);
 
-        .icon-btn:hover {
-            transform: translateY(-3px);
-            border-color: rgba(var(--amber-rgb),.5);
-        }
+    background: rgba(var(--amber-rgb), .08);
+}
 
-        #mobile-menu {
-            display: none;
-        }
+@media (hover:none) {
+    .cursor-dot,
+    .cursor-ring {
+        display:none;
+    }
+}
 
+/* =========================================================
+   PRELOADER
+   ========================================================= */
 
-        /* =========================================================
-           HERO
-           ========================================================= */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
 
-        .hero {
-            min-height: 730px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
-            display: flex;
-            align-items: center;
+    background: #05070a;
 
-            position: relative;
-            overflow: hidden;
-        }
+    transition:
+        opacity .7s var(--ease),
+        visibility .7s;
+}
 
-        .hero-content {
-            width: 100%;
-            position: relative;
-            z-index: 3;
-        }
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.15fr .85fr;
-            gap: 50px;
-            align-items: center;
-        }
+.loader-logo {
+    width: 75px;
+    height: 75px;
 
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
+    object-fit: contain;
 
-            padding: 7px 12px;
+    filter:
+        drop-shadow(0 0 25px rgba(var(--amber-rgb), .45));
 
-            border: 1px solid var(--border);
-            border-radius: 999px;
+    animation: loaderFloat 2s ease-in-out infinite;
+}
 
-            background: rgba(255,255,255,.025);
+@keyframes loaderFloat {
+    50% {
+        transform: translateY(-8px) scale(1.03);
+    }
+}
 
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: .08em;
+.loader-ring {
+    position: absolute;
 
-            color: var(--muted);
+    width: 105px;
+    height: 105px;
 
-            margin-bottom: 24px;
+    border-radius: 50%;
 
-            animation: fadeUp .9s var(--ease) both;
-        }
+    border:
+        1px solid rgba(255,255,255,.12);
 
-        .eyebrow-dot {
-            width: 7px;
-            height: 7px;
+    border-top-color: var(--amber);
 
-            border-radius: 50%;
-            background: var(--green);
+    animation: spin 1s linear infinite;
+}
 
-            box-shadow:
-                0 0 0 0 rgba(83,229,138,.45);
+.loader-label {
+    margin-top: 30px;
 
-            animation: onlinePulse 2s infinite;
-        }
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
 
-        @keyframes onlinePulse {
-            70% {
-                box-shadow:
-                    0 0 0 8px rgba(83,229,138,0);
-            }
+    color: #8d98a5;
+}
 
-            100% {
-                box-shadow:
-                    0 0 0 0 rgba(83,229,138,0);
-            }
-        }
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-        .hero h1 {
-            font-family: var(--display);
+/* =========================================================
+   SCROLL PROGRESS
+   ========================================================= */
 
-            font-size: clamp(4rem, 8vw, 7.8rem);
-            line-height: .88;
-            letter-spacing: -.07em;
+#scrollProgress {
+    position: fixed;
+    left: 0;
+    top: 0;
 
-            max-width: 800px;
+    width: 100%;
+    height: 3px;
 
-            animation: heroTitle 1.1s var(--ease) both .12s;
-        }
+    z-index: 9990;
 
-        .hero h1 .outline {
-            color: transparent;
+    transform-origin: left;
+    transform: scaleX(0);
 
-            -webkit-text-stroke:
-                1px rgba(255,255,255,.27);
-        }
+    background:
+        linear-gradient(
+            90deg,
+            var(--amber),
+            var(--blue)
+        );
 
-        .hero h1 .accent {
-            color: var(--amber);
+    box-shadow:
+        0 0 15px rgba(var(--amber-rgb), .5);
+}
 
-            text-shadow:
-                0 0 60px rgba(var(--amber-rgb),.18);
-        }
+/* =========================================================
+   CONTAINER
+   ========================================================= */
 
-        @keyframes heroTitle {
-            from {
-                opacity: 0;
-                transform: translateY(35px);
-                filter: blur(15px);
-            }
+.container {
+    width: min(var(--container), calc(100% - 40px));
+    margin: auto;
+}
 
-            to {
-                opacity: 1;
-                transform: none;
-                filter: blur(0);
-            }
-        }
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-        .hero-description {
-            max-width: 610px;
+header {
+    position: sticky;
+    top: 0;
 
-            margin-top: 27px;
+    z-index: 900;
 
-            color: var(--muted);
-            font-size: 17px;
+    border-bottom: 1px solid transparent;
 
-            animation: fadeUp 1s var(--ease) both .45s;
-        }
+    transition:
+        background .4s,
+        border .4s,
+        backdrop-filter .4s;
+}
 
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+header.scrolled {
+    background: rgba(5,7,10,.72);
+    border-color: var(--border);
 
-            margin-top: 32px;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
 
-            animation: fadeUp 1s var(--ease) both .6s;
-        }
+[data-theme="light"] header.scrolled {
+    background: rgba(238,241,245,.78);
+}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+.nav {
+    min-height: 80px;
 
-            padding: 13px 19px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-            border-radius: 999px;
+    gap: 20px;
+}
 
-            font-size: 13px;
-            font-weight: 700;
+.nav-logo {
+    display: flex;
+    align-items: center;
 
-            border: 1px solid transparent;
+    text-decoration: none;
+}
 
-            transition:
-                transform .45s var(--elastic),
-                box-shadow .35s,
-                background .35s,
-                border-color .35s;
-        }
+.nav-logo img {
+    width: auto;
+    height: 62px;
 
-        .btn:hover {
-            transform: translateY(-4px);
-        }
+    object-fit: contain;
 
-        .btn-primary {
-            color: #1b1205;
+    filter:
+        drop-shadow(
+            0 0 15px
+            rgba(var(--amber-rgb), .16)
+        );
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--amber),
-                    var(--amber-light)
-                );
+    transition:
+        transform .5s var(--ease),
+        filter .5s;
+}
 
-            box-shadow:
-                0 15px 40px
-                rgba(var(--amber-rgb),.2);
-        }
+.nav-logo:hover img {
+    transform: scale(1.06);
 
-        .btn-primary:hover {
-            box-shadow:
-                0 20px 55px
-                rgba(var(--amber-rgb),.32);
-        }
+    filter:
+        drop-shadow(
+            0 0 25px
+            rgba(var(--amber-rgb), .4)
+        );
+}
 
-        .btn-secondary {
-            border-color: var(--border);
-            background: var(--panel);
-        }
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .btn-secondary:hover {
-            border-color: rgba(var(--amber-rgb),.45);
-            background: rgba(var(--amber-rgb),.07);
-        }
+/* =========================================================
+   UI BUTTON
+   ========================================================= */
 
+.ui-button {
+    border: 1px solid var(--border);
 
-        /* =========================================================
-           HERO VISUAL
-           ========================================================= */
+    background: var(--surface);
 
-        .hero-visual {
-            min-height: 480px;
+    color: var(--text);
 
-            position: relative;
+    min-height: 42px;
 
-            display: grid;
-            place-items: center;
-        }
+    padding: 0 15px;
 
-        .orb {
-            width: 360px;
-            height: 360px;
+    border-radius: var(--pill);
 
-            position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
 
-            border-radius: 50%;
+    font: 600 13px var(--sans);
 
-            background:
-                radial-gradient(
-                    circle at 35% 30%,
-                    rgba(255,255,255,.09),
-                    transparent 20%
-                ),
-                radial-gradient(
-                    circle,
-                    rgba(var(--amber-rgb),.13),
-                    transparent 58%
-                );
+    cursor: pointer;
 
-            border: 1px solid var(--border);
+    backdrop-filter: blur(14px);
 
-            box-shadow:
-                inset 0 0 80px rgba(var(--amber-rgb),.05),
-                0 0 120px rgba(var(--amber-rgb),.06);
+    transition:
+        transform .35s var(--ease),
+        border .3s,
+        background .3s;
+}
 
-            animation: orbFloat 7s ease-in-out infinite;
-        }
+.ui-button:hover {
+    transform: translateY(-2px);
 
-        @keyframes orbFloat {
-            0%,100% {
-                transform: translateY(0) rotate(0deg);
-            }
+    border-color:
+        rgba(var(--amber-rgb), .4);
 
-            50% {
-                transform: translateY(-12px) rotate(2deg);
-            }
-        }
+    background:
+        rgba(var(--amber-rgb), .08);
+}
 
-        .orb::before,
-        .orb::after {
-            content: "";
+.lang-flag {
+    width: 24px;
+    height: 18px;
 
-            position: absolute;
-            inset: 22px;
+    object-fit: cover;
 
-            border-radius: 50%;
+    border-radius: 4px;
+}
 
-            border: 1px solid rgba(255,255,255,.08);
-        }
+/* =========================================================
+   HERO
+   ========================================================= */
 
-        .orb::after {
-            inset: 65px;
+.hero {
+    position: relative;
 
-            border-color:
-                rgba(var(--amber-rgb),.25);
+    min-height: 700px;
 
-            box-shadow:
-                0 0 60px
-                rgba(var(--amber-rgb),.12);
-        }
+    display: flex;
+    align-items: center;
 
-        .orb-logo {
-            position: absolute;
+    padding: 80px 0 110px;
 
-            width: 145px;
-            height: 145px;
+    overflow: hidden;
+}
 
-            object-fit: contain;
+/* Hero light */
 
-            filter:
-                drop-shadow(
-                    0 0 30px
-                    rgba(var(--amber-rgb),.4)
-                );
+.hero-light {
+    position: absolute;
 
-            animation: logoFloat 5s ease-in-out infinite;
-        }
+    width: 650px;
+    height: 650px;
 
-        @keyframes logoFloat {
-            0%,100% {
-                transform: translateY(0) scale(1);
-            }
+    right: -130px;
+    top: -100px;
 
-            50% {
-                transform: translateY(-8px) scale(1.025);
-            }
-        }
+    border-radius: 50%;
 
-        .orbit {
-            position: absolute;
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .13),
+            transparent 65%
+        );
 
-            width: 440px;
-            height: 160px;
+    filter: blur(20px);
 
-            border: 1px solid rgba(var(--cyan-rgb),.15);
+    animation:
+        heroGlow 7s ease-in-out infinite;
 
-            border-radius: 50%;
+    pointer-events: none;
+}
 
-            transform: rotate(-25deg);
+@keyframes heroGlow {
+    0%,100% {
+        transform: scale(1);
+        opacity: .7;
+    }
 
-            animation: orbitSpin 13s linear infinite;
-        }
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
 
-        .orbit::after {
-            content: "";
+/* =========================================================
+   NEW LOGO SHOWCASE
+   ========================================================= */
 
-            position: absolute;
+.logo-showcase {
+    position: absolute;
 
-            width: 8px;
-            height: 8px;
+    right: 0;
+    top: 50%;
 
-            border-radius: 50%;
+    width: 470px;
+    height: 470px;
 
-            background: var(--cyan);
+    transform: translateY(-50%);
 
-            box-shadow:
-                0 0 25px
-                rgba(var(--cyan-rgb),.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            top: -4px;
-            left: 50%;
-        }
+    pointer-events: none;
+}
 
-        @keyframes orbitSpin {
-            to {
-                transform: rotate(335deg);
-            }
-        }
+/* large ambient halo */
 
-        .telemetry {
-            position: absolute;
+.logo-showcase::before {
+    content: "";
 
-            right: 0;
-            bottom: 25px;
+    position: absolute;
 
-            padding: 15px;
+    width: 420px;
+    height: 420px;
 
-            min-width: 190px;
+    border-radius: 50%;
 
-            border: 1px solid var(--border);
-            background: rgba(8,11,15,.62);
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .16),
+            rgba(var(--amber-rgb), .04) 38%,
+            transparent 68%
+        );
 
-            backdrop-filter: blur(18px);
+    filter: blur(12px);
 
-            border-radius: 16px;
+    animation:
+        logoPulse 4s ease-in-out infinite;
+}
 
-            font-family: var(--mono);
-            font-size: 10px;
+/* outer energy ring */
 
-            color: var(--muted);
+.logo-orbit {
+    position: absolute;
 
-            box-shadow: var(--shadow);
-        }
+    width: 390px;
+    height: 390px;
 
-        .telemetry strong {
-            display: block;
+    border-radius: 50%;
 
-            color: var(--text);
-            font-size: 12px;
+    border:
+        1px solid
+        rgba(var(--amber-rgb), .22);
 
-            margin-bottom: 8px;
-        }
+    box-shadow:
+        0 0 50px
+        rgba(var(--amber-rgb), .06);
 
-        .telemetry-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
+    animation: orbitSpin 20s linear infinite;
+}
 
-            padding: 4px 0;
-        }
+.logo-orbit::before,
+.logo-orbit::after {
+    content: "";
 
-        .telemetry-value {
-            color: var(--amber);
-        }
+    position: absolute;
 
+    width: 7px;
+    height: 7px;
 
-        /* =========================================================
-           SECTION SYSTEM
-           ========================================================= */
+    border-radius: 50%;
 
-        section {
-            padding: 120px 0;
-            position: relative;
-        }
+    background: var(--amber);
 
-        .section-header {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
+    box-shadow:
+        0 0 15px
+        rgba(var(--amber-rgb), .8);
+}
 
-            gap: 30px;
+.logo-orbit::before {
+    top: 22px;
+    left: 50%;
+}
 
-            margin-bottom: 40px;
-        }
+.logo-orbit::after {
+    bottom: 50px;
+    right: 25px;
 
-        .section-kicker {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: .16em;
-            text-transform: uppercase;
+    background: var(--blue);
 
-            color: var(--amber);
+    box-shadow:
+        0 0 15px
+        rgba(var(--blue-rgb), .8);
+}
 
-            margin-bottom: 9px;
-        }
+/* second ring */
 
-        .section-title {
-            font-family: var(--display);
+.logo-orbit.two {
+    width: 320px;
+    height: 320px;
 
-            font-size: clamp(2.3rem, 5vw, 4rem);
-            line-height: 1;
+    border-style: dashed;
 
-            letter-spacing: -.055em;
-        }
+    opacity: .55;
 
-        .section-description {
-            max-width: 450px;
+    animation:
+        orbitSpinReverse 28s linear infinite;
+}
 
-            color: var(--muted);
-            font-size: 14px;
-        }
+/* logo itself */
 
+.showcase-logo {
+    position: relative;
 
-        /* =========================================================
-           STATS
-           ========================================================= */
+    width: 230px;
+    height: 230px;
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4,1fr);
+    object-fit: contain;
 
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
+    z-index: 4;
 
-        .stat {
-            padding: 35px 20px;
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(var(--amber-rgb), .2)
+        )
+        drop-shadow(
+            0 0 55px
+            rgba(var(--amber-rgb), .22)
+        );
 
-            position: relative;
-        }
+    animation:
+        logoFloat 5s ease-in-out infinite;
 
-        .stat:not(:last-child)::after {
-            content: "";
+    transition:
+        filter .5s,
+        transform .5s var(--ease);
+}
 
-            position: absolute;
+.logo-showcase:hover .showcase-logo {
+    filter:
+        drop-shadow(
+            0 0 18px
+            rgba(var(--amber-rgb), .45)
+        )
+        drop-shadow(
+            0 0 80px
+            rgba(var(--amber-rgb), .3)
+        );
+}
 
-            top: 25%;
-            right: 0;
+@keyframes logoFloat {
+    0%,100% {
+        transform: translateY(0) scale(1);
+    }
 
-            height: 50%;
+    50% {
+        transform: translateY(-12px) scale(1.025);
+    }
+}
 
-            width: 1px;
+@keyframes logoPulse {
+    0%,100% {
+        transform: scale(.95);
+        opacity: .6;
+    }
 
-            background: var(--border);
-        }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
 
-        .stat-number {
-            font-family: var(--display);
+@keyframes orbitSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            font-size: 40px;
-            font-weight: 700;
+@keyframes orbitSpinReverse {
+    to {
+        transform: rotate(-360deg);
+    }
+}
 
-            letter-spacing: -.05em;
-        }
+/* scan line */
 
-        .stat-label {
-            margin-top: 4px;
+.logo-scan {
+    position: absolute;
 
-            color: var(--muted);
-            font-size: 12px;
-        }
+    width: 300px;
+    height: 1px;
 
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--amber),
+            transparent
+        );
 
-        /* =========================================================
-           BENTO
-           ========================================================= */
+    opacity: .5;
 
-        .bento {
-            display: grid;
+    z-index: 3;
 
-            grid-template-columns:
-                repeat(12,1fr);
+    animation:
+        scanLogo 3.5s ease-in-out infinite;
+}
 
-            gap: 16px;
-        }
+@keyframes scanLogo {
+    0%,100% {
+        transform: translateY(-130px);
+        opacity: 0;
+    }
 
-        .card {
-            position: relative;
+    20% {
+        opacity: .7;
+    }
 
-            overflow: hidden;
+    50% {
+        transform: translateY(130px);
+        opacity: .35;
+    }
 
-            padding: 28px;
+    80% {
+        opacity: 0;
+    }
+}
 
-            border:
-                1px solid var(--border);
+/* decorative crosshair */
 
-            border-radius: var(--radius-md);
+.logo-crosshair {
+    position: absolute;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.035),
-                    rgba(255,255,255,.012)
-                ),
-                var(--panel);
+    width: 460px;
+    height: 460px;
 
-            backdrop-filter: blur(18px);
+    opacity: .35;
+}
 
-            transition:
-                transform .35s ease,
-                border-color .35s,
-                box-shadow .35s;
-        }
+.logo-crosshair::before,
+.logo-crosshair::after {
+    content: "";
 
-        .card::before {
-            content: "";
+    position: absolute;
 
-            position: absolute;
-            inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent
+        );
+}
 
-            background:
-                radial-gradient(
-                    400px circle at
-                    var(--mx,50%)
-                    var(--my,50%),
-                    rgba(var(--amber-rgb),.12),
-                    transparent 45%
-                );
+.logo-crosshair::before {
+    width: 100%;
+    height: 1px;
 
-            opacity: 0;
+    left: 0;
+    top: 50%;
+}
 
-            transition: opacity .4s;
+.logo-crosshair::after {
+    height: 100%;
+    width: 1px;
 
-            pointer-events: none;
-        }
+    left: 50%;
+    top: 0;
 
-        .card:hover::before {
-            opacity: 1;
-        }
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent
+        );
+}
 
-        .card:hover {
-            border-color:
-                rgba(var(--amber-rgb),.25);
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
 
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.22);
-        }
+.hero-content {
+    position: relative;
+    z-index: 10;
 
-        .card.large {
-            grid-column: span 7;
-        }
+    width: 58%;
+}
 
-        .card.medium {
-            grid-column: span 5;
-        }
+.hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
 
-        .card.full {
-            grid-column: span 12;
-        }
+    padding: 8px 14px;
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
+    border: 1px solid var(--border);
 
-            display: grid;
-            place-items: center;
+    border-radius: var(--pill);
 
-            border-radius: 14px;
+    background: var(--surface);
 
-            background:
-                rgba(var(--amber-rgb),.08);
+    color: var(--muted);
 
-            color: var(--amber);
+    font: 11px var(--mono);
 
-            margin-bottom: 22px;
-        }
+    letter-spacing: .12em;
+    text-transform: uppercase;
 
-        .card h3 {
-            font-family: var(--display);
+    backdrop-filter: blur(12px);
 
-            font-size: 25px;
+    margin-bottom: 25px;
 
-            margin-bottom: 10px;
-        }
+    animation: fadeUp .8s var(--ease) both;
+}
 
-        .card p {
-            color: var(--muted);
+.status-dot {
+    width: 7px;
+    height: 7px;
 
-            font-size: 14px;
-        }
+    border-radius: 50%;
 
-        .tech-list {
-            display: flex;
-            flex-wrap: wrap;
+    background: var(--green);
 
-            gap: 8px;
+    box-shadow:
+        0 0 0 0 rgba(72,226,139,.5);
 
-            margin-top: 20px;
-        }
+    animation:
+        statusPulse 2s infinite;
+}
 
-        .tech {
-            padding: 7px 10px;
+@keyframes statusPulse {
+    70% {
+        box-shadow:
+            0 0 0 8px rgba(72,226,139,0);
+    }
+}
 
-            border: 1px solid var(--border);
+.hero h1 {
+    font-family: var(--display);
 
-            border-radius: 8px;
+    font-size: clamp(4rem, 8vw, 7.5rem);
 
-            font-family: var(--mono);
-            font-size: 10px;
+    line-height: .9;
 
-            color: var(--muted);
-        }
+    letter-spacing: -.065em;
 
+    margin-bottom: 20px;
 
-        /* =========================================================
-           SERVICES
-           ========================================================= */
+    animation:
+        titleIn 1s var(--ease) .15s both;
+}
 
-        .services {
-            display: grid;
+.hero h1 span {
+    color: var(--amber);
 
-            grid-template-columns:
-                repeat(3,1fr);
+    text-shadow:
+        0 0 40px
+        rgba(var(--amber-rgb), .15);
+}
 
-            gap: 16px;
-        }
+@keyframes titleIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+        filter: blur(12px);
+    }
 
-        .service {
-            min-height: 300px;
+    to {
+        opacity: 1;
+        transform: none;
+        filter: blur(0);
+    }
+}
 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+.hero-subtitle {
+    min-height: 34px;
 
-            padding: 28px;
+    color: var(--muted);
 
-            border:
-                1px solid var(--border);
+    font: 16px var(--mono);
 
-            border-radius: var(--radius-lg);
+    margin-bottom: 35px;
 
-            background: var(--panel);
+    animation:
+        fadeUp .9s var(--ease) .45s both;
+}
 
-            transition:
-                transform .45s var(--elastic),
-                border-color .35s;
-        }
+.type-cursor {
+    display: inline-block;
 
-        .service:hover {
-            transform: translateY(-8px);
-            border-color:
-                rgba(var(--amber-rgb),.3);
-        }
+    width: 8px;
+    height: 18px;
 
-        .service-number {
-            font-family: var(--mono);
-            font-size: 10px;
+    margin-left: 5px;
 
-            color: var(--muted-2);
-        }
+    background: var(--amber);
 
-        .service-icon {
-            font-size: 25px;
-            color: var(--amber);
+    vertical-align: middle;
 
-            margin: 25px 0;
-        }
+    animation: blink 1s infinite;
+}
 
-        .service h3 {
-            font-family: var(--display);
-            font-size: 23px;
-        }
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
 
-        .service p {
-            color: var(--muted);
-            font-size: 13px;
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
 
-            margin-top: 10px;
-        }
+    gap: 12px;
 
+    animation:
+        fadeUp .9s var(--ease) .65s both;
+}
 
-        /* =========================================================
-           GALLERY
-           ========================================================= */
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
-        .gallery-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+.btn {
+    min-height: 52px;
 
-            gap: 15px;
+    padding: 0 23px;
 
-            margin-bottom: 25px;
-        }
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 
-        .gallery-status {
-            font-family: var(--mono);
-            font-size: 11px;
+    border-radius: var(--pill);
 
-            color: var(--muted);
-        }
+    text-decoration: none;
 
-        .gallery-status span {
-            color: var(--amber);
-        }
+    font-size: 14px;
+    font-weight: 700;
 
-        .gallery-search {
-            width: 230px;
+    border: 1px solid transparent;
 
-            display: flex;
-            align-items: center;
-            gap: 9px;
+    transition:
+        transform .35s var(--ease),
+        box-shadow .35s,
+        background .35s,
+        border .35s;
+}
 
-            padding: 10px 13px;
+.btn:hover {
+    transform: translateY(-3px);
+}
 
-            border:
-                1px solid var(--border);
+.btn-primary {
+    color: #171006;
 
-            background: var(--panel);
+    background:
+        linear-gradient(
+            135deg,
+            var(--amber),
+            var(--amber-light)
+        );
 
-            border-radius: 999px;
-        }
+    box-shadow:
+        0 12px 35px
+        rgba(var(--amber-rgb), .2);
+}
 
-        .gallery-search i {
-            color: var(--muted);
-            font-size: 12px;
-        }
+.btn-primary:hover {
+    box-shadow:
+        0 18px 50px
+        rgba(var(--amber-rgb), .3);
+}
 
-        .gallery-search input {
-            width: 100%;
+.btn-secondary {
+    color: var(--text);
 
-            border: none;
-            outline: none;
+    background: var(--surface);
 
-            background: transparent;
+    border-color: var(--border);
+}
 
-            color: var(--text);
+.btn-secondary:hover {
+    border-color:
+        rgba(var(--amber-rgb), .45);
 
-            font-size: 12px;
-        }
+    background:
+        rgba(var(--amber-rgb), .07);
+}
 
-        .gallery-grid {
-            display: grid;
+/* =========================================================
+   SECTION
+   ========================================================= */
 
-            grid-template-columns:
-                repeat(3,1fr);
+section {
+    position: relative;
 
-            gap: 15px;
-        }
+    padding: 90px 0;
+}
 
-        .gfx-item {
-            position: relative;
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 
-            aspect-ratio: 16/10;
+    gap: 30px;
 
-            overflow: hidden;
+    margin-bottom: 35px;
+}
 
-            border:
-                1px solid var(--border);
+.section-label {
+    font: 11px var(--mono);
 
-            border-radius: var(--radius-md);
+    letter-spacing: .2em;
 
-            background: var(--panel);
+    color: var(--amber);
 
-            isolation: isolate;
+    text-transform: uppercase;
 
-            cursor: pointer;
+    margin-bottom: 8px;
+}
 
-            animation:
-                galleryIn .7s var(--ease) both;
-        }
+.section-title {
+    font: 700 clamp(2rem, 5vw, 3.4rem) var(--display);
 
-        @keyframes galleryIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(.97);
-            }
+    letter-spacing: -.045em;
+}
 
-            to {
-                opacity: 1;
-                transform: none;
-            }
-        }
+.section-description {
+    color: var(--muted);
 
-        .gfx-item img {
-            width: 100%;
-            height: 100%;
+    max-width: 500px;
 
-            object-fit: cover;
+    font-size: 14px;
+}
 
-            display: block;
+/* =========================================================
+   STATS
+   ========================================================= */
 
-            transition:
-                transform .8s var(--ease),
-                filter .5s;
-        }
+.stats {
+    display: grid;
 
-        .gfx-item:hover img {
-            transform: scale(1.07);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-            filter:
-                brightness(.72)
-                saturate(1.08);
-        }
+    gap: 14px;
 
-        .gfx-overlay {
-            position: absolute;
-            inset: 0;
+    margin-top: 50px;
+}
 
-            display: flex;
-            align-items: flex-end;
+.stat {
+    padding: 24px;
 
-            padding: 18px;
+    border:
+        1px solid var(--border);
 
-            background:
-                linear-gradient(
-                    transparent 35%,
-                    rgba(0,0,0,.8)
-                );
+    background:
+        linear-gradient(
+            145deg,
+            var(--surface),
+            rgba(255,255,255,.015)
+        );
 
-            opacity: 0;
+    border-radius: var(--radius-md);
 
-            transition: opacity .4s;
-        }
+    backdrop-filter: blur(15px);
 
-        .gfx-item:hover .gfx-overlay {
-            opacity: 1;
-        }
+    transition:
+        transform .4s var(--ease),
+        border .3s;
+}
 
-        .gfx-name {
-            font-family: var(--mono);
-            font-size: 11px;
-        }
+.stat:hover {
+    transform: translateY(-5px);
 
-        .gfx-open {
-            margin-left: auto;
+    border-color:
+        rgba(var(--amber-rgb), .3);
+}
 
-            width: 36px;
-            height: 36px;
+.stat-number {
+    font: 700 27px var(--display);
 
-            display: grid;
-            place-items: center;
+    color: var(--text);
+}
 
-            border-radius: 50%;
+.stat-label {
+    margin-top: 5px;
 
-            background: rgba(255,255,255,.12);
+    font-size: 12px;
 
-            backdrop-filter: blur(10px);
-        }
+    color: var(--muted);
+}
 
-        .gallery-empty {
-            grid-column: 1/-1;
+/* =========================================================
+   SKILLS
+   ========================================================= */
 
-            padding: 80px 20px;
+.skills-grid {
+    display: grid;
 
-            text-align: center;
+    grid-template-columns:
+        repeat(3, 1fr);
 
-            border:
-                1px dashed var(--border);
+    gap: 16px;
+}
 
-            border-radius: var(--radius-lg);
+.skill-card {
+    position: relative;
 
-            color: var(--muted);
-        }
+    overflow: hidden;
 
-        .gallery-loading {
-            grid-column: 1/-1;
+    min-height: 190px;
 
-            min-height: 280px;
+    padding: 27px;
 
-            display: grid;
-            place-items: center;
+    border:
+        1px solid var(--border);
 
-            color: var(--muted);
+    border-radius: var(--radius-lg);
 
-            font-family: var(--mono);
-            font-size: 11px;
-        }
+    background: var(--surface);
 
-        .loading-spinner {
-            width: 25px;
-            height: 25px;
+    backdrop-filter: blur(15px);
 
-            border-radius: 50%;
+    transition:
+        transform .4s var(--ease),
+        border .3s,
+        box-shadow .4s;
+}
 
-            border:
-                2px solid var(--border);
+.skill-card::after {
+    content: "";
 
-            border-top-color: var(--amber);
+    position: absolute;
 
-            animation: spin .8s linear infinite;
+    width: 160px;
+    height: 160px;
 
-            margin: auto auto 12px;
-        }
+    right: -80px;
+    bottom: -80px;
 
+    border-radius: 50%;
 
-        /* =========================================================
-           TIMELINE
-           ========================================================= */
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .14),
+            transparent 70%
+        );
 
-        .timeline {
-            position: relative;
+    transition: transform .5s var(--ease);
+}
 
-            max-width: 850px;
+.skill-card:hover {
+    transform: translateY(-7px);
 
-            margin: auto;
-        }
+    border-color:
+        rgba(var(--amber-rgb), .3);
 
-        .timeline::before {
-            content: "";
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.2);
+}
 
-            position: absolute;
+.skill-card:hover::after {
+    transform: scale(2);
+}
 
-            left: 17px;
-            top: 0;
-            bottom: 0;
+.skill-icon {
+    width: 45px;
+    height: 45px;
 
-            width: 1px;
+    display: grid;
+    place-items: center;
 
-            background:
-                linear-gradient(
-                    var(--amber),
-                    var(--border),
-                    transparent
-                );
-        }
+    border-radius: 14px;
 
-        .timeline-item {
-            position: relative;
+    background:
+        rgba(var(--amber-rgb), .1);
 
-            padding-left: 60px;
+    color: var(--amber);
 
-            margin-bottom: 50px;
-        }
+    font-size: 18px;
 
-        .timeline-dot {
-            position: absolute;
+    margin-bottom: 20px;
+}
 
-            left: 9px;
-            top: 3px;
+.skill-card h3 {
+    font: 700 19px var(--display);
 
-            width: 17px;
-            height: 17px;
+    margin-bottom: 7px;
+}
 
-            border-radius: 50%;
+.skill-card p {
+    color: var(--muted);
 
-            background: var(--bg);
+    font-size: 13px;
+}
 
-            border:
-                2px solid var(--amber);
+/* =========================================================
+   GALLERY
+   ========================================================= */
 
-            box-shadow:
-                0 0 20px
-                rgba(var(--amber-rgb),.35);
-        }
+.gallery-toolbar {
+    display: flex;
 
-        .timeline-date {
-            font-family: var(--mono);
+    justify-content: space-between;
+    align-items: center;
 
-            font-size: 10px;
-            color: var(--amber);
+    gap: 15px;
 
-            margin-bottom: 7px;
-        }
+    margin-bottom: 25px;
 
-        .timeline h3 {
-            font-family: var(--display);
-            font-size: 22px;
-        }
+    padding: 14px 17px;
 
-        .timeline p {
-            color: var(--muted);
-            font-size: 13px;
-            margin-top: 5px;
-        }
+    border:
+        1px solid var(--border);
 
+    background: var(--surface);
 
-        /* =========================================================
-           DISCORD CONTACT
-           ========================================================= */
+    border-radius: var(--radius-md);
 
-        .contact {
-            position: relative;
+    backdrop-filter: blur(15px);
+}
 
-            overflow: hidden;
+.gallery-count {
+    color: var(--muted);
 
-            padding: 55px;
+    font: 11px var(--mono);
 
-            border:
-                1px solid
-                rgba(var(--amber-rgb),.2);
+    letter-spacing: .08em;
+}
 
-            border-radius: var(--radius-xl);
+.gallery-count strong {
+    color: var(--text);
+}
 
-            background:
-                radial-gradient(
-                    circle at 85% 20%,
-                    rgba(var(--amber-rgb),.13),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 15% 100%,
-                    rgba(var(--cyan-rgb),.07),
-                    transparent 35%
-                ),
-                var(--panel);
+.gallery-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-            box-shadow:
-                var(--shadow);
-        }
+    color: var(--muted);
 
-        .contact::before {
-            content: "";
+    font-size: 12px;
+}
 
-            position: absolute;
-            inset: 0;
+.gallery-status i {
+    color: var(--green);
+}
 
-            background:
-                linear-gradient(
-                    110deg,
-                    transparent 20%,
-                    rgba(255,255,255,.035),
-                    transparent 80%
-                );
+/* masonry */
 
-            transform:
-                translateX(-100%);
+.gallery {
+    columns: 3 280px;
 
-            animation:
-                contactShine 6s ease-in-out infinite;
-        }
+    column-gap: 16px;
+}
 
-        @keyframes contactShine {
-            50%,100% {
-                transform: translateX(100%);
-            }
-        }
+.gallery-item {
+    position: relative;
 
-        .contact-content {
-            position: relative;
-            z-index: 2;
+    display: inline-block;
 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    width: 100%;
 
-            gap: 30px;
-        }
+    margin-bottom: 16px;
 
-        .contact h2 {
-            font-family: var(--display);
+    break-inside: avoid;
 
-            font-size: clamp(2.2rem,5vw,4rem);
+    overflow: hidden;
 
-            line-height: .95;
+    border-radius: var(--radius-lg);
 
-            letter-spacing: -.055em;
-        }
+    border:
+        1px solid var(--border);
 
-        .contact p {
-            color: var(--muted);
+    background: var(--surface);
 
-            max-width: 500px;
+    cursor: pointer;
 
-            margin-top: 14px;
-        }
+    opacity: 0;
+    transform: translateY(20px);
 
-        .discord-copy {
-            display: flex;
-            align-items: center;
+    animation:
+        galleryIn .7s var(--ease) forwards;
 
-            border:
-                1px solid var(--border);
+    transition:
+        transform .45s var(--ease),
+        border .3s,
+        box-shadow .4s;
+}
 
-            background:
-                rgba(0,0,0,.2);
+.gallery-item:hover {
+    transform:
+        translateY(-7px)
+        scale(1.008);
 
-            border-radius: 999px;
+    border-color:
+        rgba(var(--amber-rgb), .35);
 
-            overflow: hidden;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.3);
+}
 
-            flex-shrink: 0;
-        }
+.gallery-item img {
+    width: 100%;
+    height: auto;
 
-        .discord-name {
-            padding: 13px 18px;
+    display: block;
 
-            font-family: var(--mono);
-            font-size: 12px;
-        }
+    transition:
+        transform .7s var(--ease),
+        filter .5s;
+}
 
-        .copy-discord {
-            width: 48px;
-            height: 48px;
+.gallery-item:hover img {
+    transform: scale(1.035);
 
-            border: none;
-            border-left: 1px solid var(--border);
+    filter:
+        brightness(1.07)
+        saturate(1.08);
+}
 
-            background:
-                rgba(var(--amber-rgb),.1);
+/* image overlay */
 
-            display: grid;
-            place-items: center;
+.gallery-overlay {
+    position: absolute;
 
-            transition:
-                background .3s,
-                color .3s;
-        }
+    inset: 0;
 
-        .copy-discord:hover {
-            background: var(--amber);
-            color: #181006;
-        }
+    display: flex;
 
-        .copy-feedback {
-            position: fixed;
+    align-items: end;
 
-            left: 50%;
-            bottom: 28px;
+    padding: 18px;
 
-            transform:
-                translate(-50%, 30px);
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.78),
+            transparent 55%
+        );
 
-            opacity: 0;
+    opacity: 0;
 
-            padding: 11px 16px;
+    transition: opacity .4s;
+}
 
-            border:
-                1px solid var(--border);
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
 
-            border-radius: 999px;
+.gallery-name {
+    display: flex;
 
-            background:
-                rgba(10,13,17,.88);
+    align-items: center;
 
-            backdrop-filter: blur(20px);
+    gap: 9px;
 
-            font-family: var(--mono);
-            font-size: 11px;
+    color: white;
 
-            z-index: 10000;
+    font: 600 12px var(--mono);
 
-            transition:
-                opacity .4s,
-                transform .4s var(--elastic);
-        }
+    text-shadow:
+        0 2px 10px black;
+}
 
-        .copy-feedback.show {
-            opacity: 1;
-            transform: translate(-50%,0);
-        }
+.gallery-name i {
+    color: var(--amber);
+}
 
+.gallery-loading {
+    min-height: 240px;
 
-        /* =========================================================
-           FOOTER
-           ========================================================= */
+    display: flex;
 
-        footer {
-            padding: 40px 0;
+    align-items: center;
+    justify-content: center;
 
-            border-top:
-                1px solid var(--border);
+    flex-direction: column;
 
-            color: var(--muted);
+    gap: 15px;
 
-            font-size: 11px;
-        }
+    border:
+        1px dashed var(--border);
 
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    border-radius: var(--radius-lg);
 
-        .footer-code {
-            font-family: var(--mono);
-        }
+    color: var(--muted);
 
-        .footer-code span {
-            color: var(--amber);
-        }
+    font-size: 13px;
+}
 
+.gallery-loading i {
+    font-size: 24px;
 
-        /* =========================================================
-           LIGHTBOX
-           ========================================================= */
+    color: var(--amber);
 
-        #lightbox {
-            position: fixed;
-            inset: 0;
+    animation: spin 1s linear infinite;
+}
 
-            z-index: 20000;
+.gallery-empty {
+    grid-column: 1 / -1;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    padding: 50px;
 
-            padding: 30px;
+    text-align: center;
 
-            background:
-                rgba(2,4,6,.88);
+    color: var(--muted);
+}
 
-            backdrop-filter: blur(25px);
+@keyframes galleryIn {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
 
-            opacity: 0;
-            visibility: hidden;
+/* =========================================================
+   DISCORD
+   ========================================================= */
 
-            transition:
-                opacity .4s,
-                visibility .4s;
-        }
+.contact-card {
+    position: relative;
 
-        #lightbox.open {
-            opacity: 1;
-            visibility: visible;
-        }
+    overflow: hidden;
 
-        .lightbox-inner {
-            width: min(1100px,100%);
+    padding: 45px;
 
-            position: relative;
+    border:
+        1px solid var(--border);
 
-            transform:
-                translateY(25px)
-                scale(.96);
+    border-radius: var(--radius-xl);
 
-            transition:
-                transform .55s var(--ease);
-        }
+    background:
+        linear-gradient(
+            135deg,
+            var(--surface),
+            rgba(var(--amber-rgb), .045)
+        );
 
-        #lightbox.open .lightbox-inner {
-            transform: none;
-        }
+    backdrop-filter: blur(20px);
 
-        #lightbox-image {
-            width: 100%;
-            max-height: 80vh;
+    display: flex;
 
-            object-fit: contain;
+    justify-content: space-between;
+    align-items: center;
 
-            display: block;
+    gap: 30px;
+}
 
-            border-radius: 18px;
+.contact-card::before {
+    content: "";
 
-            box-shadow:
-                0 40px 100px rgba(0,0,0,.65);
-        }
+    position: absolute;
 
-        .lightbox-top {
-            display: flex;
-            justify-content: space-between;
+    width: 350px;
+    height: 350px;
 
-            margin-bottom: 12px;
+    right: -180px;
+    top: -180px;
 
-            color: var(--muted);
+    border-radius: 50%;
 
-            font-family: var(--mono);
-            font-size: 11px;
-        }
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .16),
+            transparent 70%
+        );
 
-        .lightbox-close {
-            position: absolute;
+    pointer-events: none;
+}
 
-            top: -55px;
-            right: 0;
+.contact-card h2 {
+    font: 700 clamp(2rem,5vw,3.5rem) var(--display);
 
-            width: 40px;
-            height: 40px;
+    letter-spacing: -.05em;
 
-            display: grid;
-            place-items: center;
+    margin-bottom: 10px;
+}
 
-            border:
-                1px solid var(--border);
+.contact-card p {
+    color: var(--muted);
 
-            border-radius: 50%;
+    font-size: 14px;
+}
 
-            background: var(--panel);
-        }
+/* Discord copy */
 
+.discord-copy {
+    position: relative;
 
-        /* =========================================================
-           REVEAL
-           ========================================================= */
+    flex-shrink: 0;
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(35px);
+    min-height: 56px;
 
-            transition:
-                opacity .9s var(--ease),
-                transform .9s var(--ease);
-        }
+    padding: 0 18px;
 
-        .reveal.visible {
-            opacity: 1;
-            transform: none;
-        }
+    border:
+        1px solid rgba(88,101,242,.35);
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+    background:
+        rgba(88,101,242,.1);
 
-            to {
-                opacity: 1;
-                transform: none;
-            }
-        }
+    color: var(--text);
 
+    border-radius: 15px;
 
-        /* =========================================================
-           MOBILE
-           ========================================================= */
+    display: flex;
+    align-items: center;
 
-        @media(max-width:900px) {
+    gap: 13px;
 
-            .container {
-                width: min(100% - 28px, 700px);
-            }
+    cursor: pointer;
 
-            .nav-links {
-                display: none;
-            }
+    transition:
+        transform .35s var(--ease),
+        background .3s,
+        border .3s;
+}
 
-            #mobile-menu {
-                display: grid;
-            }
+.discord-copy:hover {
+    transform: translateY(-3px);
 
-            .hero {
-                min-height: auto;
-                padding: 90px 0 70px;
-            }
+    background:
+        rgba(88,101,242,.18);
 
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
+    border-color:
+        rgba(88,101,242,.6);
+}
 
-            .hero-visual {
-                min-height: 380px;
-            }
+.discord-icon {
+    color: #7289da;
 
-            .hero h1 {
-                font-size: clamp(4rem,18vw,6.5rem);
-            }
+    font-size: 21px;
+}
 
-            .orb {
-                width: 290px;
-                height: 290px;
-            }
+.discord-username {
+    font: 600 13px var(--mono);
+}
 
-            .orbit {
-                width: 350px;
-            }
+.copy-icon {
+    margin-left: 10px;
 
-            .stats {
-                grid-template-columns: repeat(2,1fr);
-            }
+    color: var(--muted);
 
-            .stat:nth-child(2)::after {
-                display: none;
-            }
+    transition:
+        color .3s,
+        transform .3s;
+}
 
-            .stat:nth-child(1),
-            .stat:nth-child(2) {
-                border-bottom: 1px solid var(--border);
-            }
+.discord-copy:hover .copy-icon {
+    color: var(--text);
 
-            .bento {
-                grid-template-columns: 1fr;
-            }
+    transform: translateX(2px);
+}
 
-            .card.large,
-            .card.medium,
-            .card.full {
-                grid-column: span 1;
-            }
+.copy-tooltip {
+    position: absolute;
 
-            .services {
-                grid-template-columns: 1fr;
-            }
+    left: 50%;
+    bottom: calc(100% + 10px);
 
-            .gallery-grid {
-                grid-template-columns: repeat(2,1fr);
-            }
+    transform:
+        translateX(-50%)
+        translateY(5px);
 
-            .contact-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+    padding: 7px 11px;
 
-            .contact {
-                padding: 35px 25px;
-            }
+    background: #11161c;
 
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+    color: white;
 
-        @media(max-width:550px) {
+    border-radius: 8px;
 
-            section {
-                padding: 85px 0;
-            }
+    font-size: 11px;
 
-            .hero h1 {
-                font-size: 19vw;
-            }
+    white-space: nowrap;
 
-            .hero-description {
-                font-size: 15px;
-            }
+    opacity: 0;
 
-            .hero-actions {
-                flex-direction: column;
-            }
+    pointer-events: none;
 
-            .btn {
-                width: 100%;
-            }
+    transition:
+        opacity .25s,
+        transform .25s;
+}
 
-            .gallery-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
+.discord-copy.copied .copy-tooltip {
+    opacity: 1;
 
-            .gallery-search {
-                width: 100%;
-            }
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
+footer {
+    padding: 50px 0 35px;
 
-            .stat {
-                padding: 25px 12px;
-            }
+    border-top:
+        1px solid var(--border);
 
-            .stat-number {
-                font-size: 30px;
-            }
+    color: var(--muted);
+}
 
-            .discord-copy {
-                width: 100%;
-            }
+.footer-inner {
+    display: flex;
 
-            .discord-name {
-                flex: 1;
-            }
+    justify-content: space-between;
 
-            .footer-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-        }
+    align-items: center;
 
+    gap: 20px;
+}
 
-        /* =========================================================
-           REDUCED MOTION
-           ========================================================= */
+.footer-mark {
+    font: 700 16px var(--display);
 
-        @media(prefers-reduced-motion:reduce) {
+    color: var(--text);
+}
 
-            *,
-            *::before,
-            *::after {
-                animation-duration: .001ms !important;
-                animation-iteration-count: 1 !important;
-                scroll-behavior: auto !important;
-                transition-duration: .001ms !important;
-            }
-        }
+.footer-meta {
+    font: 11px var(--mono);
 
-    </style>
+    opacity: .7;
+}
+
+/* =========================================================
+   LIGHT EFFECTS
+   ========================================================= */
+
+.light-orb {
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: -3;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(var(--amber-rgb), .045),
+            transparent 70%
+        );
+
+    filter: blur(15px);
+
+    transition:
+        transform .15s linear;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.image-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background:
+        rgba(0,0,0,.88);
+
+    backdrop-filter: blur(18px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .4s,
+        visibility .4s;
+}
+
+.image-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-image {
+    max-width: min(1200px, 95vw);
+    max-height: 85vh;
+
+    object-fit: contain;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.7);
+
+    transform: scale(.92);
+
+    transition:
+        transform .5s var(--ease);
+}
+
+.image-modal.open .modal-image {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: fixed;
+
+    right: 25px;
+    top: 25px;
+
+    width: 48px;
+    height: 48px;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform: translateY(25px);
+
+    transition:
+        opacity .8s var(--ease),
+        transform .8s var(--ease);
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform: none;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .hero {
+        min-height: auto;
+
+        padding-top: 70px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .logo-showcase {
+        position: relative;
+
+        right: auto;
+        top: auto;
+
+        width: 100%;
+        height: 360px;
+
+        transform: none;
+
+        margin-top: 40px;
+
+        order: 2;
+    }
+
+    .hero {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-content {
+        order: 1;
+    }
+
+    .hero-light {
+        right: -300px;
+    }
+
+    .stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .skills-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .contact-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        width: min(
+            var(--container),
+            calc(100% - 28px)
+        );
+    }
+
+    .nav {
+        min-height: 70px;
+    }
+
+    .nav-logo img {
+        height: 50px;
+    }
+
+    .nav-actions {
+        gap: 7px;
+    }
+
+    .ui-button {
+        min-height: 38px;
+
+        padding: 0 11px;
+
+        font-size: 12px;
+    }
+
+    .hero {
+        padding:
+            55px 0 60px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(3.5rem, 19vw, 5.2rem);
+    }
+
+    .hero-subtitle {
+        font-size: 12px;
+    }
+
+    .logo-showcase {
+        height: 300px;
+    }
+
+    .showcase-logo {
+        width: 165px;
+        height: 165px;
+    }
+
+    .logo-orbit {
+        width: 270px;
+        height: 270px;
+    }
+
+    .logo-orbit.two {
+        width: 220px;
+        height: 220px;
+    }
+
+    .logo-crosshair {
+        width: 300px;
+        height: 300px;
+    }
+
+    .stats,
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 65px 0;
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-description {
+        margin-top: 12px;
+    }
+
+    .gallery {
+        columns: 1;
+    }
+
+    .contact-card {
+        padding: 28px;
+    }
+
+    .discord-copy {
+        width: 100%;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <!-- =========================================================
-         PRELOADER
-         ========================================================= -->
+<!-- =====================================================
+     PRELOADER
+     ===================================================== -->
 
-    <div id="preloader">
+<div id="preloader">
 
-        <div style="position:relative;display:grid;place-items:center;">
+    <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+        <div class="loader-ring"></div>
 
-            <div class="loader-ring"></div>
+        <img
+            id="loaderLogo"
+            class="loader-logo"
+            src="dark.png"
+            alt="Falcon">
+    </div>
+
+    <div class="loader-label">
+        FALCON / INITIALIZING
+    </div>
+
+</div>
+
+<div id="scrollProgress"></div>
+
+<div class="ambient-glow"></div>
+<div class="light-orb" id="lightOrb"></div>
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header id="header">
+
+    <div class="container nav">
+
+        <a href="#home" class="nav-logo" aria-label="Falcon Home">
 
             <img
-                class="loader-logo"
-                src="dark1.png"
-                alt="Falcon"
-            >
+                id="navLogo"
+                src="dark.png"
+                alt="Falcon logo">
 
-        </div>
+        </a>
 
-        <div class="loader-label">
-            FALCON // INITIALIZING
-        </div>
+        <div class="nav-actions">
 
-    </div>
-
-
-    <!-- =========================================================
-         VISUAL FX
-         ========================================================= -->
-
-    <div id="scroll-progress"></div>
-
-    <div id="ambient-light"></div>
-
-    <div class="aurora"></div>
-
-    <canvas id="particles"></canvas>
-
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-
-    <div class="hud tl"></div>
-    <div class="hud tr"></div>
-    <div class="hud bl"></div>
-    <div class="hud br"></div>
-
-
-    <!-- =========================================================
-         HEADER
-         ========================================================= -->
-
-    <header id="header">
-
-        <div class="container nav">
-
-            <a href="#home" class="brand">
-
-                <img
-                    src="dark1.png"
-                    alt="Falcon logo"
-                >
-
-                <div class="brand-text">
-                    FALCON<span>.</span>
-                </div>
-
-            </a>
-
-
-            <nav class="nav-links">
-
-                <a
-                    class="nav-link"
-                    href="#about"
-                    data-i18n="nav_about"
-                >
-                    Chi sono
-                </a>
-
-                <a
-                    class="nav-link"
-                    href="#services"
-                    data-i18n="nav_services"
-                >
-                    Servizi
-                </a>
-
-                <a
-                    class="nav-link"
-                    href="#gallery"
-                    data-i18n="nav_gallery"
-                >
-                    Galleria
-                </a>
-
-                <a
-                    class="nav-link"
-                    href="#contact"
-                    data-i18n="nav_contact"
-                >
-                    Contatti
-                </a>
-
-            </nav>
-
-
-            <div class="nav-actions">
-
-                <button
-                    class="icon-btn"
-                    id="languageBtn"
-                    aria-label="Change language"
-                    title="Lingua"
-                >
-                    <span id="languageIcon">IT</span>
-                </button>
-
-                <button
-                    class="icon-btn"
-                    id="themeBtn"
-                    aria-label="Change theme"
-                    title="Tema"
-                >
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-
-                <button
-                    class="icon-btn"
-                    id="mobile-menu"
-                    aria-label="Menu"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <main id="home">
-
-
-        <!-- =====================================================
-             HERO
-             ===================================================== -->
-
-        <section class="hero">
-
-            <div class="container hero-content">
-
-                <div class="hero-grid">
-
-                    <div>
-
-                        <div class="eyebrow">
-
-                            <span class="eyebrow-dot"></span>
-
-                            <span data-i18n="status">
-                                SISTEMA ONLINE // DISPONIBILE
-                            </span>
-
-                        </div>
-
-
-                        <h1>
-
-                            David
-
-                            <br>
-
-                            <span class="outline">
-                                creates
-                            </span>
-
-                            <br>
-
-                            <span class="accent">
-                                things.
-                            </span>
-
-                        </h1>
-
-
-                        <p
-                            class="hero-description"
-                            data-i18n="hero_description"
-                        >
-                            Sviluppatore Python, GFX Artist e creative developer.
-                            Trasformo idee in software, visual e sistemi digitali.
-                        </p>
-
-
-                        <div class="hero-actions">
-
-                            <a
-                                href="#gallery"
-                                class="btn btn-primary magnetic"
-                                data-i18n="view_work"
-                            >
-                                <i class="fa-solid fa-arrow-down"></i>
-                                Guarda i lavori
-                            </a>
-
-                            <button
-                                class="btn btn-secondary magnetic"
-                                id="heroDiscord"
-                            >
-                                <i class="fa-brands fa-discord"></i>
-                                <span data-i18n="contact_me">
-                                    Contattami
-                                </span>
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- HERO 3D VISUAL -->
-
-                    <div class="hero-visual">
-
-                        <div class="orbit"></div>
-
-                        <div class="orb">
-
-                            <img
-                                src="dark1.png"
-                                class="orb-logo"
-                                alt="Falcon"
-                            >
-
-                        </div>
-
-
-                        <div class="telemetry">
-
-                            <strong>
-                                FALCON / TELEMETRY
-                            </strong>
-
-                            <div class="telemetry-row">
-                                <span>STATUS</span>
-                                <span class="telemetry-value">ONLINE</span>
-                            </div>
-
-                            <div class="telemetry-row">
-                                <span>CORE</span>
-                                <span class="telemetry-value">PYTHON</span>
-                            </div>
-
-                            <div class="telemetry-row">
-                                <span>VISUAL</span>
-                                <span class="telemetry-value">GFX</span>
-                            </div>
-
-                            <div class="telemetry-row">
-                                <span>MODE</span>
-                                <span class="telemetry-value">CREATE</span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             STATS
-             ===================================================== -->
-
-        <section style="padding-top:20px;padding-bottom:70px;">
-
-            <div class="container">
-
-                <div class="stats reveal">
-
-                    <div class="stat">
-                        <div class="stat-number" data-count="4">0</div>
-                        <div
-                            class="stat-label"
-                            data-i18n="stat_languages"
-                        >
-                            Linguaggi principali
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-number" data-count="10">0</div>
-                        <div
-                            class="stat-label"
-                            data-i18n="stat_projects"
-                        >
-                            Progetti e sistemi
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-number" data-count="100">0</div>
-                        <div
-                            class="stat-label"
-                            data-i18n="stat_creativity"
-                        >
-                            Creatività
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-number">24/7</div>
-                        <div
-                            class="stat-label"
-                            data-i18n="stat_mindset"
-                        >
-                            Curiosità tecnica
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             ABOUT
-             ===================================================== -->
-
-        <section id="about">
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-
-                        <div
-                            class="section-kicker"
-                            data-i18n="about_kicker"
-                        >
-                            01 // PROFILE
-                        </div>
-
-                        <h2
-                            class="section-title"
-                            data-i18n="about_title"
-                        >
-                            Costruire.<br>
-                            Sperimentare.
-                        </h2>
-
-                    </div>
-
-                    <p
-                        class="section-description"
-                        data-i18n="about_description"
-                    >
-                        Un mix tra sviluppo software, automazione,
-                        grafica e sperimentazione tecnica.
-                    </p>
-
-                </div>
-
-
-                <div class="bento">
-
-
-                    <article class="card large tilt reveal">
-
-                        <div class="card-icon">
-                            <i class="fa-solid fa-code"></i>
-                        </div>
-
-                        <h3 data-i18n="dev_title">
-                            Development
-                        </h3>
-
-                        <p data-i18n="dev_text">
-                            Sviluppo applicazioni Python, automazioni,
-                            tool, bot e sistemi interattivi.
-                            Mi interessa soprattutto costruire strumenti
-                            realmente utilizzabili.
-                        </p>
-
-                        <div class="tech-list">
-
-                            <span class="tech">Python</span>
-                            <span class="tech">Lua</span>
-                            <span class="tech">HTML</span>
-                            <span class="tech">CSS</span>
-                            <span class="tech">JavaScript</span>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="card medium tilt reveal">
-
-                        <div class="card-icon">
-                            <i class="fa-solid fa-cube"></i>
-                        </div>
-
-                        <h3 data-i18n="gfx_title">
-                            GFX / Visual
-                        </h3>
-
-                        <p data-i18n="gfx_text">
-                            Visual design, Roblox GFX e composizioni
-                            digitali con particolare attenzione
-                            all'atmosfera.
-                        </p>
-
-                    </article>
-
-
-                    <article class="card medium tilt reveal">
-
-                        <div class="card-icon">
-                            <i class="fa-brands fa-discord"></i>
-                        </div>
-
-                        <h3 data-i18n="discord_title">
-                            Discord
-                        </h3>
-
-                        <p data-i18n="discord_text">
-                            Bot, sistemi di moderazione, utility,
-                            automazioni e strumenti per community.
-                        </p>
-
-                    </article>
-
-
-                    <article class="card large tilt reveal">
-
-                        <div class="card-icon">
-                            <i class="fa-solid fa-terminal"></i>
-                        </div>
-
-                        <h3 data-i18n="mindset_title">
-                            Technical mindset
-                        </h3>
-
-                        <p data-i18n="mindset_text">
-                            Non mi limito a usare gli strumenti:
-                            mi interessa capire come funzionano,
-                            modificarli e costruire soluzioni nuove.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             SERVICES
-             ===================================================== -->
-
-        <section id="services">
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-
-                        <div
-                            class="section-kicker"
-                            data-i18n="services_kicker"
-                        >
-                            02 // CAPABILITIES
-                        </div>
-
-                        <h2
-                            class="section-title"
-                            data-i18n="services_title"
-                        >
-                            Cosa posso<br>
-                            costruire.
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="services">
-
-
-                    <article class="service reveal">
-
-                        <div>
-
-                            <div class="service-number">
-                                SERVICE / 01
-                            </div>
-
-                            <div class="service-icon">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
-
-                            <h3>
-                                Python
-                            </h3>
-
-                            <p data-i18n="service_python">
-                                Script, automazioni, tool desktop,
-                                API e piccoli sistemi software.
-                            </p>
-
-                        </div>
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </article>
-
-
-                    <article class="service reveal">
-
-                        <div>
-
-                            <div class="service-number">
-                                SERVICE / 02
-                            </div>
-
-                            <div class="service-icon">
-                                <i class="fa-solid fa-image"></i>
-                            </div>
-
-                            <h3>
-                                GFX Design
-                            </h3>
-
-                            <p data-i18n="service_gfx">
-                                Roblox GFX, composizioni, thumbnail
-                                e visual digitali.
-                            </p>
-
-                        </div>
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </article>
-
-
-                    <article class="service reveal">
-
-                        <div>
-
-                            <div class="service-number">
-                                SERVICE / 03
-                            </div>
-
-                            <div class="service-icon">
-                                <i class="fa-brands fa-discord"></i>
-                            </div>
-
-                            <h3>
-                                Discord Systems
-                            </h3>
-
-                            <p data-i18n="service_discord">
-                                Bot, utility, moderazione e sistemi
-                                per community.
-                            </p>
-
-                        </div>
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             GALLERY
-             ===================================================== -->
-
-        <section id="gallery">
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-
-                        <div
-                            class="section-kicker"
-                            data-i18n="gallery_kicker"
-                        >
-                            03 // VISUAL ARCHIVE
-                        </div>
-
-                        <h2
-                            class="section-title"
-                            data-i18n="gallery_title"
-                        >
-                            Galleria.
-                        </h2>
-
-                    </div>
-
-                    <p
-                        class="section-description"
-                        data-i18n="gallery_description"
-                    >
-                        I lavori vengono caricati automaticamente
-                        dalla directory del repository.
-                    </p>
-
-                </div>
-
-
-                <div class="gallery-toolbar reveal">
-
-                    <div
-                        class="gallery-status"
-                        id="galleryStatus"
-                    >
-                        SCANSIONE REPOSITORY...
-                    </div>
-
-                    <label class="gallery-search">
-
-                        <i class="fa-solid fa-magnifying-glass"></i>
-
-                        <input
-                            type="search"
-                            id="gallerySearch"
-                            placeholder="Cerca..."
-                            autocomplete="off"
-                        >
-
-                    </label>
-
-                </div>
-
-
-                <div
-                    class="gallery-grid"
-                    id="galleryGrid"
-                >
-
-                    <div class="gallery-loading">
-
-                        <div>
-
-                            <div class="loading-spinner"></div>
-
-                            <div>
-                                Loading visual archive...
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             PROCESS
-             ===================================================== -->
-
-        <section>
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-
-                        <div class="section-kicker">
-                            04 // PROCESS
-                        </div>
-
-                        <h2 class="section-title">
-                            Sempre in<br>
-                            evoluzione.
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timeline">
-
-
-                    <div class="timeline-item reveal">
-
-                        <div class="timeline-dot"></div>
-
-                        <div class="timeline-date">
-                            PHASE / 01
-                        </div>
-
-                        <h3 data-i18n="phase1_title">
-                            Idea
-                        </h3>
-
-                        <p data-i18n="phase1_text">
-                            Capire il problema e immaginare
-                            cosa dovrebbe diventare.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item reveal">
-
-                        <div class="timeline-dot"></div>
-
-                        <div class="timeline-date">
-                            PHASE / 02
-                        </div>
-
-                        <h3 data-i18n="phase2_title">
-                            Build
-                        </h3>
-
-                        <p data-i18n="phase2_text">
-                            Prototipare velocemente e trasformare
-                            l'idea in qualcosa di concreto.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item reveal">
-
-                        <div class="timeline-dot"></div>
-
-                        <div class="timeline-date">
-                            PHASE / 03
-                        </div>
-
-                        <h3 data-i18n="phase3_title">
-                            Refine
-                        </h3>
-
-                        <p data-i18n="phase3_text">
-                            Migliorare performance, estetica,
-                            UX e affidabilità.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item reveal">
-
-                        <div class="timeline-dot"></div>
-
-                        <div class="timeline-date">
-                            PHASE / 04
-                        </div>
-
-                        <h3 data-i18n="phase4_title">
-                            Repeat
-                        </h3>
-
-                        <p data-i18n="phase4_text">
-                            Il progetto non è mai veramente finito:
-                            si evolve.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             CONTACT
-             ===================================================== -->
-
-        <section id="contact">
-
-            <div class="container">
-
-                <div class="contact reveal">
-
-                    <div class="contact-content">
-
-                        <div>
-
-                            <div class="section-kicker">
-                                05 // CONTACT
-                            </div>
-
-                            <h2 data-i18n="contact_title">
-                                Hai un'idea?
-                            </h2>
-
-                            <p data-i18n="contact_text">
-                                Scrivimi su Discord e vediamo
-                                cosa possiamo costruire.
-                            </p>
-
-                        </div>
-
-
-                        <div class="discord-copy">
-
-                            <div class="discord-name">
-                                for_david_k
-                            </div>
-
-                            <button
-                                class="copy-discord"
-                                id="copyDiscord"
-                                aria-label="Copia username Discord"
-                                title="Copia username"
-                            >
-                                <i class="fa-regular fa-copy"></i>
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================================
-         FOOTER
-         ========================================================= -->
-
-    <footer>
-
-        <div class="container footer-inner">
-
-            <div>
-                © <span id="year"></span> David.
-                <span data-i18n="footer">
-                    Built with curiosity.
-                </span>
-            </div>
-
-            <div class="footer-code">
-                FALCON <span>//</span> SYSTEM ONLINE
-            </div>
-
-        </div>
-
-    </footer>
-
-
-    <!-- =========================================================
-         COPY FEEDBACK
-         ========================================================= -->
-
-    <div
-        class="copy-feedback"
-        id="copyFeedback"
-    >
-        <i class="fa-solid fa-check"></i>
-        <span data-i18n="copied">
-            Username copiato
-        </span>
-    </div>
-
-
-    <!-- =========================================================
-         LIGHTBOX
-         ========================================================= -->
-
-    <div id="lightbox">
-
-        <div class="lightbox-inner">
+            <!-- Language -->
 
             <button
-                class="lightbox-close"
-                id="lightboxClose"
-                aria-label="Close"
-            >
-                <i class="fa-solid fa-xmark"></i>
+                class="ui-button"
+                id="languageButton"
+                type="button">
+
+                <img
+                    id="languageFlag"
+                    class="lang-flag"
+                    src="it.png"
+                    alt="Italiano">
+
+                <span id="languageText">
+                    IT
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
             </button>
 
-            <div class="lightbox-top">
+            <!-- Theme -->
 
-                <span id="lightboxName">
-                    GFX
+            <button
+                class="ui-button"
+                id="themeButton"
+                type="button"
+                aria-label="Cambia tema">
+
+                <i
+                    id="themeIcon"
+                    class="fa-solid fa-sun">
+                </i>
+
+                <span id="themeText">
+                    Tema
                 </span>
 
-                <span>
-                    ESC / CLOSE
-                </span>
-
-            </div>
-
-            <img
-                id="lightbox-image"
-                src=""
-                alt=""
-            >
+            </button>
 
         </div>
 
     </div>
 
+</header>
 
-    <script>
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
 
-        /* =========================================================
-           CONFIGURATION
-           ========================================================= */
+<main id="home">
 
-        const CONFIG = {
+<!-- =====================================================
+     HERO
+     ===================================================== -->
 
-            discord: "for_david_k",
+<section class="hero">
 
-            githubAPI:
-                "https://api.github.com/repos/kibrisky1/Falcon/contents/",
+    <div class="hero-light"></div>
 
-            /*
-             * Gallery rule:
-             *
-             * Every image containing "gfx"
-             * OR exactly "bloodwar.png"
-             *
-             * will automatically be displayed.
-             */
+    <div class="container">
 
-            galleryFilter(file) {
+        <div class="hero-content">
+
+            <div class="hero-status">
+
+                <span class="status-dot"></span>
+
+                <span
+                    data-it="SISTEMA ONLINE"
+                    data-en="SYSTEM ONLINE">
+                    SISTEMA ONLINE
+                </span>
+
+            </div>
+
+            <h1>
+                <span>Falcon</span>
+                <br>
+                David.
+            </h1>
+
+            <div class="hero-subtitle">
+
+                <span id="typingText">
+                    Python Developer
+                </span>
+
+                <span class="type-cursor"></span>
+
+            </div>
+
+            <div class="hero-actions">
+
+                <a
+                    href="#gallery"
+                    class="btn btn-primary">
+
+                    <i class="fa-solid fa-images"></i>
+
+                    <span
+                        data-it="Esplora la Galleria"
+                        data-en="Explore Gallery">
+                        Esplora la Galleria
+                    </span>
+
+                </a>
+
+                <a
+                    href="#contact"
+                    class="btn btn-secondary">
+
+                    <i class="fa-brands fa-discord"></i>
+
+                    <span
+                        data-it="Contattami"
+                        data-en="Contact Me">
+                        Contattami
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             LOGO SHOWCASE
+             NOT PART OF THE GALLERY
+             ================================================= -->
+
+        <div class="logo-showcase">
+
+            <div class="logo-crosshair"></div>
+
+            <div class="logo-orbit"></div>
+            <div class="logo-orbit two"></div>
+
+            <div class="logo-scan"></div>
+
+            <img
+                id="heroLogo"
+                class="showcase-logo"
+                src="dark.png"
+                alt="Falcon">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     STATS
+     ===================================================== -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div>
+                <div class="section-label">
+                    01 / PROFILE
+                </div>
+
+                <h2 class="section-title"
+                    data-it="Un laboratorio digitale."
+                    data-en="A digital laboratory.">
+                    Un laboratorio digitale.
+                </h2>
+            </div>
+
+            <p class="section-description"
+               data-it="Codice, design e sperimentazione raccolti in un unico spazio."
+               data-en="Code, design and experimentation collected in one place.">
+                Codice, design e sperimentazione raccolti in un unico spazio.
+            </p>
+
+        </div>
+
+        <div class="stats reveal">
+
+            <div class="stat">
+                <div class="stat-number">Python</div>
+                <div class="stat-label"
+                     data-it="Development"
+                     data-en="Development">
+                    Development
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number">GFX</div>
+                <div class="stat-label"
+                     data-it="Visual Design"
+                     data-en="Visual Design">
+                    Visual Design
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number">Discord</div>
+                <div class="stat-label"
+                     data-it="Bots & Communities"
+                     data-en="Bots & Communities">
+                    Bots & Communities
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label"
+                     data-it="Esperimenti"
+                     data-en="Experiments">
+                    Esperimenti
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     SKILLS
+     ===================================================== -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <div class="section-label">
+                    02 / STACK
+                </div>
+
+                <h2 class="section-title"
+                    data-it="Cosa faccio."
+                    data-en="What I do.">
+                    Cosa faccio.
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="skills-grid">
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-brands fa-python"></i>
+                </div>
+
+                <h3>Python</h3>
+
+                <p
+                    data-it="Automazione, utility, bot e programmi desktop."
+                    data-en="Automation, utilities, bots and desktop applications.">
+                    Automazione, utility, bot e programmi desktop.
+                </p>
+
+            </article>
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+
+                <h3>GFX</h3>
+
+                <p
+                    data-it="Composizioni, artwork e visual design digitali."
+                    data-en="Digital compositions, artwork and visual design.">
+                    Composizioni, artwork e visual design digitali.
+                </p>
+
+            </article>
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-brands fa-discord"></i>
+                </div>
+
+                <h3>Discord</h3>
+
+                <p
+                    data-it="Bot, sistemi di moderazione e gestione community."
+                    data-en="Bots, moderation systems and community management.">
+                    Bot, sistemi di moderazione e gestione community.
+                </p>
+
+            </article>
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+
+                <h3
+                    data-it="Web"
+                    data-en="Web">
+                    Web
+                </h3>
+
+                <p
+                    data-it="Interfacce moderne, responsive e interattive."
+                    data-en="Modern, responsive and interactive interfaces.">
+                    Interfacce moderne, responsive e interattive.
+                </p>
+
+            </article>
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+
+                <h3>Roblox</h3>
+
+                <p
+                    data-it="Scripting, animazioni e progettazione di esperienze."
+                    data-en="Scripting, animation and experience design.">
+                    Scripting, animazioni e progettazione di esperienze.
+                </p>
+
+            </article>
+
+            <article class="skill-card reveal">
+
+                <div class="skill-icon">
+                    <i class="fa-solid fa-terminal"></i>
+                </div>
+
+                <h3
+                    data-it="Sperimentazione"
+                    data-en="Experimentation">
+                    Sperimentazione
+                </h3>
+
+                <p
+                    data-it="Nuove tecnologie, tool e idee fuori dagli schemi."
+                    data-en="New technologies, tools and unconventional ideas.">
+                    Nuove tecnologie, tool e idee fuori dagli schemi.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     GALLERY
+     ===================================================== -->
+
+<section id="gallery">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <div class="section-label">
+                    03 / GALLERY
+                </div>
+
+                <h2 class="section-title"
+                    data-it="Lavori selezionati."
+                    data-en="Selected work.">
+                    Lavori selezionati.
+                </h2>
+
+            </div>
+
+            <p class="section-description"
+               data-it="La galleria viene aggiornata automaticamente dai file presenti nella repository."
+               data-en="The gallery updates automatically from files in the repository.">
+                La galleria viene aggiornata automaticamente dai file presenti nella repository.
+            </p>
+
+        </div>
+
+        <div class="gallery-toolbar">
+
+            <div class="gallery-count">
+
+                <span
+                    data-it="ELEMENTI"
+                    data-en="ITEMS">
+                    ELEMENTI
+                </span>
+
+                <strong id="galleryCount">
+                    0
+                </strong>
+
+            </div>
+
+            <div class="gallery-status">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <span
+                    data-it="AUTO-SCAN ATTIVO"
+                    data-en="AUTO-SCAN ACTIVE">
+                    AUTO-SCAN ATTIVO
+                </span>
+
+            </div>
+
+        </div>
+
+        <div
+            id="galleryGrid"
+            class="gallery">
+
+            <div class="gallery-loading">
+
+                <i class="fa-solid fa-spinner"></i>
+
+                <span
+                    data-it="Scansione della repository..."
+                    data-en="Scanning repository...">
+                    Scansione della repository...
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     CONTACT
+     ===================================================== -->
+
+<section id="contact">
+
+    <div class="container">
+
+        <div class="contact-card reveal">
+
+            <div>
+
+                <div class="section-label">
+                    04 / CONTACT
+                </div>
+
+                <h2
+                    data-it="Parliamone."
+                    data-en="Let's talk.">
+                    Parliamone.
+                </h2>
+
+                <p
+                    data-it="Puoi trovarmi su Discord."
+                    data-en="You can find me on Discord.">
+                    Puoi trovarmi su Discord.
+                </p>
+
+            </div>
+
+            <button
+                id="discordCopy"
+                class="discord-copy"
+                type="button"
+                aria-label="Copia username Discord">
+
+                <span class="discord-icon">
+                    <i class="fa-brands fa-discord"></i>
+                </span>
+
+                <span class="discord-username">
+                    for_david_k
+                </span>
+
+                <i
+                    class="fa-regular fa-copy copy-icon">
+                </i>
+
+                <span
+                    class="copy-tooltip"
+                    data-it="Copiato!"
+                    data-en="Copied!">
+                    Copiato!
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <div class="footer-mark">
+            FALCON / DAVID
+        </div>
+
+        <div class="footer-meta">
+            © <span id="year"></span> — BUILT WITH CODE
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- =====================================================
+     IMAGE MODAL
+     ===================================================== -->
+
+<div
+    class="image-modal"
+    id="imageModal"
+    role="dialog"
+    aria-modal="true">
+
+    <button
+        class="modal-close"
+        id="modalClose"
+        aria-label="Chiudi">
+
+        <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <img
+        id="modalImage"
+        class="modal-image"
+        src=""
+        alt="">
+
+</div>
+
+<script>
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
+
+const CONFIG = {
+
+    /* Your GitHub repository */
+    owner: "kibrisky1",
+
+    repo: "Falcon",
+
+    branch: "main",
+
+    /* Files that are explicitly allowed */
+    specialGalleryFiles: [
+        "bloodwar.png"
+    ]
+
+};
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const root =
+    document.documentElement;
+
+const header =
+    document.getElementById("header");
+
+const themeButton =
+    document.getElementById("themeButton");
+
+const themeIcon =
+    document.getElementById("themeIcon");
+
+const themeText =
+    document.getElementById("themeText");
+
+const navLogo =
+    document.getElementById("navLogo");
+
+const heroLogo =
+    document.getElementById("heroLogo");
+
+const loaderLogo =
+    document.getElementById("loaderLogo");
+
+const favicon =
+    document.getElementById("favicon");
+
+const metaTheme =
+    document.getElementById("meta-theme-color");
+
+const galleryGrid =
+    document.getElementById("galleryGrid");
+
+const galleryCount =
+    document.getElementById("galleryCount");
+
+const discordCopy =
+    document.getElementById("discordCopy");
+
+const imageModal =
+    document.getElementById("imageModal");
+
+const modalImage =
+    document.getElementById("modalImage");
+
+const modalClose =
+    document.getElementById("modalClose");
+
+const scrollProgress =
+    document.getElementById("scrollProgress");
+
+const lightOrb =
+    document.getElementById("lightOrb");
+
+const languageButton =
+    document.getElementById("languageButton");
+
+const languageFlag =
+    document.getElementById("languageFlag");
+
+const languageText =
+    document.getElementById("languageText");
+
+const year =
+    document.getElementById("year");
+
+
+/* =========================================================
+   YEAR
+   ========================================================= */
+
+year.textContent =
+    new Date().getFullYear();
+
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+let savedTheme =
+    localStorage.getItem("falcon-theme");
+
+let currentTheme =
+    savedTheme || "dark";
+
+function updateLogo() {
+
+    const isLight =
+        root.getAttribute("data-theme") === "light";
+
+    /*
+       BLACK BACKGROUND  -> dark.png
+       WHITE BACKGROUND  -> dark1.png
+    */
+
+    const logo =
+        isLight
+            ? "dark1.png"
+            : "dark.png";
+
+    navLogo.src = logo;
+    heroLogo.src = logo;
+    loaderLogo.src = logo;
+
+    /*
+       favicon follows theme too
+    */
+
+    favicon.href = logo;
+
+    metaTheme.content =
+        isLight
+            ? "#eef1f5"
+            : "#05070a";
+}
+
+function applyTheme(theme) {
+
+    currentTheme = theme;
+
+    if (theme === "light") {
+
+        root.setAttribute(
+            "data-theme",
+            "light"
+        );
+
+        themeIcon.className =
+            "fa-solid fa-moon";
+
+        themeText.textContent =
+            currentLanguage === "it"
+                ? "Scuro"
+                : "Dark";
+
+    } else {
+
+        root.removeAttribute(
+            "data-theme"
+        );
+
+        themeIcon.className =
+            "fa-solid fa-sun";
+
+        themeText.textContent =
+            currentLanguage === "it"
+                ? "Chiaro"
+                : "Light";
+    }
+
+    localStorage.setItem(
+        "falcon-theme",
+        theme
+    );
+
+    updateLogo();
+}
+
+applyTheme(currentTheme);
+
+themeButton.addEventListener(
+    "click",
+    () => {
+
+        applyTheme(
+            currentTheme === "dark"
+                ? "light"
+                : "dark"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LANGUAGE SYSTEM
+   Italian is the default.
+   ========================================================= */
+
+let currentLanguage =
+    localStorage.getItem("falcon-language")
+    || "it";
+
+function applyLanguage(lang) {
+
+    currentLanguage = lang;
+
+    document.documentElement.lang =
+        lang;
+
+    document
+        .querySelectorAll("[data-it][data-en]")
+        .forEach(element => {
+
+            element.textContent =
+                element.dataset[lang];
+
+        });
+
+    languageText.textContent =
+        lang.toUpperCase();
+
+    languageFlag.src =
+        lang === "it"
+            ? "it.png"
+            : "en.png";
+
+    languageFlag.alt =
+        lang === "it"
+            ? "Italiano"
+            : "English";
+
+    localStorage.setItem(
+        "falcon-language",
+        lang
+    );
+
+    /*
+       Update theme button text
+    */
+
+    if (currentTheme === "light") {
+
+        themeText.textContent =
+            lang === "it"
+                ? "Scuro"
+                : "Dark";
+
+    } else {
+
+        themeText.textContent =
+            lang === "it"
+                ? "Chiaro"
+                : "Light";
+    }
+}
+
+languageButton.addEventListener(
+    "click",
+    () => {
+
+        applyLanguage(
+            currentLanguage === "it"
+                ? "en"
+                : "it"
+        );
+
+    }
+);
+
+applyLanguage(currentLanguage);
+
+
+/* =========================================================
+   TYPING EFFECT
+   ========================================================= */
+
+const typingElement =
+    document.getElementById("typingText");
+
+const typingWords = {
+
+    it: [
+        "Python Developer",
+        "GFX Artist",
+        "Discord Specialist",
+        "Roblox Developer",
+        "Technology Enthusiast"
+    ],
+
+    en: [
+        "Python Developer",
+        "GFX Artist",
+        "Discord Specialist",
+        "Roblox Developer",
+        "Technology Enthusiast"
+    ]
+
+};
+
+let typingIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeLoop() {
+
+    const words =
+        typingWords[currentLanguage];
+
+    const word =
+        words[typingIndex % words.length];
+
+    if (!deleting) {
+
+        charIndex++;
+
+        typingElement.textContent =
+            word.substring(0, charIndex);
+
+        if (charIndex >= word.length) {
+
+            deleting = true;
+
+            setTimeout(
+                typeLoop,
+                1400
+            );
+
+            return;
+        }
+
+    } else {
+
+        charIndex--;
+
+        typingElement.textContent =
+            word.substring(0, charIndex);
+
+        if (charIndex <= 0) {
+
+            deleting = false;
+
+            typingIndex++;
+
+        }
+
+    }
+
+    setTimeout(
+        typeLoop,
+        deleting ? 35 : 65
+    );
+}
+
+typeLoop();
+
+
+/* =========================================================
+   GITHUB GALLERY AUTO SCANNER
+   ========================================================= */
+
+/*
+   Important:
+
+   GitHub Pages cannot enumerate its own directory.
+
+   Therefore we query:
+
+   api.github.com/repos/kibrisky1/Falcon/contents
+
+   Then:
+
+   - every file whose name contains "gfx"
+     becomes a gallery item
+
+   - bloodwar.png is always included
+
+   - dark.png
+   - dark1.png
+   - light.png
+   - light1.png
+   - en.png
+   - it.png
+   - davidgfx.png
+
+   etc. are NOT included unless their filename
+   contains "gfx".
+
+   This means future files like:
+
+   gfx5.png
+   gfx6.png
+   mygfx.png
+   final_gfx.png
+
+   automatically appear.
+*/
+
+async function loadGallery() {
+
+    galleryGrid.innerHTML = `
+        <div class="gallery-loading">
+
+            <i class="fa-solid fa-spinner"></i>
+
+            <span>
+                ${
+                    currentLanguage === "it"
+                        ? "Scansione della repository..."
+                        : "Scanning repository..."
+                }
+            </span>
+
+        </div>
+    `;
+
+    const apiURL =
+        `https://api.github.com/repos/` +
+        `${CONFIG.owner}/${CONFIG.repo}/contents/` +
+        `?ref=${CONFIG.branch}`;
+
+    try {
+
+        const response =
+            await fetch(apiURL, {
+                headers: {
+                    "Accept":
+                        "application/vnd.github+json"
+                }
+            });
+
+        if (!response.ok) {
+            throw new Error(
+                `GitHub API ${response.status}`
+            );
+        }
+
+        const files =
+            await response.json();
+
+        /*
+           Only files, not directories.
+        */
+
+        const imageFiles =
+            files.filter(file => {
+
+                if (file.type !== "file") {
+                    return false;
+                }
 
                 const name =
                     file.name.toLowerCase();
 
-                const isImage =
-                    /\.(png|jpg|jpeg|webp|gif)$/i
-                    .test(name);
-
-                if (!isImage)
-                    return false;
-
-                return (
-                    name.includes("gfx") ||
-                    name === "bloodwar.png"
-                );
-            }
-
-        };
-
-
-        /* =========================================================
-           YEAR
-           ========================================================= */
-
-        document.getElementById("year").textContent =
-            new Date().getFullYear();
-
-
-        /* =========================================================
-           PRELOADER
-           ========================================================= */
-
-        window.addEventListener("load", () => {
-
-            setTimeout(() => {
-
-                document
-                    .getElementById("preloader")
-                    .classList.add("hidden");
-
-            }, 650);
-
-        });
-
-
-        /* =========================================================
-           HEADER
-           ========================================================= */
-
-        const header =
-            document.getElementById("header");
-
-        function updateHeader() {
-
-            if (window.scrollY > 30)
-                header.classList.add("scrolled");
-            else
-                header.classList.remove("scrolled");
-
-        }
-
-        window.addEventListener(
-            "scroll",
-            updateHeader,
-            { passive: true }
-        );
-
-        updateHeader();
-
-
-        /* =========================================================
-           SCROLL PROGRESS
-           ========================================================= */
-
-        const progress =
-            document.getElementById("scroll-progress");
-
-        function updateProgress() {
-
-            const scrollTop =
-                window.scrollY;
-
-            const height =
-                document.documentElement.scrollHeight -
-                window.innerHeight;
-
-            const amount =
-                height > 0
-                    ? scrollTop / height
-                    : 0;
-
-            progress.style.transform =
-                `scaleX(${amount})`;
-
-        }
-
-        window.addEventListener(
-            "scroll",
-            updateProgress,
-            { passive: true }
-        );
-
-
-        /* =========================================================
-           CURSOR
-           ========================================================= */
-
-        const cursorDot =
-            document.getElementById("cursor-dot");
-
-        const cursorRing =
-            document.getElementById("cursor-ring");
-
-        const ambient =
-            document.getElementById("ambient-light");
-
-        let mouseX = innerWidth / 2;
-        let mouseY = innerHeight / 2;
-
-        let ringX = mouseX;
-        let ringY = mouseY;
-
-        window.addEventListener(
-            "mousemove",
-            event => {
-
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-
-                if (cursorDot) {
-
-                    cursorDot.style.left =
-                        mouseX + "px";
-
-                    cursorDot.style.top =
-                        mouseY + "px";
-
-                }
-
-                if (ambient) {
-
-                    ambient.style.left =
-                        mouseX + "px";
-
-                    ambient.style.top =
-                        mouseY + "px";
-
-                }
-
-            }
-        );
-
-        function cursorLoop() {
-
-            ringX +=
-                (mouseX - ringX) * .15;
-
-            ringY +=
-                (mouseY - ringY) * .15;
-
-            if (cursorRing) {
-
-                cursorRing.style.left =
-                    ringX + "px";
-
-                cursorRing.style.top =
-                    ringY + "px";
-
-            }
-
-            requestAnimationFrame(cursorLoop);
-
-        }
-
-        cursorLoop();
-
-
-        document
-            .querySelectorAll(
-                "a, button, .gfx-item, .card, .service"
-            )
-            .forEach(element => {
-
-                element.addEventListener(
-                    "mouseenter",
-                    () =>
-                        document.body
-                            .classList
-                            .add("cursor-hover")
-                );
-
-                element.addEventListener(
-                    "mouseleave",
-                    () =>
-                        document.body
-                            .classList
-                            .remove("cursor-hover")
-                );
-
-            });
-
-
-        /* =========================================================
-           PARTICLES
-           ========================================================= */
-
-        const canvas =
-            document.getElementById("particles");
-
-        const ctx =
-            canvas.getContext("2d");
-
-        let particles = [];
-
-        function resizeCanvas() {
-
-            canvas.width =
-                window.innerWidth *
-                devicePixelRatio;
-
-            canvas.height =
-                window.innerHeight *
-                devicePixelRatio;
-
-            ctx.setTransform(
-                devicePixelRatio,
-                0,
-                0,
-                devicePixelRatio,
-                0,
-                0
-            );
-
-        }
-
-        function createParticles() {
-
-            particles = [];
-
-            const amount =
-                Math.min(
-                    90,
-                    Math.floor(
-                        window.innerWidth / 15
-                    )
-                );
-
-            for (
-                let i = 0;
-                i < amount;
-                i++
-            ) {
-
-                particles.push({
-
-                    x:
-                        Math.random() *
-                        window.innerWidth,
-
-                    y:
-                        Math.random() *
-                        window.innerHeight,
-
-                    r:
-                        Math.random() * 1.4 + .3,
-
-                    speed:
-                        Math.random() * .22 + .05,
-
-                    alpha:
-                        Math.random() * .35 + .08
-
-                });
-
-            }
-
-        }
-
-        function drawParticles() {
-
-            ctx.clearRect(
-                0,
-                0,
-                window.innerWidth,
-                window.innerHeight
-            );
-
-            for (const p of particles) {
-
-                p.y -= p.speed;
-
-                if (p.y < -10)
-                    p.y =
-                        window.innerHeight + 10;
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    p.x,
-                    p.y,
-                    p.r,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fillStyle =
-                    `rgba(255,255,255,${p.alpha})`;
-
-                ctx.fill();
-
-            }
-
-            requestAnimationFrame(
-                drawParticles
-            );
-
-        }
-
-        resizeCanvas();
-        createParticles();
-        drawParticles();
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                resizeCanvas();
-                createParticles();
-
-            }
-        );
-
-
-        /* =========================================================
-           CARD LIGHT TRACKING
-           ========================================================= */
-
-        document
-            .querySelectorAll(".card")
-            .forEach(card => {
-
-                card.addEventListener(
-                    "mousemove",
-                    event => {
-
-                        const rect =
-                            card.getBoundingClientRect();
-
-                        const x =
-                            event.clientX -
-                            rect.left;
-
-                        const y =
-                            event.clientY -
-                            rect.top;
-
-                        card.style.setProperty(
-                            "--mx",
-                            `${x}px`
-                        );
-
-                        card.style.setProperty(
-                            "--my",
-                            `${y}px`
-                        );
-
-                    }
-                );
-
-            });
-
-
-        /* =========================================================
-           TILT
-           ========================================================= */
-
-        document
-            .querySelectorAll(".tilt")
-            .forEach(card => {
-
-                card.addEventListener(
-                    "mousemove",
-                    event => {
-
-                        const rect =
-                            card.getBoundingClientRect();
-
-                        const x =
-                            event.clientX -
-                            rect.left;
-
-                        const y =
-                            event.clientY -
-                            rect.top;
-
-                        const rotateY =
-                            ((x / rect.width) - .5)
-                            * 5;
-
-                        const rotateX =
-                            -((y / rect.height) - .5)
-                            * 5;
-
-                        card.style.transform =
-                            `perspective(1000px)
-                             rotateX(${rotateX}deg)
-                             rotateY(${rotateY}deg)
-                             translateY(-4px)`;
-
-                    }
-                );
-
-                card.addEventListener(
-                    "mouseleave",
-                    () => {
-
-                        card.style.transform =
-                            "";
-
-                    }
-                );
-
-            });
-
-
-        /* =========================================================
-           MAGNETIC BUTTONS
-           ========================================================= */
-
-        document
-            .querySelectorAll(".magnetic")
-            .forEach(button => {
-
-                button.addEventListener(
-                    "mousemove",
-                    event => {
-
-                        const rect =
-                            button.getBoundingClientRect();
-
-                        const x =
-                            event.clientX -
-                            rect.left -
-                            rect.width / 2;
-
-                        const y =
-                            event.clientY -
-                            rect.top -
-                            rect.height / 2;
-
-                        button.style.transform =
-                            `translate(
-                                ${x * .12}px,
-                                ${y * .12}px
-                            )`;
-
-                    }
-                );
-
-                button.addEventListener(
-                    "mouseleave",
-                    () => {
-
-                        button.style.transform =
-                            "";
-
-                    }
-                );
-
-            });
-
-
-        /* =========================================================
-           REVEAL OBSERVER
-           ========================================================= */
-
-        const revealObserver =
-            new IntersectionObserver(
-                entries => {
-
-                    entries.forEach(
-                        entry => {
-
-                            if (
-                                entry.isIntersecting
-                            ) {
-
-                                entry.target
-                                    .classList
-                                    .add("visible");
-
-                                revealObserver
-                                    .unobserve(
-                                        entry.target
-                                    );
-
-                            }
-
-                        }
-                    );
-
-                },
-                {
-                    threshold: .12
-                }
-            );
-
-        document
-            .querySelectorAll(".reveal")
-            .forEach(
-                element =>
-                    revealObserver.observe(element)
-            );
-
-
-        /* =========================================================
-           COUNTERS
-           ========================================================= */
-
-        const counterObserver =
-            new IntersectionObserver(
-                entries => {
-
-                    entries.forEach(entry => {
-
-                        if (
-                            !entry.isIntersecting
+                /*
+                   Explicit bloodwar
+                */
+
+                if (
+                    CONFIG.specialGalleryFiles
+                        .some(
+                            special =>
+                                name ===
+                                special.toLowerCase()
                         )
-                            return;
-
-                        const element =
-                            entry.target;
-
-                        const target =
-                            Number(
-                                element.dataset.count
-                            );
-
-                        let value = 0;
-
-                        const duration = 1100;
-
-                        const start =
-                            performance.now();
-
-                        function animate(now) {
-
-                            const progress =
-                                Math.min(
-                                    (now - start) /
-                                    duration,
-                                    1
-                                );
-
-                            value =
-                                Math.floor(
-                                    target *
-                                    (
-                                        1 -
-                                        Math.pow(
-                                            1-progress,
-                                            3
-                                        )
-                                    )
-                                );
-
-                            element.textContent =
-                                value;
-
-                            if (progress < 1)
-                                requestAnimationFrame(
-                                    animate
-                                );
-
-                        }
-
-                        requestAnimationFrame(
-                            animate
-                        );
-
-                        counterObserver
-                            .unobserve(element);
-
-                    });
-
+                ) {
+                    return true;
                 }
-            );
 
-        document
-            .querySelectorAll("[data-count]")
-            .forEach(
-                element =>
-                    counterObserver.observe(element)
-            );
+                /*
+                   ANY filename containing "gfx"
+                */
 
+                return name.includes("gfx");
 
-        /* =========================================================
-           GALLERY
-           ========================================================= */
+            })
+            .filter(file => {
 
-        const galleryGrid =
-            document.getElementById(
-                "galleryGrid"
-            );
+                /*
+                   Only image formats.
+                   This protects the gallery if a future
+                   file such as "gfx.txt" is uploaded.
+                */
 
-        const galleryStatus =
-            document.getElementById(
-                "galleryStatus"
-            );
+                return /\.(png|jpe?g|webp|gif|avif)$/i
+                    .test(file.name);
 
-        const gallerySearch =
-            document.getElementById(
-                "gallerySearch"
-            );
+            })
+            .sort((a,b) => {
 
-        let galleryFiles = [];
+                /*
+                   bloodwar first, then alphabetical.
+                */
 
+                if (
+                    a.name.toLowerCase()
+                    === "bloodwar.png"
+                ) {
+                    return -1;
+                }
 
-        async function loadGallery() {
+                if (
+                    b.name.toLowerCase()
+                    === "bloodwar.png"
+                ) {
+                    return 1;
+                }
 
-            galleryStatus.textContent =
-                "SCANNING REPOSITORY...";
+                return a.name.localeCompare(
+                    b.name,
+                    undefined,
+                    {
+                        numeric: true,
+                        sensitivity: "base"
+                    }
+                );
+            });
 
-            try {
+        galleryCount.textContent =
+            imageFiles.length;
 
-                const response =
-                    await fetch(
-                        CONFIG.githubAPI,
-                        {
-                            headers: {
-                                "Accept":
-                                    "application/vnd.github+json"
-                            }
-                        }
-                    );
+        galleryGrid.innerHTML = "";
 
-                if (!response.ok)
-                    throw new Error(
-                        "GitHub API error"
-                    );
+        if (!imageFiles.length) {
 
-                const files =
-                    await response.json();
+            galleryGrid.innerHTML = `
+                <div class="gallery-empty">
 
+                    <i
+                        class="fa-regular fa-images"
+                        style="
+                            font-size:35px;
+                            margin-bottom:15px;
+                            display:block;
+                            color:var(--amber);
+                        ">
+                    </i>
 
-                galleryFiles =
-                    files
-                        .filter(
-                            CONFIG.galleryFilter
-                        )
-                        .sort(
-                            (a,b) =>
-                                a.name.localeCompare(
-                                    b.name,
-                                    undefined,
-                                    {
-                                        numeric: true,
-                                        sensitivity: "base"
-                                    }
-                                )
-                        );
+                    ${
+                        currentLanguage === "it"
+                            ? "Nessuna GFX trovata."
+                            : "No GFX found."
+                    }
 
+                </div>
+            `;
 
-                renderGallery();
+            return;
+        }
 
+        imageFiles.forEach(
+            (file, index) => {
 
-            } catch (error) {
-
-                console.error(
-                    "Gallery error:",
-                    error
+                createGalleryItem(
+                    file,
+                    index
                 );
 
-                galleryStatus.textContent =
-                    "ARCHIVE UNAVAILABLE";
-
-                galleryGrid.innerHTML = `
-
-                    <div class="gallery-empty">
-
-                        <i
-                            class="fa-solid fa-triangle-exclamation"
-                            style="font-size:25px;margin-bottom:15px;"
-                        ></i>
-
-                        <br>
-
-                        Unable to scan the
-                        GitHub repository.
-
-                        <br><br>
-
-                        <small>
-                            Check that the repository is public.
-                        </small>
-
-                    </div>
-
-                `;
-
             }
-
-        }
-
-
-        function renderGallery() {
-
-            const query =
-                gallerySearch.value
-                    .trim()
-                    .toLowerCase();
-
-
-            const filtered =
-                galleryFiles.filter(
-                    file =>
-                        file.name
-                            .toLowerCase()
-                            .includes(query)
-                );
-
-
-            galleryStatus.innerHTML =
-                `ARCHIVE /
-                 <span>${filtered.length}</span>
-                 VISUALS`;
-
-
-            if (!filtered.length) {
-
-                galleryGrid.innerHTML = `
-
-                    <div class="gallery-empty">
-
-                        <i
-                            class="fa-regular fa-images"
-                            style="font-size:30px;margin-bottom:15px;"
-                        ></i>
-
-                        <br>
-
-                        ${
-                            query
-                            ? "Nessun risultato."
-                            : "Nessun GFX trovato."
-                        }
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-            galleryGrid.innerHTML =
-                filtered
-                    .map(
-                        (file,index) => {
-
-                            /*
-                             * raw.githubusercontent.com
-                             * is used instead of GitHub's HTML page.
-                             */
-
-                            const imageURL =
-                                `https://raw.githubusercontent.com/kibrisky1/Falcon/main/${encodeURIComponent(file.name)}`;
-
-                            return `
-
-                                <article
-                                    class="gfx-item"
-                                    tabindex="0"
-                                    data-image="${imageURL}"
-                                    data-name="${escapeHTML(file.name)}"
-                                    style="animation-delay:${Math.min(index * 50,500)}ms;"
-                                >
-
-                                    <img
-                                        src="${imageURL}"
-                                        alt="${escapeHTML(file.name)}"
-                                        loading="lazy"
-                                        decoding="async"
-                                    >
-
-                                    <div class="gfx-overlay">
-
-                                        <span class="gfx-name">
-                                            ${escapeHTML(file.name)}
-                                        </span>
-
-                                        <span class="gfx-open">
-                                            <i class="fa-solid fa-expand"></i>
-                                        </span>
-
-                                    </div>
-
-                                </article>
-
-                            `;
-
-                        }
-                    )
-                    .join("");
-
-
-            attachGalleryEvents();
-
-        }
-
-
-        function escapeHTML(value) {
-
-            return String(value)
-                .replaceAll("&","&amp;")
-                .replaceAll("<","&lt;")
-                .replaceAll(">","&gt;")
-                .replaceAll('"',"&quot;")
-                .replaceAll("'","&#039;");
-
-        }
-
-
-        function attachGalleryEvents() {
-
-            document
-                .querySelectorAll(".gfx-item")
-                .forEach(item => {
-
-                    item.addEventListener(
-                        "click",
-                        () =>
-                            openLightbox(
-                                item.dataset.image,
-                                item.dataset.name
-                            )
-                    );
-
-                    item.addEventListener(
-                        "keydown",
-                        event => {
-
-                            if (
-                                event.key === "Enter" ||
-                                event.key === " "
-                            ) {
-
-                                event.preventDefault();
-
-                                openLightbox(
-                                    item.dataset.image,
-                                    item.dataset.name
-                                );
-
-                            }
-
-                        }
-                    );
-
-                });
-
-        }
-
-
-        gallerySearch.addEventListener(
-            "input",
-            renderGallery
         );
 
+    } catch (error) {
 
-        loadGallery();
+        console.error(
+            "Falcon gallery error:",
+            error
+        );
+
+        galleryGrid.innerHTML = `
+            <div class="gallery-empty">
+
+                <i
+                    class="fa-solid fa-triangle-exclamation"
+                    style="
+                        font-size:32px;
+                        margin-bottom:15px;
+                        display:block;
+                        color:var(--amber);
+                    ">
+                </i>
+
+                <strong>
+                    ${
+                        currentLanguage === "it"
+                            ? "Impossibile caricare la galleria."
+                            : "Unable to load gallery."
+                    }
+                </strong>
+
+                <br>
+
+                <small>
+                    ${
+                        currentLanguage === "it"
+                            ? "Controlla la connessione o la repository GitHub."
+                            : "Check the connection or GitHub repository."
+                    }
+                </small>
+
+            </div>
+        `;
+
+    }
+}
 
 
-        /* =========================================================
-           LIGHTBOX
-           ========================================================= */
+/* =========================================================
+   CREATE GALLERY ITEM
+   ========================================================= */
 
-        const lightbox =
-            document.getElementById(
-                "lightbox"
-            );
+function createGalleryItem(
+    file,
+    index
+) {
 
-        const lightboxImage =
-            document.getElementById(
-                "lightbox-image"
-            );
+    const item =
+        document.createElement("article");
 
-        const lightboxName =
-            document.getElementById(
-                "lightboxName"
-            );
+    item.className =
+        "gallery-item";
 
+    item.style.animationDelay =
+        `${Math.min(index * 70, 700)}ms`;
 
-        function openLightbox(
-            src,
-            name
-        ) {
+    const image =
+        document.createElement("img");
 
-            lightboxImage.src = src;
+    /*
+       raw.githubusercontent is used instead of
+       the GitHub web URL.
 
-            lightboxImage.alt = name;
+       This is faster and works directly on GitHub Pages.
+    */
 
-            lightboxName.textContent =
-                name;
+    const imageURL =
+        `https://raw.githubusercontent.com/` +
+        `${CONFIG.owner}/${CONFIG.repo}/` +
+        `${CONFIG.branch}/${encodeURIComponent(file.name)}`;
 
-            lightbox.classList.add("open");
+    image.src = imageURL;
 
-            document.body.style.overflow =
-                "hidden";
+    image.alt =
+        file.name;
 
-        }
+    image.loading =
+        index < 3
+            ? "eager"
+            : "lazy";
 
+    image.decoding =
+        "async";
 
-        function closeLightbox() {
+    const overlay =
+        document.createElement("div");
 
-            lightbox.classList.remove(
+    overlay.className =
+        "gallery-overlay";
+
+    overlay.innerHTML = `
+        <div class="gallery-name">
+
+            <i class="fa-solid fa-expand"></i>
+
+            <span>
+                ${escapeHTML(file.name)}
+            </span>
+
+        </div>
+    `;
+
+    item.appendChild(image);
+    item.appendChild(overlay);
+
+    item.addEventListener(
+        "click",
+        () => {
+
+            modalImage.src =
+                imageURL;
+
+            modalImage.alt =
+                file.name;
+
+            imageModal.classList.add(
                 "open"
             );
 
             document.body.style.overflow =
-                "";
+                "hidden";
+        }
+    );
 
-            setTimeout(
-                () => {
-                    lightboxImage.src = "";
-                },
-                300
-            );
+    image.addEventListener(
+        "error",
+        () => {
+
+            item.style.display =
+                "none";
 
         }
+    );
+
+    galleryGrid.appendChild(item);
+}
 
 
-        document
-            .getElementById("lightboxClose")
-            .addEventListener(
-                "click",
-                closeLightbox
-            );
+/* =========================================================
+   HTML ESCAPE
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
 
-        lightbox.addEventListener(
-            "click",
-            event => {
+/* =========================================================
+   RELOAD GALLERY WHEN LANGUAGE CHANGES
+   ========================================================= */
 
-                if (
-                    event.target ===
-                    lightbox
-                )
-                    closeLightbox();
+const originalApplyLanguage =
+    applyLanguage;
 
-            }
-        );
+applyLanguage = function(lang) {
 
+    originalApplyLanguage(lang);
 
-        document.addEventListener(
-            "keydown",
-            event => {
+    /*
+       Don't reload images unnecessarily.
+       Gallery itself has no language-specific
+       content except its empty/loading messages.
+    */
 
-                if (
-                    event.key === "Escape"
-                )
-                    closeLightbox();
-
-            }
-        );
+};
 
 
-        /* =========================================================
-           DISCORD COPY
-           ========================================================= */
+/* =========================================================
+   MODAL
+   ========================================================= */
 
-        const copyDiscord =
-            document.getElementById(
-                "copyDiscord"
-            );
+function closeModal() {
 
-        const copyFeedback =
-            document.getElementById(
-                "copyFeedback"
-            );
+    imageModal.classList.remove(
+        "open"
+    );
 
+    document.body.style.overflow =
+        "";
+}
 
-        async function copyUsername() {
+modalClose.addEventListener(
+    "click",
+    closeModal
+);
 
-            try {
+imageModal.addEventListener(
+    "click",
+    event => {
 
-                await navigator.clipboard.writeText(
-                    CONFIG.discord
-                );
-
-            } catch {
-
-                const textarea =
-                    document.createElement(
-                        "textarea"
-                    );
-
-                textarea.value =
-                    CONFIG.discord;
-
-                document.body.appendChild(
-                    textarea
-                );
-
-                textarea.select();
-
-                document.execCommand(
-                    "copy"
-                );
-
-                textarea.remove();
-
-            }
-
-
-            copyDiscord.innerHTML =
-                '<i class="fa-solid fa-check"></i>';
-
-            copyFeedback.classList.add(
-                "show"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    copyDiscord.innerHTML =
-                        '<i class="fa-regular fa-copy"></i>';
-
-                    copyFeedback.classList.remove(
-                        "show"
-                    );
-
-                },
-                1800
-            );
-
+        if (
+            event.target ===
+            imageModal
+        ) {
+            closeModal();
         }
 
+    }
+);
 
-        copyDiscord.addEventListener(
-            "click",
-            copyUsername
-        );
+document.addEventListener(
+    "keydown",
+    event => {
 
-
-        document
-            .getElementById("heroDiscord")
-            .addEventListener(
-                "click",
-                copyUsername
-            );
-
-
-        /* =========================================================
-           THEME
-           ========================================================= */
-
-        const themeBtn =
-            document.getElementById(
-                "themeBtn"
-            );
-
-        const metaTheme =
-            document.querySelector(
-                'meta[name="theme-color"]'
-            );
-
-
-        function applyTheme(theme) {
-
-            document.documentElement
-                .dataset.theme =
-                theme;
-
-            localStorage.setItem(
-                "falcon-theme",
-                theme
-            );
-
-
-            themeBtn.innerHTML =
-                theme === "dark"
-                    ? '<i class="fa-solid fa-sun"></i>'
-                    : '<i class="fa-solid fa-moon"></i>';
-
-
-            metaTheme.setAttribute(
-                "content",
-                theme === "dark"
-                    ? "#07090c"
-                    : "#edf1f5"
-            );
-
+        if (
+            event.key === "Escape"
+        ) {
+            closeModal();
         }
 
+    }
+);
 
-        const savedTheme =
-            localStorage.getItem(
-                "falcon-theme"
+
+/* =========================================================
+   DISCORD COPY
+   ========================================================= */
+
+discordCopy.addEventListener(
+    "click",
+    async () => {
+
+        const username =
+            "for_david_k";
+
+        try {
+
+            await navigator.clipboard.writeText(
+                username
             );
 
+        } catch {
 
-        applyTheme(
-            savedTheme ||
-            (
-                matchMedia(
-                    "(prefers-color-scheme: light)"
-                ).matches
-                    ? "light"
-                    : "dark"
-            )
+            /*
+               Fallback for older browsers.
+            */
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value =
+                username;
+
+            textarea.style.position =
+                "fixed";
+
+            textarea.style.opacity =
+                "0";
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+            textarea.remove();
+        }
+
+        discordCopy.classList.add(
+            "copied"
         );
 
+        const icon =
+            discordCopy.querySelector(
+                ".copy-icon"
+            );
 
-        themeBtn.addEventListener(
-            "click",
+        icon.className =
+            "fa-solid fa-check copy-icon";
+
+        setTimeout(
             () => {
 
-                const current =
-                    document.documentElement
-                        .dataset.theme;
-
-                applyTheme(
-                    current === "dark"
-                        ? "light"
-                        : "dark"
+                discordCopy.classList.remove(
+                    "copied"
                 );
 
-            }
-        );
-
-
-        /* =========================================================
-           LANGUAGE SYSTEM
-           ========================================================= */
-
-        const translations = {
-
-            it: {
-
-                nav_about:
-                    "Chi sono",
-
-                nav_services:
-                    "Servizi",
-
-                nav_gallery:
-                    "Galleria",
-
-                nav_contact:
-                    "Contatti",
-
-                status:
-                    "SISTEMA ONLINE // DISPONIBILE",
-
-                hero_description:
-                    "Sviluppatore Python, GFX Artist e creative developer. Trasformo idee in software, visual e sistemi digitali.",
-
-                view_work:
-                    "Guarda i lavori",
-
-                contact_me:
-                    "Contattami",
-
-                stat_languages:
-                    "Linguaggi principali",
-
-                stat_projects:
-                    "Progetti e sistemi",
-
-                stat_creativity:
-                    "Creatività",
-
-                stat_mindset:
-                    "Curiosità tecnica",
-
-                about_kicker:
-                    "01 // PROFILO",
-
-                about_title:
-                    "Costruire.<br>Sperimentare.",
-
-                about_description:
-                    "Un mix tra sviluppo software, automazione, grafica e sperimentazione tecnica.",
-
-                dev_title:
-                    "Development",
-
-                dev_text:
-                    "Sviluppo applicazioni Python, automazioni, tool, bot e sistemi interattivi. Mi interessa soprattutto costruire strumenti realmente utilizzabili.",
-
-                gfx_title:
-                    "GFX / Visual",
-
-                gfx_text:
-                    "Visual design, Roblox GFX e composizioni digitali con particolare attenzione all'atmosfera.",
-
-                discord_title:
-                    "Discord",
-
-                discord_text:
-                    "Bot, sistemi di moderazione, utility, automazioni e strumenti per community.",
-
-                mindset_title:
-                    "Technical mindset",
-
-                mindset_text:
-                    "Non mi limito a usare gli strumenti: mi interessa capire come funzionano, modificarli e costruire soluzioni nuove.",
-
-                services_kicker:
-                    "02 // CAPABILITIES",
-
-                services_title:
-                    "Cosa posso<br>costruire.",
-
-                service_python:
-                    "Script, automazioni, tool desktop, API e piccoli sistemi software.",
-
-                service_gfx:
-                    "Roblox GFX, composizioni, thumbnail e visual digitali.",
-
-                service_discord:
-                    "Bot, utility, moderazione e sistemi per community.",
-
-                gallery_kicker:
-                    "03 // ARCHIVIO VISIVO",
-
-                gallery_title:
-                    "Galleria.",
-
-                gallery_description:
-                    "I lavori vengono caricati automaticamente dalla directory del repository.",
-
-                phase1_title:
-                    "Idea",
-
-                phase1_text:
-                    "Capire il problema e immaginare cosa dovrebbe diventare.",
-
-                phase2_title:
-                    "Build",
-
-                phase2_text:
-                    "Prototipare velocemente e trasformare l'idea in qualcosa di concreto.",
-
-                phase3_title:
-                    "Refine",
-
-                phase3_text:
-                    "Migliorare performance, estetica, UX e affidabilità.",
-
-                phase4_title:
-                    "Repeat",
-
-                phase4_text:
-                    "Il progetto non è mai veramente finito: si evolve.",
-
-                contact_title:
-                    "Hai un'idea?",
-
-                contact_text:
-                    "Scrivimi su Discord e vediamo cosa possiamo costruire.",
-
-                copied:
-                    "Username copiato",
-
-                footer:
-                    "Built with curiosity."
+                icon.className =
+                    "fa-regular fa-copy copy-icon";
 
             },
+            1600
+        );
+    }
+);
 
 
-            en: {
+/* =========================================================
+   HEADER SCROLL
+   ========================================================= */
 
-                nav_about:
-                    "About",
+function handleScroll() {
 
-                nav_services:
-                    "Services",
+    const scrollY =
+        window.scrollY;
 
-                nav_gallery:
-                    "Gallery",
+    if (scrollY > 20) {
 
-                nav_contact:
-                    "Contact",
+        header.classList.add(
+            "scrolled"
+        );
 
-                status:
-                    "SYSTEM ONLINE // AVAILABLE",
+    } else {
 
-                hero_description:
-                    "Python developer, GFX artist and creative developer. I turn ideas into software, visuals and digital systems.",
+        header.classList.remove(
+            "scrolled"
+        );
 
-                view_work:
-                    "View my work",
+    }
 
-                contact_me:
-                    "Contact me",
+    /*
+       Progress bar
+    */
 
-                stat_languages:
-                    "Main languages",
+    const max =
+        document.documentElement.scrollHeight
+        - window.innerHeight;
 
-                stat_projects:
-                    "Projects & systems",
+    const progress =
+        max > 0
+            ? scrollY / max
+            : 0;
 
-                stat_creativity:
-                    "Creativity",
+    scrollProgress.style.transform =
+        `scaleX(${progress})`;
+}
 
-                stat_mindset:
-                    "Technical curiosity",
+window.addEventListener(
+    "scroll",
+    handleScroll,
+    {
+        passive: true
+    }
+);
 
-                about_kicker:
-                    "01 // PROFILE",
-
-                about_title:
-                    "Build.<br>Experiment.",
-
-                about_description:
-                    "A mix of software development, automation, graphics and technical experimentation.",
-
-                dev_title:
-                    "Development",
-
-                dev_text:
-                    "I build Python applications, automations, tools, bots and interactive systems with a focus on creating things that are actually useful.",
-
-                gfx_title:
-                    "GFX / Visual",
-
-                gfx_text:
-                    "Visual design, Roblox GFX and digital compositions with a strong focus on atmosphere.",
-
-                discord_title:
-                    "Discord",
-
-                discord_text:
-                    "Bots, moderation systems, utilities, automations and tools for communities.",
-
-                mindset_title:
-                    "Technical mindset",
-
-                mindset_text:
-                    "I don't just use tools. I like understanding how they work, modifying them and building new solutions.",
-
-                services_kicker:
-                    "02 // CAPABILITIES",
-
-                services_title:
-                    "What I can<br>build.",
-
-                service_python:
-                    "Scripts, automations, desktop tools, APIs and small software systems.",
-
-                service_gfx:
-                    "Roblox GFX, compositions, thumbnails and digital visuals.",
-
-                service_discord:
-                    "Bots, utilities, moderation and community systems.",
-
-                gallery_kicker:
-                    "03 // VISUAL ARCHIVE",
-
-                gallery_title:
-                    "Gallery.",
-
-                gallery_description:
-                    "Projects are automatically loaded from the repository directory.",
-
-                phase1_title:
-                    "Idea",
-
-                phase1_text:
-                    "Understand the problem and imagine what it should become.",
-
-                phase2_title:
-                    "Build",
-
-                phase2_text:
-                    "Prototype quickly and turn the idea into something concrete.",
-
-                phase3_title:
-                    "Refine",
-
-                phase3_text:
-                    "Improve performance, aesthetics, UX and reliability.",
-
-                phase4_title:
-                    "Repeat",
-
-                phase4_text:
-                    "A project is never truly finished. It evolves.",
-
-                contact_title:
-                    "Have an idea?",
-
-                contact_text:
-                    "Message me on Discord and let's see what we can build.",
-
-                copied:
-                    "Username copied",
-
-                footer:
-                    "Built with curiosity."
-
-            }
-
-        };
+handleScroll();
 
 
-        let currentLanguage =
-            localStorage.getItem(
-                "falcon-language"
-            ) || "it";
+/* =========================================================
+   MOUSE LIGHT
+   ========================================================= */
 
+if (
+    window.matchMedia(
+        "(hover:hover) and (pointer:fine)"
+    ).matches
+) {
 
-        function applyLanguage(language) {
+    const cursorDot =
+        document.querySelector(
+            ".cursor-dot"
+        );
 
-            currentLanguage =
-                language;
+    const cursorRing =
+        document.querySelector(
+            ".cursor-ring"
+        );
 
-            localStorage.setItem(
-                "falcon-language",
-                language
-            );
+    /*
+       Create cursors dynamically.
+    */
 
-            document.documentElement.lang =
-                language;
+    if (!cursorDot) {
 
-            document.getElementById(
-                "languageIcon"
-            ).textContent =
-                language.toUpperCase();
+        const dot =
+            document.createElement("div");
 
+        dot.className =
+            "cursor-dot";
 
-            document
-                .querySelectorAll("[data-i18n]")
-                .forEach(element => {
+        document.body.appendChild(
+            dot
+        );
+    }
 
-                    const key =
-                        element.dataset.i18n;
+    if (!cursorRing) {
 
-                    if (
-                        translations[language] &&
-                        translations[language][key]
-                    ) {
+        const ring =
+            document.createElement("div");
 
-                        element.innerHTML =
-                            translations[language][key];
+        ring.className =
+            "cursor-ring";
 
-                    }
+        document.body.appendChild(
+            ring
+        );
+    }
 
-                });
+    const dot =
+        document.querySelector(
+            ".cursor-dot"
+        );
 
+    const ring =
+        document.querySelector(
+            ".cursor-ring"
+        );
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let ringX = 0;
+    let ringY = 0;
+
+    document.addEventListener(
+        "mousemove",
+        event => {
+
+            mouseX =
+                event.clientX;
+
+            mouseY =
+                event.clientY;
+
+            dot.style.left =
+                `${mouseX}px`;
+
+            dot.style.top =
+                `${mouseY}px`;
+
+            /*
+               Move ambient light toward cursor.
+            */
+
+            lightOrb.style.transform =
+                `translate(
+                    ${mouseX - window.innerWidth / 2}px,
+                    ${mouseY - window.innerHeight / 2}px
+                )`;
         }
+    );
 
+    function animateCursor() {
 
-        document
-            .getElementById("languageBtn")
-            .addEventListener(
-                "click",
-                () => {
+        ringX +=
+            (mouseX - ringX) * .15;
 
-                    applyLanguage(
-                        currentLanguage === "it"
-                            ? "en"
-                            : "it"
-                    );
+        ringY +=
+            (mouseY - ringY) * .15;
 
-                }
-            );
+        ring.style.left =
+            `${ringX}px`;
 
+        ring.style.top =
+            `${ringY}px`;
 
-        applyLanguage(
-            currentLanguage
+        requestAnimationFrame(
+            animateCursor
         );
+    }
 
+    animateCursor();
 
-        /* =========================================================
-           MOBILE MENU
-           ========================================================= */
+    document.addEventListener(
+        "mouseover",
+        event => {
 
-        const mobileMenu =
-            document.getElementById(
-                "mobile-menu"
-            );
+            if (
+                event.target.closest(
+                    "a,button,.gallery-item,.skill-card"
+                )
+            ) {
 
-        mobileMenu.addEventListener(
-            "click",
-            () => {
-
-                const links =
-                    document.querySelector(
-                        ".nav-links"
-                    );
-
-                const visible =
-                    getComputedStyle(
-                        links
-                    ).display !== "none";
-
-                if (visible) {
-
-                    links.style.display =
-                        "none";
-
-                } else {
-
-                    links.style.display =
-                        "flex";
-
-                    links.style.position =
-                        "absolute";
-
-                    links.style.top =
-                        "70px";
-
-                    links.style.left =
-                        "14px";
-
-                    links.style.right =
-                        "14px";
-
-                    links.style.padding =
-                        "12px";
-
-                    links.style.flexDirection =
-                        "column";
-
-                    links.style.alignItems =
-                        "stretch";
-
-                    links.style.background =
-                        "var(--panel-solid)";
-
-                    links.style.border =
-                        "1px solid var(--border)";
-
-                    links.style.borderRadius =
-                        "18px";
-
-                    links.style.backdropFilter =
-                        "blur(20px)";
-
-                }
-
-            }
-        );
-
-
-        /* =========================================================
-           CLOSE MOBILE MENU WHEN LINK CLICKED
-           ========================================================= */
-
-        document
-            .querySelectorAll(".nav-link")
-            .forEach(link => {
-
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        if (
-                            window.innerWidth <= 900
-                        ) {
-
-                            document
-                                .querySelector(
-                                    ".nav-links"
-                                )
-                                .style.display =
-                                "none";
-
-                        }
-
-                    }
+                document.body.classList.add(
+                    "cursor-hover"
                 );
 
-            });
+            }
+        }
+    );
 
+    document.addEventListener(
+        "mouseout",
+        event => {
 
-        /* =========================================================
-           ESC / GENERAL CLEANUP
-           ========================================================= */
+            if (
+                event.target.closest(
+                    "a,button,.gallery-item,.skill-card"
+                )
+            ) {
 
-        window.addEventListener(
-            "resize",
-            () => {
-
-                if (
-                    window.innerWidth > 900
-                ) {
-
-                    const links =
-                        document.querySelector(
-                            ".nav-links"
-                        );
-
-                    links.style.display =
-                        "";
-
-                    links.style.position =
-                        "";
-
-                    links.style.top =
-                        "";
-
-                    links.style.left =
-                        "";
-
-                    links.style.right =
-                        "";
-
-                    links.style.padding =
-                        "";
-
-                    links.style.flexDirection =
-                        "";
-
-                    links.style.background =
-                        "";
-
-                    links.style.border =
-                        "";
-
-                }
+                document.body.classList.remove(
+                    "cursor-hover"
+                );
 
             }
+        }
+    );
+}
+
+
+/* =========================================================
+   REVEAL ON SCROLL
+   ========================================================= */
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: .12
+        }
+    );
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(
+        element =>
+            revealObserver.observe(
+                element
+            )
+    );
+
+
+/* =========================================================
+   PRELOADER
+   ========================================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        setTimeout(
+            () => {
+
+                document
+                    .getElementById(
+                        "preloader"
+                    )
+                    .classList.add(
+                        "hidden"
+                    );
+
+            },
+            650
         );
 
-    </script>
+    }
+);
+
+
+/* =========================================================
+   INITIAL GALLERY
+   ========================================================= */
+
+loadGallery();
+
+
+/* =========================================================
+   PERIODIC GALLERY REFRESH
+   ========================================================= */
+
+/*
+   If you add a new GFX while the site is open,
+   check again every 5 minutes.
+
+   Visitors loading the page always get the
+   newest list immediately.
+*/
+
+setInterval(
+    loadGallery,
+    5 * 60 * 1000
+);
+
+</script>
 
 </body>
 </html>
