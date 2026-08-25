@@ -2,19 +2,12 @@
 <html lang="it" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#050505">
 
 <title>Falcon | David</title>
-
 <meta name="description" content="Portfolio di David — Python Developer, GFX Artist, Discord Specialist e Creative Developer.">
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://kibrisky1.github.io/Falcon/">
-<meta property="og:title" content="Falcon | David">
-<meta property="og:description" content="Python Developer, GFX Artist & Discord Specialist.">
-<meta property="og:image" content="https://kibrisky1.github.io/Falcon/dark.png">
 
 <link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
 <link rel="icon" href="dark.png" id="favicon">
@@ -33,47 +26,55 @@
 >
 
 <style>
-/* ==========================================================
-   FALCON / BLACK & WHITE EDITION
-   ========================================================== */
+/* =========================================================
+   FALCON / NEW YORK NIGHT
+   ========================================================= */
 
 :root{
-    --black:#050505;
-    --black2:#0a0a0a;
-    --black3:#101010;
+    --bg:#040404;
+    --bg2:#090909;
+    --panel:rgba(12,12,12,.72);
+    --panel-soft:rgba(255,255,255,.035);
 
     --white:#f5f5f5;
-    --white2:#cfcfcf;
+    --white2:#d0d0d0;
     --grey:#929292;
-    --grey2:#626262;
+    --grey2:#5f5f5f;
 
-    --line:rgba(255,255,255,.10);
-    --lineStrong:rgba(255,255,255,.19);
+    --line:rgba(255,255,255,.09);
+    --line2:rgba(255,255,255,.17);
 
-    --panel:rgba(14,14,14,.68);
-    --panelSolid:#111111;
-
-    --radius:24px;
-    --radiusSmall:14px;
-
-    --maxWidth:1180px;
-
-    --ease:cubic-bezier(.16,1,.3,1);
-    --elastic:cubic-bezier(.34,1.56,.64,1);
+    --max:1180px;
 
     --display:"Space Grotesk",sans-serif;
     --body:"Inter",sans-serif;
     --mono:"DM Mono",monospace;
+
+    --radius:24px;
+
+    --ease:cubic-bezier(.16,1,.3,1);
+    --elastic:cubic-bezier(.34,1.56,.64,1);
 }
 
-/* ==========================================================
-   RESET
-   ========================================================== */
+[data-theme="light"]{
+    --bg:#e9e9e9;
+    --bg2:#f7f7f7;
+    --panel:rgba(255,255,255,.72);
+    --panel-soft:rgba(0,0,0,.035);
+
+    --white:#111;
+    --white2:#292929;
+    --grey:#5c5c5c;
+    --grey2:#858585;
+
+    --line:rgba(0,0,0,.09);
+    --line2:rgba(0,0,0,.17);
+}
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html{
@@ -85,8 +86,8 @@ body{
     min-height:100vh;
     overflow-x:hidden;
 
+    background:var(--bg);
     color:var(--white);
-    background:var(--black);
 
     font-family:var(--body);
     line-height:1.6;
@@ -95,7 +96,7 @@ body{
     text-rendering:optimizeLegibility;
 }
 
-body.no-scroll{
+body.locked{
     overflow:hidden;
 }
 
@@ -105,8 +106,8 @@ a{
 }
 
 button{
-    color:inherit;
     font:inherit;
+    color:inherit;
 }
 
 img{
@@ -118,321 +119,98 @@ img{
     color:#000;
 }
 
-::-webkit-scrollbar{
-    width:8px;
-}
+/* =========================================================
+   SCENE
+   ========================================================= */
 
-::-webkit-scrollbar-track{
-    background:#050505;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#292929;
-    border-radius:999px;
-}
-
-/* ==========================================================
-   ENVIRONMENT
-   ========================================================== */
-
-#environment{
+#scene{
     position:fixed;
     inset:0;
+
     z-index:-20;
-    overflow:hidden;
-    background:
-        radial-gradient(
-            ellipse at 50% 0%,
-            #1a1a1a 0%,
-            #0b0b0b 35%,
-            #050505 78%
-        );
-}
 
-/* distant wall light */
-
-.environmentLight{
-    position:absolute;
-
-    width:70vw;
-    height:38vh;
-
-    left:50%;
-    top:-8vh;
-
-    transform:translateX(-50%);
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(255,255,255,.08),
-            transparent 72%
-        );
-
-    filter:blur(35px);
-}
-
-/* architecture */
-
-.architecture{
-    position:absolute;
-    inset:0;
     pointer-events:none;
-}
 
-.wall{
-    position:absolute;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.035),
-            rgba(255,255,255,.008)
-        );
-}
-
-.wall.left{
-    left:0;
-    top:0;
-    width:27%;
-    height:100%;
-}
-
-.wall.right{
-    right:0;
-    top:0;
-    width:24%;
-    height:100%;
-}
-
-.wall.back{
-    left:27%;
-    right:24%;
-    top:0;
-    height:74%;
-}
-
-.floor{
-    position:absolute;
-    left:-10%;
-    right:-10%;
-    bottom:-15%;
-    height:45%;
+    overflow:hidden;
 
     background:
         linear-gradient(
-            180deg,
-            rgba(255,255,255,.025),
-            transparent
+            to bottom,
+            #060606 0%,
+            #0b0b0b 35%,
+            #090909 70%,
+            #030303 100%
         );
-
-    transform:
-        perspective(1000px)
-        rotateX(64deg);
-
-    transform-origin:bottom;
 }
 
-/* vertical architecture lines */
-
-.archLine{
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:1px;
-    background:linear-gradient(
-        rgba(255,255,255,.07),
-        rgba(255,255,255,.01)
-    );
-}
-
-.archLine.a{
-    left:27%;
-}
-
-.archLine.b{
-    right:24%;
-}
-
-.archLine.c{
-    left:50%;
-    opacity:.22;
-}
-
-/* rain */
-
-#rainCanvas{
+#cityCanvas{
     position:absolute;
     inset:0;
+
     width:100%;
     height:100%;
-    opacity:.43;
 }
 
-/* mist */
-
-.mist{
+.sceneMist{
     position:absolute;
-    left:-10%;
-    right:-10%;
-    height:180px;
-    bottom:8%;
+
+    left:-20%;
+    right:-20%;
+    bottom:18%;
+
+    height:28%;
 
     background:
         linear-gradient(
             to top,
-            rgba(255,255,255,.035),
+            rgba(255,255,255,.025),
             transparent
         );
 
-    filter:blur(25px);
+    filter:blur(24px);
 
     animation:
-        mistMove 14s ease-in-out infinite alternate;
+        mistDrift 16s ease-in-out infinite alternate;
 }
 
-@keyframes mistMove{
-    from{
-        transform:translateX(-3%);
-    }
-
-    to{
-        transform:translateX(4%);
-    }
+@keyframes mistDrift{
+    from{transform:translateX(-2%)}
+    to{transform:translateX(3%)}
 }
 
-/* vignette */
-
-#environment::after{
-    content:"";
+.sceneVignette{
     position:absolute;
     inset:0;
 
-    pointer-events:none;
-
     background:
         radial-gradient(
-            ellipse,
-            transparent 40%,
-            rgba(0,0,0,.65) 100%
+            ellipse at center,
+            transparent 35%,
+            rgba(0,0,0,.82) 100%
         );
 }
 
-/* ==========================================================
-   SOUND TOGGLE
-   ========================================================== */
+/* =========================================================
+   RAIN
+   ========================================================= */
 
-.soundControl{
+#rainCanvas{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    opacity:.38;
+}
+
+/* =========================================================
+   POINTER LIGHT
+   ========================================================= */
+
+#pointerLight{
     position:fixed;
 
-    right:22px;
-    bottom:22px;
-
-    z-index:2000;
-
-    width:46px;
-    height:46px;
-
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:50%;
-
-    display:grid;
-    place-items:center;
-
-    background:rgba(8,8,8,.65);
-
-    backdrop-filter:blur(16px);
-
-    cursor:pointer;
-
-    transition:
-        transform .4s var(--elastic),
-        border-color .3s,
-        background .3s;
-}
-
-.soundControl:hover{
-    transform:translateY(-4px) scale(1.06);
-    border-color:rgba(255,255,255,.35);
-    background:rgba(255,255,255,.08);
-}
-
-.soundBars{
-    display:flex;
-    gap:2px;
-    align-items:end;
-    height:14px;
-}
-
-.soundBar{
-    width:2px;
-    height:5px;
-    background:#fff;
-    transition:.3s;
-}
-
-.soundControl.active .soundBar:nth-child(1){
-    animation:soundBar .55s ease-in-out infinite alternate;
-}
-
-.soundControl.active .soundBar:nth-child(2){
-    animation:soundBar .35s ease-in-out infinite alternate;
-}
-
-.soundControl.active .soundBar:nth-child(3){
-    animation:soundBar .45s ease-in-out infinite alternate;
-}
-
-@keyframes soundBar{
-    to{
-        height:14px;
-    }
-}
-
-/* ==========================================================
-   CURSOR
-   ========================================================== */
-
-.cursorDot,
-.cursorRing{
-    position:fixed;
-    left:0;
-    top:0;
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
-    z-index:6000;
-
-    border-radius:50%;
-}
-
-.cursorDot{
-    width:5px;
-    height:5px;
-    background:white;
-}
-
-.cursorRing{
-    width:34px;
-    height:34px;
-    border:1px solid rgba(255,255,255,.35);
-
-    transition:
-        width .4s var(--elastic),
-        height .4s var(--elastic),
-        background .3s,
-        border-color .3s;
-}
-
-body.cursorHover .cursorRing{
-    width:64px;
-    height:64px;
-    border-color:#fff;
-    background:rgba(255,255,255,.035);
-}
-
-#cursorLight{
-    position:fixed;
     width:420px;
     height:420px;
 
@@ -440,9 +218,6 @@ body.cursorHover .cursorRing{
     top:0;
 
     transform:translate(-50%,-50%);
-
-    pointer-events:none;
-    z-index:-1;
 
     border-radius:50%;
 
@@ -452,125 +227,200 @@ body.cursorHover .cursorRing{
             rgba(255,255,255,.035),
             transparent 68%
         );
+
+    pointer-events:none;
+
+    z-index:-1;
 }
 
-/* ==========================================================
-   CONTAINER
-   ========================================================== */
+/* =========================================================
+   CURSOR
+   ========================================================= */
 
-.container{
-    width:min(
-        var(--maxWidth),
-        calc(100% - 44px)
-    );
+/*
+   CSS alone hides the cursor on coarse pointers.
+   JS below also performs a runtime pointer check.
+*/
 
-    margin:0 auto;
+.customCursor{
+    position:fixed;
+
+    display:none;
+
+    pointer-events:none;
+
+    z-index:9999;
+
+    transform:translate(-50%,-50%);
 }
 
-/* ==========================================================
-   PROGRESS
-   ========================================================== */
+@media (hover:hover) and (pointer:fine){
+
+    .customCursor{
+        display:block;
+    }
+
+    body.customCursorEnabled *{
+        cursor:none !important;
+    }
+
+    #cursorCore{
+        width:5px;
+        height:5px;
+
+        border-radius:50%;
+
+        background:#fff;
+    }
+
+    #cursorHalo{
+        width:34px;
+        height:34px;
+
+        border:
+            1px solid
+            rgba(255,255,255,.4);
+
+        border-radius:50%;
+
+        transition:
+            width .4s var(--elastic),
+            height .4s var(--elastic),
+            border-color .3s,
+            background .3s;
+    }
+
+    body.cursorHover #cursorHalo{
+        width:62px;
+        height:62px;
+
+        border-color:#fff;
+
+        background:
+            rgba(255,255,255,.035);
+    }
+}
+
+/* =========================================================
+   TOP PROGRESS
+   ========================================================= */
 
 #progress{
     position:fixed;
-    top:0;
+
     left:0;
+    top:0;
 
     width:100%;
     height:2px;
-
-    z-index:5000;
 
     background:#fff;
 
     transform-origin:left;
     transform:scaleX(0);
 
-    box-shadow:
-        0 0 15px rgba(255,255,255,.45);
+    z-index:5000;
 }
 
-/* ==========================================================
-   HEADER
-   ========================================================== */
+/* =========================================================
+   NAV
+   ========================================================= */
 
 header{
     position:fixed;
-    left:0;
+
     top:0;
+    left:0;
 
     width:100%;
 
     z-index:3000;
 
-    padding:18px 0;
+    padding:20px 0;
 
     transition:
-        padding .5s var(--ease),
-        background .5s,
-        backdrop-filter .5s,
-        border .5s;
+        padding .45s var(--ease),
+        background .45s,
+        border-color .45s;
 }
 
 header.scrolled{
     padding:11px 0;
 
     background:
-        rgba(5,5,5,.68);
+        rgba(5,5,5,.72);
 
     border-bottom:
-        1px solid
-        var(--line);
+        1px solid var(--line);
 
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+}
+
+[data-theme="light"] header.scrolled{
+    background:
+        rgba(238,238,238,.72);
+}
+
+.container{
+    width:
+        min(
+            var(--max),
+            calc(100% - 44px)
+        );
+
+    margin:auto;
 }
 
 .nav{
+    height:45px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     gap:20px;
 }
 
 .brand{
     display:flex;
+
     align-items:center;
+
     gap:10px;
 
     font:
-        700 15px
+        700 14px
         var(--display);
 
-    letter-spacing:.06em;
+    letter-spacing:.05em;
 }
 
-.brandLogo{
-    width:36px;
-    height:36px;
+.brand img{
+    width:35px;
+    height:35px;
 
     object-fit:contain;
 
-    border-radius:10px;
+    border-radius:9px;
 
     filter:
-        brightness(1.1)
-        drop-shadow(
-            0 0 12px rgba(255,255,255,.12)
-        );
+        grayscale(1)
+        brightness(1.15);
 
     transition:
         transform .4s var(--elastic),
-        filter .4s;
+        filter .3s;
 }
 
-.brand:hover .brandLogo{
+.brand:hover img{
     transform:scale(1.06);
-    filter:
-        brightness(1.35)
-        drop-shadow(
-            0 0 20px rgba(255,255,255,.2)
-        );
+    filter:grayscale(1) brightness(1.5);
 }
 
 .navLinks{
@@ -580,24 +430,25 @@ header.scrolled{
 
 .navLinks a{
     padding:8px 12px;
-    border-radius:9px;
 
     color:var(--grey);
 
     font-size:11px;
     font-weight:600;
 
+    border-radius:9px;
+
     transition:
-        color .3s,
-        background .3s;
+        color .25s,
+        background .25s;
 }
 
 .navLinks a:hover{
     color:#fff;
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.05);
 }
 
-.navControls{
+.navActions{
     display:flex;
     gap:7px;
 }
@@ -605,31 +456,34 @@ header.scrolled{
 .navButton{
     min-height:38px;
 
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.025);
-
-    border-radius:10px;
+    padding:0 11px;
 
     display:flex;
     align-items:center;
     gap:7px;
 
-    padding:0 11px;
+    border:
+        1px solid var(--line);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    cursor:pointer;
 
     font-size:10px;
     font-weight:700;
 
-    cursor:pointer;
-
     transition:
         transform .35s var(--elastic),
-        border-color .3s,
-        background .3s;
+        border-color .25s,
+        background .25s;
 }
 
 .navButton:hover{
     transform:translateY(-2px);
-    border-color:var(--lineStrong);
+    border-color:var(--line2);
     background:rgba(255,255,255,.06);
 }
 
@@ -637,7 +491,7 @@ header.scrolled{
     font-family:var(--mono);
 }
 
-@media(max-width:780px){
+@media(max-width:760px){
 
     .navLinks{
         display:none;
@@ -645,172 +499,167 @@ header.scrolled{
 
     .container{
         width:min(
-            var(--maxWidth),
+            var(--max),
             calc(100% - 28px)
         );
     }
 }
 
-/* ==========================================================
+/* =========================================================
    HERO
-   ========================================================== */
+   ========================================================= */
 
 .hero{
     min-height:100svh;
 
     display:flex;
+
     align-items:center;
 
     padding:
-        150px 0
-        100px;
+        125px 0 90px;
 
     position:relative;
-
-    overflow:hidden;
 }
 
 .heroContent{
     position:relative;
+
     z-index:5;
+
     max-width:760px;
 }
 
-.heroEyebrow{
+.eyebrow{
     display:inline-flex;
+
     align-items:center;
-    gap:9px;
+
+    gap:8px;
 
     color:var(--grey);
 
     font:
-        10px
-        var(--mono);
+        10px var(--mono);
 
     letter-spacing:.13em;
 
-    text-transform:uppercase;
-
     animation:
-        heroReveal 1.1s var(--ease) both;
+        heroUp 1s var(--ease) both;
 }
 
-.liveDot{
+.eyebrowDot{
     width:6px;
     height:6px;
+
     border-radius:50%;
+
     background:#fff;
 
-    box-shadow:
-        0 0 0 0 rgba(255,255,255,.4);
-
     animation:
-        livePulse 2s infinite;
+        dotPulse 2.2s infinite;
 }
 
-@keyframes livePulse{
+@keyframes dotPulse{
+
     70%{
         box-shadow:
-            0 0 0 8px rgba(255,255,255,0);
+            0 0 0 8px
+            rgba(255,255,255,0);
     }
 }
 
 .heroTitle{
-    margin-top:28px;
+    margin-top:25px;
 
     font:
-        700 clamp(4rem,10vw,8.7rem)/.84
+        700
+        clamp(4rem,10vw,8.4rem)/.84
         var(--display);
 
     letter-spacing:-.075em;
 
-    max-width:900px;
-
     animation:
-        heroTitle 1.4s var(--ease) .08s both;
+        titleReveal
+        1.25s
+        var(--ease)
+        .1s
+        both;
 }
 
-.heroTitle .thin{
+.heroTitle span{
+    display:inline-block;
+}
+
+.heroTitle .outline{
     color:transparent;
 
     -webkit-text-stroke:
-        1px rgba(255,255,255,.24);
+        1px rgba(255,255,255,.23);
 }
 
-.heroTitle .white{
+.heroTitle .bright{
     color:#fff;
 }
 
-@keyframes heroTitle{
+[data-theme="light"] .heroTitle .outline{
+    -webkit-text-stroke:
+        1px rgba(0,0,0,.2);
+}
+
+@keyframes titleReveal{
 
     0%{
         opacity:0;
 
         transform:
-            translateY(70px)
-            scale(.93);
+            translateY(75px)
+            scale(.9);
 
         filter:
             blur(18px);
 
         clip-path:
-            polygon(
-                0 100%,
-                100% 100%,
-                100% 100%,
-                0 100%
-            );
+            inset(100% 0 0 0);
     }
 
-    45%{
+    60%{
         opacity:1;
-
-        clip-path:
-            polygon(
-                0 0,
-                100% 0,
-                100% 100%,
-                0 100%
-            );
-    }
-
-    100%{
-        opacity:1;
-
-        transform:none;
-
-        filter:none;
 
         clip-path:
             inset(0);
     }
+
+    100%{
+        transform:none;
+        filter:none;
+        opacity:1;
+    }
 }
 
-.heroDescription{
-    margin-top:30px;
-
+.heroText{
     max-width:580px;
+
+    margin-top:28px;
 
     color:var(--grey);
 
     font-size:15px;
 
     animation:
-        descriptionReveal
-        1.1s
+        textReveal
+        1s
         var(--ease)
-        .38s
+        .4s
         both;
 }
 
-@keyframes descriptionReveal{
+@keyframes textReveal{
 
     from{
         opacity:0;
         transform:
-            translateY(35px)
-            scale(.97);
-
+            translateY(28px);
         clip-path:
             inset(0 0 100% 0);
     }
@@ -823,12 +672,12 @@ header.scrolled{
     }
 }
 
-.heroActions{
-    margin-top:30px;
-
+.heroButtons{
     display:flex;
     gap:10px;
     flex-wrap:wrap;
+
+    margin-top:29px;
 
     animation:
         buttonsReveal
@@ -843,8 +692,8 @@ header.scrolled{
     from{
         opacity:0;
         transform:
-            translateY(25px)
-            scale(.93);
+            translateY(24px)
+            scale(.94);
     }
 
     to{
@@ -853,21 +702,20 @@ header.scrolled{
     }
 }
 
-.btn{
+.button{
     min-height:48px;
 
-    padding:
-        0 18px;
-
     display:inline-flex;
+
     align-items:center;
     gap:9px;
+
+    padding:0 18px;
 
     border:
         1px solid var(--line);
 
-    border-radius:
-        13px;
+    border-radius:13px;
 
     background:
         rgba(255,255,255,.035);
@@ -877,97 +725,89 @@ header.scrolled{
 
     cursor:pointer;
 
-    position:relative;
     overflow:hidden;
+
+    position:relative;
 
     transition:
         transform .4s var(--elastic),
         background .3s,
-        border-color .3s,
-        box-shadow .4s;
+        border-color .3s;
 }
 
-.btn::after{
+.button::after{
     content:"";
 
     position:absolute;
 
     top:0;
-    left:-100%;
+    left:-110%;
 
     width:70%;
     height:100%;
 
     background:
         linear-gradient(
-            100deg,
+            110deg,
             transparent,
             rgba(255,255,255,.18),
             transparent
         );
 
-    transform:skewX(-20deg);
+    transform:skewX(-18deg);
 
     transition:left .9s var(--ease);
 }
 
-.btn:hover::after{
+.button:hover::after{
     left:140%;
 }
 
-.btn:hover{
+.button:hover{
     transform:translateY(-4px);
-    border-color:var(--lineStrong);
+    border-color:var(--line2);
 }
 
-.btnPrimary{
+.buttonPrimary{
     background:#fff;
-    color:#050505;
+    color:#000;
     border-color:#fff;
 }
 
-.btnPrimary:hover{
-    box-shadow:
-        0 18px 45px rgba(255,255,255,.12);
+.buttonSecondary:hover{
+    background:rgba(255,255,255,.07);
 }
 
-.btnSecondary{
-    background:rgba(255,255,255,.025);
-}
+/* =========================================================
+   LOGO
+   ========================================================= */
 
-.btnSecondary:hover{
-    background:rgba(255,255,255,.065);
-}
-
-/* ==========================================================
-   HERO IMAGE
-   ========================================================== */
-
-.heroVisual{
+.logoDisplay{
     position:absolute;
 
-    width:min(60vw,700px);
-    height:min(60vw,700px);
+    width:min(56vw,680px);
+    height:min(56vw,680px);
 
-    right:-160px;
+    right:-170px;
     top:50%;
 
     transform:
         translateY(-50%);
 
-    z-index:1;
+    z-index:2;
 
     pointer-events:none;
 
     transition:
-        transform .3s ease-out;
+        transform .25s ease-out;
 }
 
-.heroVisual::before{
+.logoDisplay::before{
     content:"";
 
     position:absolute;
-    inset:12%;
+
+    inset:10%;
 
     border-radius:50%;
 
@@ -975,20 +815,24 @@ header.scrolled{
         radial-gradient(
             circle,
             rgba(255,255,255,.12),
-            rgba(255,255,255,.02) 36%,
+            rgba(255,255,255,.015) 38%,
             transparent 70%
         );
 
-    filter:blur(26px);
+    filter:blur(30px);
 
     animation:
-        logoAura 5s ease-in-out infinite alternate;
+        logoPulse
+        5s
+        ease-in-out
+        infinite alternate;
 }
 
-@keyframes logoAura{
+@keyframes logoPulse{
+
     from{
-        transform:scale(.92);
-        opacity:.55;
+        transform:scale(.9);
+        opacity:.5;
     }
 
     to{
@@ -997,126 +841,128 @@ header.scrolled{
     }
 }
 
-.heroLogoOrbit{
+.logoOrbit{
     position:absolute;
-    inset:12%;
+
+    inset:13%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.09);
 
     animation:
-        rotateOrbit 28s linear infinite;
+        orbit 26s linear infinite;
 }
 
-.heroLogoOrbit::before{
+.logoOrbit::before{
     content:"";
 
     position:absolute;
 
-    width:7px;
-    height:7px;
+    width:6px;
+    height:6px;
 
     border-radius:50%;
 
     background:#fff;
 
     box-shadow:
-        0 0 20px #fff;
+        0 0 16px #fff;
 
     top:17px;
     left:50%;
 }
 
-.heroLogoOrbit.two{
-    inset:21%;
+.logoOrbit.second{
+    inset:23%;
+
     border-style:dashed;
-    border-color:rgba(255,255,255,.08);
+
+    border-color:
+        rgba(255,255,255,.07);
 
     animation:
-        rotateOrbitReverse
-        21s
-        linear
-        infinite;
+        orbitReverse
+        20s linear infinite;
 }
 
-@keyframes rotateOrbit{
-    to{
-        transform:rotate(360deg);
-    }
+@keyframes orbit{
+    to{transform:rotate(360deg)}
 }
 
-@keyframes rotateOrbitReverse{
-    to{
-        transform:rotate(-360deg);
-    }
+@keyframes orbitReverse{
+    to{transform:rotate(-360deg)}
 }
 
-.heroLogo{
+.logoImage{
     position:absolute;
 
     width:42%;
 
-    top:29%;
     left:29%;
+    top:29%;
 
     object-fit:contain;
 
     filter:
         grayscale(1)
-        brightness(1.1)
+        brightness(1.08)
         drop-shadow(
-            0 0 40px rgba(255,255,255,.12)
+            0 0 50px rgba(255,255,255,.13)
         );
 
     animation:
-        logoArrival
-        1.6s
+        logoEnter
+        1.5s
         var(--ease)
-        .2s
+        .16s
         both,
         logoFloat
-        5.5s
-        ease-in-out
-        1.8s
-        infinite;
+        5.5s ease-in-out
+        1.7s infinite;
 }
 
-@keyframes logoArrival{
+@keyframes logoEnter{
 
-    0%{
+    from{
         opacity:0;
 
         transform:
-            scale(.3)
-            rotate(-8deg);
+            scale(.25)
+            rotate(-9deg);
 
         filter:
-            blur(20px)
-            brightness(2);
+            blur(22px)
+            brightness(1.8);
     }
 
     50%{
         opacity:1;
 
         transform:
-            scale(1.07)
+            scale(1.06)
             rotate(1deg);
 
         filter:
             blur(0)
-            brightness(1.4);
+            brightness(1.35);
     }
 
-    100%{
+    to{
         opacity:1;
+
         transform:
             scale(1)
             rotate(0);
 
         filter:
             grayscale(1)
-            brightness(1.1)
+            brightness(1.08)
             drop-shadow(
-                0 0 40px rgba(255,255,255,.12)
+                0 0 50px
+                rgba(255,255,255,.13)
             );
     }
 }
@@ -1128,37 +974,36 @@ header.scrolled{
     }
 
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-13px);
     }
 }
 
-.logoSweep{
+.logoScan{
     position:absolute;
 
-    top:18%;
-    left:20%;
+    width:55%;
 
-    width:60%;
     height:1px;
+
+    left:22.5%;
+    top:20%;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            #fff,
+            white,
             transparent
         );
-
-    box-shadow:
-        0 0 15px rgba(255,255,255,.4);
 
     opacity:0;
 
     animation:
-        sweep 5s ease-in-out infinite;
+        logoScan
+        4.5s ease-in-out infinite;
 }
 
-@keyframes sweep{
+@keyframes logoScan{
 
     0%,100%{
         transform:translateY(0);
@@ -1166,13 +1011,12 @@ header.scrolled{
     }
 
     15%{
-        opacity:.75;
+        opacity:.7;
     }
 
     55%{
-        transform:
-            translateY(270px);
-        opacity:.15;
+        transform:translateY(270px);
+        opacity:.1;
     }
 
     75%{
@@ -1182,19 +1026,21 @@ header.scrolled{
 
 @media(max-width:900px){
 
-    .heroVisual{
-        width:560px;
-        height:560px;
-        right:-240px;
-        opacity:.35;
+    .logoDisplay{
+        width:540px;
+        height:540px;
+
+        right:-250px;
+
+        opacity:.4;
     }
 }
 
-@media(max-width:650px){
+@media(max-width:640px){
 
     .hero{
         padding:
-            140px 0 100px;
+            120px 0 90px;
     }
 
     .heroTitle{
@@ -1202,100 +1048,96 @@ header.scrolled{
             clamp(
                 3.5rem,
                 18vw,
-                5.4rem
+                5.5rem
             );
     }
 
-    .heroVisual{
-        width:470px;
-        height:470px;
-        right:-270px;
-        top:38%;
-        opacity:.19;
+    .logoDisplay{
+        width:430px;
+        height:430px;
+
+        right:-240px;
+
+        top:42%;
+
+        opacity:.18;
     }
 }
 
-/* ==========================================================
-   SECTION
-   ========================================================== */
+/* =========================================================
+   SECTIONS
+   ========================================================= */
 
 section{
     position:relative;
 
     padding:
-        120px 0;
+        110px 0;
 }
 
-.sectionHeader{
+.sectionHeading{
     display:flex;
 
-    justify-content:space-between;
     align-items:flex-end;
+
+    justify-content:space-between;
 
     gap:30px;
 
-    margin-bottom:
-        42px;
+    margin-bottom:42px;
 }
 
-.kicker{
+.sectionKicker{
+    font:
+        10px var(--mono);
+
+    letter-spacing:.17em;
+
     color:var(--white2);
 
-    font:
-        10px
-        var(--mono);
-
-    letter-spacing:.18em;
-
-    text-transform:uppercase;
-
-    margin-bottom:
-        10px;
+    margin-bottom:10px;
 }
 
 .sectionTitle{
     font:
         700
-        clamp(2.5rem,6vw,4.8rem)/.92
+        clamp(2.4rem,6vw,4.8rem)/.93
         var(--display);
 
     letter-spacing:-.06em;
 }
 
 .sectionDescription{
-    max-width:460px;
+    max-width:470px;
 
     color:var(--grey);
 
     font-size:13px;
 }
 
-/* ==========================================================
-   PAGE REVEAL
-   ========================================================== */
+/* =========================================================
+   REVEAL
+   ========================================================= */
 
 .reveal{
     opacity:0;
 
     transform:
-        translateY(65px)
+        translateY(60px)
         scale(.96)
-        rotateX(8deg);
-
-    transform-origin:
-        center bottom;
+        rotateX(7deg);
 
     filter:
-        blur(10px);
+        blur(9px);
 
     clip-path:
-        inset(20% 0 0 0);
+        inset(15% 0 0 0);
 
     transition:
-        opacity 1s var(--ease),
-        transform 1.15s var(--ease),
-        filter 1s var(--ease),
-        clip-path 1.15s var(--ease);
+        opacity .9s var(--ease),
+        transform 1.05s var(--ease),
+        filter .9s var(--ease),
+        clip-path 1.05s var(--ease);
 }
 
 .reveal.visible{
@@ -1309,12 +1151,13 @@ section{
         inset(0);
 }
 
-/* ==========================================================
+/* =========================================================
    STATS
-   ========================================================== */
+   ========================================================= */
 
 .stats{
     display:grid;
+
     grid-template-columns:
         repeat(4,1fr);
 
@@ -1322,11 +1165,7 @@ section{
 }
 
 .stat{
-    min-height:
-        155px;
-
-    padding:
-        23px;
+    min-height:145px;
 
     border:
         1px solid var(--line);
@@ -1338,13 +1177,14 @@ section{
         rgba(255,255,255,.025);
 
     backdrop-filter:
-        blur(15px);
+        blur(16px);
 
-    position:
-        relative;
+    padding:
+        22px;
 
-    overflow:
-        hidden;
+    position:relative;
+
+    overflow:hidden;
 
     transition:
         transform .45s var(--elastic),
@@ -1352,18 +1192,18 @@ section{
         background .3s;
 }
 
-.stat::before{
+.stat::after{
     content:"";
 
     position:absolute;
 
-    width:190px;
-    height:190px;
-
-    right:-120px;
-    top:-120px;
+    width:180px;
+    height:180px;
 
     border-radius:50%;
+
+    top:-120px;
+    right:-100px;
 
     background:
         radial-gradient(
@@ -1377,34 +1217,40 @@ section{
 }
 
 .stat:hover{
-    transform:translateY(-8px);
-    border-color:var(--lineStrong);
-    background:rgba(255,255,255,.045);
+    transform:
+        translateY(-8px);
+
+    border-color:
+        var(--line2);
+
+    background:
+        rgba(255,255,255,.045);
 }
 
-.stat:hover::before{
-    transform:scale(1.6);
+.stat:hover::after{
+    transform:
+        scale(1.8);
 }
 
 .statNumber{
     font:
-        700 39px
+        700 37px
         var(--display);
 
     letter-spacing:
-        -.055em;
+        -.05em;
 }
 
-.statLabel{
+.statText{
+    margin-top:
+        7px;
+
     color:
         var(--grey);
 
     font:
-        10px
+        9px
         var(--mono);
-
-    margin-top:
-        9px;
 
     letter-spacing:
         .05em;
@@ -1418,21 +1264,20 @@ section{
     }
 }
 
-/* ==========================================================
+/* =========================================================
    SKILLS
-   ========================================================== */
+   ========================================================= */
 
 .skillsLayout{
     display:grid;
 
     grid-template-columns:
-        1.15fr
-        .85fr;
+        1.15fr .85fr;
 
     gap:16px;
 }
 
-.skillsPanel{
+.panel{
     border:
         1px solid var(--line);
 
@@ -1461,9 +1306,11 @@ section{
     border-bottom:0;
 }
 
-.skillTop{
+.skillHead{
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     margin-bottom:
@@ -1472,7 +1319,9 @@ section{
 
 .skillName{
     display:flex;
+
     align-items:center;
+
     gap:10px;
 
     font-size:
@@ -1483,11 +1332,14 @@ section{
 }
 
 .skillName i{
-    width:18px;
-    color:#fff;
+    width:
+        18px;
+
+    color:
+        #fff;
 }
 
-.skillPercent{
+.skillValue{
     color:
         var(--grey2);
 
@@ -1501,10 +1353,10 @@ section{
         4px;
 
     border-radius:
-        999px;
+        99px;
 
     background:
-        rgba(255,255,255,.06);
+        rgba(255,255,255,.055);
 
     overflow:
         hidden;
@@ -1515,6 +1367,12 @@ section{
 
     width:var(--amount);
 
+    transform:
+        scaleX(0);
+
+    transform-origin:
+        left;
+
     background:
         linear-gradient(
             90deg,
@@ -1522,75 +1380,71 @@ section{
             #fff
         );
 
-    transform:
-        scaleX(0);
-
-    transform-origin:
-        left;
-
     transition:
         transform 1.4s var(--ease);
 }
 
-.skillsPanel.visible .skillFill{
+.panel.visible .skillFill{
     transform:
         scaleX(1);
 }
 
-.skillsQuote{
-    height:100%;
-    min-height:300px;
+.quotePanel{
+    min-height:100%;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:space-between;
 }
 
-.quoteText{
-    max-width:400px;
+.quote{
+    max-width:
+        420px;
 
     font:
-        600 27px/1.15
+        600 27px/1.12
         var(--display);
 
     letter-spacing:
         -.045em;
 }
 
-.quoteMark{
+.quoteSign{
+    color:
+        rgba(255,255,255,.08);
+
     font:
         700 90px
         var(--display);
-
-    color:
-        rgba(255,255,255,.08);
 
     line-height:
         .7;
 }
 
-.miniTerminal{
-    border:
-        1px solid var(--line);
-
-    background:
-        rgba(0,0,0,.25);
-
-    border-radius:
-        14px;
+.terminal{
+    margin-top:
+        30px;
 
     padding:
         14px;
 
-    font:
-        10px/1.9
-        var(--mono);
+    background:
+        rgba(0,0,0,.23);
+
+    border:
+        1px solid var(--line);
+
+    border-radius:
+        13px;
 
     color:
         var(--grey);
 
-    margin-top:
-        30px;
+    font:
+        10px/1.9
+        var(--mono);
 }
 
 @media(max-width:800px){
@@ -1601,9 +1455,9 @@ section{
     }
 }
 
-/* ==========================================================
+/* =========================================================
    PROJECTS
-   ========================================================== */
+   ========================================================= */
 
 .projects{
     display:grid;
@@ -1615,12 +1469,14 @@ section{
 }
 
 .project{
-    min-height:300px;
+    min-height:290px;
 
     position:relative;
 
+    overflow:hidden;
+
     padding:
-        28px;
+        27px;
 
     border:
         1px solid var(--line);
@@ -1628,14 +1484,8 @@ section{
     border-radius:
         var(--radius);
 
-    overflow:hidden;
-
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.04),
-            rgba(255,255,255,.015)
-        );
+        rgba(255,255,255,.025);
 
     backdrop-filter:
         blur(18px);
@@ -1644,8 +1494,8 @@ section{
         preserve-3d;
 
     transition:
-        transform .25s ease-out,
-        border-color .35s,
+        transform .2s ease-out,
+        border-color .3s,
         box-shadow .45s;
 }
 
@@ -1654,14 +1504,11 @@ section{
 
     position:absolute;
 
-    width:420px;
-    height:420px;
+    width:430px;
+    height:430px;
 
-    left:
-        var(--px,50%);
-
-    top:
-        var(--py,50%);
+    left:var(--px,50%);
+    top:var(--py,50%);
 
     transform:
         translate(-50%,-50%);
@@ -1669,54 +1516,62 @@ section{
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,.07),
+            rgba(255,255,255,.065),
             transparent 70%
         );
 
-    pointer-events:none;
+    pointer-events:
+        none;
 }
 
 .project:hover{
     border-color:
-        rgba(255,255,255,.25);
+        rgba(255,255,255,.24);
 
     box-shadow:
-        0 30px 90px
-        rgba(0,0,0,.3);
+        0 30px 80px
+        rgba(0,0,0,.28);
 }
 
-.projectNumber{
+.projectId{
+    color:
+        var(--grey2);
+
     font:
         9px
         var(--mono);
 
     letter-spacing:
-        .12em;
-
-    color:
-        var(--grey2);
+        .1em;
 }
 
 .projectIcon{
-    width:52px;
-    height:52px;
+    width:
+        52px;
 
-    display:grid;
-    place-items:center;
+    height:
+        52px;
 
-    margin-top:55px;
+    margin-top:
+        52px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
 
     border:
-        1px solid var(--lineStrong);
+        1px solid var(--line2);
 
     border-radius:
-        16px;
-
-    font-size:
-        18px;
+        15px;
 
     transform:
         translateZ(25px);
+
+    font-size:
+        17px;
 }
 
 .project h3{
@@ -1724,7 +1579,7 @@ section{
         20px;
 
     font:
-        700 27px
+        700 26px
         var(--display);
 
     letter-spacing:
@@ -1749,16 +1604,16 @@ section{
     position:absolute;
 
     right:
-        24px;
+        23px;
 
     bottom:
-        24px;
+        23px;
 
     width:
-        38px;
+        37px;
 
     height:
-        38px;
+        37px;
 
     border:
         1px solid var(--line);
@@ -1781,11 +1636,9 @@ section{
     transform:
         rotate(-45deg);
 
-    background:
-        #fff;
+    color:#000;
 
-    color:
-        #000;
+    background:#fff;
 }
 
 @media(max-width:700px){
@@ -1796,40 +1649,105 @@ section{
     }
 }
 
-/* ==========================================================
+/* =========================================================
    GALLERY
-   ========================================================== */
+   ========================================================= */
 
-.galleryTop{
+.galleryBar{
     display:flex;
-
-    justify-content:space-between;
 
     align-items:center;
 
+    justify-content:space-between;
+
     gap:15px;
+
+    padding:
+        12px 14px;
 
     margin-bottom:
         18px;
 
-    padding:
-        13px 14px;
-
     border:
         1px solid var(--line);
+
+    border-radius:
+        13px;
 
     background:
         rgba(255,255,255,.02);
 
-    border-radius:
-        14px;
+    color:
+        var(--grey);
 
     font:
         9px
         var(--mono);
+}
 
-    color:
-        var(--grey);
+.galleryWrap{
+    position:relative;
+}
+
+.galleryParticles{
+    position:absolute;
+
+    inset:-20px;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+.galleryParticle{
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    opacity:.2;
+
+    animation:
+        galleryParticle
+        var(--duration)
+        ease-in-out
+        infinite;
+
+    animation-delay:
+        var(--delay);
+}
+
+@keyframes galleryParticle{
+
+    0%,100%{
+        transform:
+            translate3d(0,15px,0)
+            scale(.6);
+
+        opacity:0;
+    }
+
+    30%{
+        opacity:.25;
+    }
+
+    65%{
+        opacity:.15;
+    }
+
+    100%{
+        transform:
+            translate3d(var(--dx),-80px,0)
+            scale(1.3);
+
+        opacity:0;
+    }
 }
 
 .galleryGrid{
@@ -1857,21 +1775,24 @@ section{
         18px;
 
     background:
-        #101010;
+        #111;
 
     cursor:pointer;
 
-    transform:
-        translateY(45px)
-        scale(.94);
-
     opacity:0;
+
+    transform:
+        translateY(42px)
+        scale(.93);
 
     filter:
         blur(10px);
 
     animation:
-        galleryEnter .9s var(--ease) forwards;
+        galleryIn
+        .95s
+        var(--ease)
+        forwards;
 
     animation-delay:
         var(--delay);
@@ -1882,35 +1803,76 @@ section{
         box-shadow .45s;
 }
 
-@keyframes galleryEnter{
+@keyframes galleryIn{
 
-    from{
+    0%{
         opacity:0;
+
         transform:
-            translateY(45px)
-            scale(.94);
+            translateY(42px)
+            scale(.93);
+
         filter:
             blur(10px);
     }
 
-    62%{
+    55%{
+        opacity:1;
+
         transform:
             translateY(-5px)
-            scale(1.015);
+            scale(1.012);
+
         filter:
             blur(0);
     }
 
-    to{
+    100%{
         opacity:1;
         transform:none;
         filter:none;
     }
 }
 
-.galleryItem::before{
-    content:"";
+.galleryItem:hover{
+    transform:
+        translateY(-8px)
+        scale(1.008);
 
+    border-color:
+        rgba(255,255,255,.28);
+
+    box-shadow:
+        0 28px 80px
+        rgba(0,0,0,.4);
+}
+
+.galleryItem img{
+    display:block;
+
+    width:100%;
+
+    aspect-ratio:
+        4/3;
+
+    object-fit:cover;
+
+    transition:
+        transform .85s var(--ease),
+        filter .55s;
+}
+
+.galleryItem:hover img{
+    transform:
+        scale(1.05);
+
+    filter:
+        grayscale(1)
+        brightness(.72)
+        contrast(1.08);
+}
+
+.galleryShine{
     position:absolute;
 
     inset:0;
@@ -1922,49 +1884,21 @@ section{
     background:
         linear-gradient(
             115deg,
-            transparent 30%,
-            rgba(255,255,255,.08) 45%,
-            transparent 58%
+            transparent 25%,
+            rgba(255,255,255,.12) 46%,
+            transparent 57%
         );
 
     transform:
-        translateX(-120%);
+        translateX(-130%);
 
     transition:
         transform 1s var(--ease);
 }
 
-.galleryItem:hover::before{
+.galleryItem:hover .galleryShine{
     transform:
-        translateX(120%);
-}
-
-.galleryItem img{
-    width:
-        100%;
-
-    display:
-        block;
-
-    aspect-ratio:
-        4 / 3;
-
-    object-fit:
-        cover;
-
-    transition:
-        transform .9s var(--ease),
-        filter .6s;
-}
-
-.galleryItem:hover img{
-    transform:
-        scale(1.045);
-
-    filter:
-        grayscale(1)
-        contrast(1.08)
-        brightness(.78);
+        translateX(130%);
 }
 
 .galleryOverlay{
@@ -1977,7 +1911,7 @@ section{
     z-index:3;
 
     padding:
-        45px 17px 15px;
+        42px 16px 15px;
 
     background:
         linear-gradient(
@@ -1991,7 +1925,7 @@ section{
         translateY(10px);
 
     transition:
-        opacity .35s,
+        opacity .3s,
         transform .35s var(--ease);
 }
 
@@ -2007,11 +1941,9 @@ section{
 }
 
 .galleryMeta{
-    margin-top:
-        3px;
+    margin-top:3px;
 
-    color:
-        #aaa;
+    color:#aaa;
 
     font:
         9px
@@ -2033,7 +1965,7 @@ section{
         18px;
 
     padding:
-        60px 20px;
+        55px 20px;
 }
 
 @media(max-width:900px){
@@ -2050,101 +1982,18 @@ section{
         grid-template-columns:
             1fr;
     }
-
-    .galleryItem img{
-        aspect-ratio:
-            16 / 10;
-    }
 }
 
-/* ==========================================================
-   GALLERY PARTICLES
-   ========================================================== */
-
-.galleryScene{
-    position:relative;
-}
-
-.galleryParticles{
-    position:absolute;
-
-    inset:-25px;
-
-    pointer-events:none;
-
-    overflow:visible;
-
-    z-index:-1;
-}
-
-.galleryParticle{
-    position:absolute;
-
-    width:2px;
-    height:2px;
-
-    background:#fff;
-
-    border-radius:50%;
-
-    opacity:
-        var(--opacity);
-
-    box-shadow:
-        0 0 9px rgba(255,255,255,.4);
-
-    animation:
-        galleryDust
-        var(--duration)
-        ease-in-out
-        infinite;
-}
-
-@keyframes galleryDust{
-
-    0%,100%{
-        transform:
-            translate3d(0,10px,0)
-            scale(.7);
-
-        opacity:
-            0;
-    }
-
-    30%{
-        opacity:
-            var(--opacity);
-    }
-
-    65%{
-        opacity:
-            calc(var(--opacity) * .8);
-    }
-
-    100%{
-        transform:
-            translate3d(
-                var(--driftX),
-                -65px,
-                0
-            )
-            scale(1.2);
-
-        opacity:
-            0;
-    }
-}
-
-/* ==========================================================
+/* =========================================================
    LIGHTBOX
-   ========================================================== */
+   ========================================================= */
 
 .lightbox{
     position:fixed;
 
     inset:0;
 
-    z-index:5000;
+    z-index:7000;
 
     display:flex;
 
@@ -2152,21 +2001,21 @@ section{
 
     justify-content:center;
 
-    padding:30px;
+    padding:20px;
 
     background:
-        rgba(0,0,0,.92);
+        rgba(0,0,0,.94);
 
     backdrop-filter:
-        blur(24px);
+        blur(25px);
 
     opacity:0;
 
     visibility:hidden;
 
     transition:
-        opacity .45s var(--ease),
-        visibility .45s;
+        opacity .4s,
+        visibility .4s;
 }
 
 .lightbox.open{
@@ -2181,26 +2030,25 @@ section{
     max-height:
         82vh;
 
-    object-fit:
-        contain;
+    object-fit:contain;
 
     border-radius:
         12px;
 
     box-shadow:
-        0 40px 120px rgba(0,0,0,.75);
+        0 45px 140px
+        rgba(0,0,0,.75);
 
     transform:
-        scale(.87)
-        translateY(25px)
-        rotateX(7deg);
+        scale(.86)
+        translateY(25px);
 
     filter:
-        blur(8px);
+        blur(9px);
 
     transition:
         transform .7s var(--elastic),
-        filter .55s var(--ease);
+        filter .6s var(--ease);
 }
 
 .lightbox.open .lightboxImage{
@@ -2211,24 +2059,31 @@ section{
 .lightboxButton{
     position:absolute;
 
-    width:45px;
-    height:45px;
+    width:
+        45px;
+
+    height:
+        45px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
 
     border:
-        1px solid rgba(255,255,255,.16);
+        1px solid rgba(255,255,255,.15);
 
-    border-radius:50%;
+    border-radius:
+        50%;
 
     background:
         rgba(255,255,255,.06);
 
-    display:grid;
-    place-items:center;
-
     cursor:pointer;
 
     transition:
-        .4s var(--elastic);
+        .35s var(--elastic);
 }
 
 .lightboxButton:hover{
@@ -2238,57 +2093,56 @@ section{
 }
 
 #lightboxClose{
-    right:24px;
-    top:24px;
+    right:22px;
+    top:22px;
 }
 
-#lightboxPrev{
-    left:24px;
+#lightboxPrevious{
+    left:22px;
     top:50%;
 }
 
 #lightboxNext{
-    right:24px;
+    right:22px;
     top:50%;
 }
 
 .lightboxInfo{
     position:absolute;
 
-    bottom:25px;
     left:50%;
+    bottom:22px;
 
     transform:
         translateX(-50%);
 
-    color:#aaa;
+    color:#a2a2a2;
 
     font:
         9px
         var(--mono);
 
-    white-space:
-        nowrap;
+    white-space:nowrap;
 }
 
 @media(max-width:650px){
 
     .lightbox{
-        padding:12px;
+        padding:10px;
     }
 
-    #lightboxPrev{
-        left:10px;
+    #lightboxPrevious{
+        left:8px;
     }
 
     #lightboxNext{
-        right:10px;
+        right:8px;
     }
 }
 
-/* ==========================================================
+/* =========================================================
    CONTACT
-   ========================================================== */
+   ========================================================= */
 
 .contact{
     padding-bottom:
@@ -2301,7 +2155,7 @@ section{
     overflow:hidden;
 
     padding:
-        60px;
+        58px;
 
     border:
         1px solid var(--line);
@@ -2325,12 +2179,14 @@ section{
 
     position:absolute;
 
-    left:-40%;
-
+    left:-45%;
     top:0;
 
-    width:28%;
+    width:25%;
     height:100%;
+
+    transform:
+        skewX(-18deg);
 
     background:
         linear-gradient(
@@ -2340,18 +2196,16 @@ section{
             transparent
         );
 
-    transform:
-        skewX(-15deg);
-
     animation:
         contactSweep
-        8s ease-in-out infinite;
+        8s ease-in-out
+        infinite;
 }
 
 @keyframes contactSweep{
 
     0%,35%{
-        left:-40%;
+        left:-45%;
     }
 
     72%,100%{
@@ -2360,10 +2214,12 @@ section{
 }
 
 .contactTitle{
-    max-width:780px;
+    max-width:
+        800px;
 
     font:
-        700 clamp(3rem,8vw,7rem)/.88
+        700
+        clamp(3rem,8vw,7rem)/.88
         var(--display);
 
     letter-spacing:
@@ -2371,23 +2227,20 @@ section{
 }
 
 .contactText{
-    color:
-        var(--grey);
-
     max-width:
-        560px;
+        570px;
 
     margin:
         25px 0;
+
+    color:
+        var(--grey);
 
     font-size:
         13px;
 }
 
 .discordButton{
-    position:relative;
-    z-index:2;
-
     display:inline-flex;
 
     align-items:center;
@@ -2398,7 +2251,7 @@ section{
         13px 14px;
 
     border:
-        1px solid var(--lineStrong);
+        1px solid var(--line2);
 
     border-radius:
         13px;
@@ -2406,13 +2259,12 @@ section{
     background:
         rgba(255,255,255,.04);
 
-    cursor:
-        pointer;
+    cursor:pointer;
 
     transition:
         transform .4s var(--elastic),
         background .3s,
-        border .3s;
+        border-color .3s;
 }
 
 .discordButton:hover{
@@ -2420,7 +2272,7 @@ section{
         translateY(-4px);
 
     background:
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.075);
 
     border-color:
         rgba(255,255,255,.3);
@@ -2432,18 +2284,97 @@ section{
         var(--mono);
 }
 
-.copyIcon{
-    color:
-        #fff;
+/* =========================================================
+   SOUND
+   ========================================================= */
+
+.soundButton{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:3500;
+
+    width:45px;
+    height:45px;
+
+    display:grid;
+    place-items:center;
+
+    border:
+        1px solid var(--line2);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(5,5,5,.7);
+
+    backdrop-filter:
+        blur(15px);
+
+    cursor:pointer;
+
+    transition:
+        .35s var(--elastic);
 }
 
-/* ==========================================================
+.soundButton:hover{
+    transform:
+        translateY(-4px) scale(1.06);
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.soundBars{
+    height:13px;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:2px;
+}
+
+.soundBars i{
+    display:block;
+
+    width:2px;
+    height:5px;
+
+    background:#fff;
+}
+
+.soundButton.active .soundBars i:nth-child(1){
+    animation:
+        audioBar .45s ease-in-out infinite alternate;
+}
+
+.soundButton.active .soundBars i:nth-child(2){
+    animation:
+        audioBar .3s ease-in-out infinite alternate;
+}
+
+.soundButton.active .soundBars i:nth-child(3){
+    animation:
+        audioBar .5s ease-in-out infinite alternate;
+}
+
+@keyframes audioBar{
+    to{
+        height:13px;
+    }
+}
+
+/* =========================================================
    FOOTER
-   ========================================================== */
+   ========================================================= */
 
 footer{
     padding:
-        28px 0 45px;
+        30px 0 44px;
 
     border-top:
         1px solid var(--line);
@@ -2456,14 +2387,14 @@ footer{
         var(--mono);
 }
 
-.footer{
+.footerInner{
     display:flex;
+
+    align-items:center;
 
     justify-content:space-between;
 
     gap:20px;
-
-    align-items:center;
 }
 
 .footerBrand{
@@ -2475,10 +2406,10 @@ footer{
 
     .contactCard{
         padding:
-            36px 25px;
+            38px 25px;
     }
 
-    .footer{
+    .footerInner{
         flex-direction:
             column;
 
@@ -2487,15 +2418,15 @@ footer{
     }
 }
 
-/* ==========================================================
-   COPY TOAST
-   ========================================================== */
+/* =========================================================
+   TOAST
+   ========================================================= */
 
-.copyToast{
+.toast{
     position:fixed;
 
     left:50%;
-    bottom:28px;
+    bottom:30px;
 
     transform:
         translate(-50%,20px);
@@ -2504,56 +2435,82 @@ footer{
 
     pointer-events:none;
 
-    z-index:7000;
+    z-index:8000;
 
     padding:
         11px 15px;
 
     border:
-        1px solid rgba(255,255,255,.12);
+        1px solid rgba(255,255,255,.13);
 
     border-radius:
         11px;
 
     background:
-        rgba(12,12,12,.92);
+        rgba(8,8,8,.93);
 
     backdrop-filter:
-        blur(15px);
+        blur(16px);
 
     font:
         10px
         var(--mono);
 
     transition:
-        opacity .35s,
-        transform .35s var(--elastic);
+        .4s var(--elastic);
 }
 
-.copyToast.show{
+.toast.show{
     opacity:1;
 
     transform:
         translate(-50%,0);
 }
 
-/* ==========================================================
+/* =========================================================
+   SMALL DEVICES
+   ========================================================= */
+
+@media(max-width:560px){
+
+    section{
+        padding:
+            90px 0;
+    }
+
+    .sectionHeader{
+        display:block;
+    }
+
+    .sectionDescription{
+        margin-top:14px;
+    }
+}
+
+/* =========================================================
    REDUCED MOTION
-   ========================================================== */
+   ========================================================= */
 
 @media(prefers-reduced-motion:reduce){
 
     *,
     *::before,
     *::after{
-        animation-duration:.001ms!important;
-        animation-iteration-count:1!important;
-        transition-duration:.001ms!important;
-        scroll-behavior:auto!important;
+        animation-duration:
+            .001ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .001ms !important;
+
+        scroll-behavior:
+            auto !important;
     }
 
     #rainCanvas,
-    #particles{
+    #cityCanvas{
         display:none;
     }
 }
@@ -2562,108 +2519,120 @@ footer{
 
 <body>
 
-<!-- ==========================================================
-     ENVIRONMENT
-     ========================================================== -->
+<!-- =========================================================
+     BACKGROUND ENVIRONMENT
+     ========================================================= -->
 
-<div id="environment">
+<div id="scene">
 
-    <div class="environmentLight"></div>
-
-    <div class="architecture">
-
-        <div class="wall left"></div>
-        <div class="wall right"></div>
-        <div class="wall back"></div>
-
-        <div class="archLine a"></div>
-        <div class="archLine b"></div>
-        <div class="archLine c"></div>
-
-        <div class="floor"></div>
-
-    </div>
+    <canvas id="cityCanvas"></canvas>
 
     <canvas id="rainCanvas"></canvas>
 
-    <div class="mist"></div>
+    <div class="sceneMist"></div>
+
+    <div class="sceneVignette"></div>
 
 </div>
 
 
-<div id="cursorLight"></div>
-
-<canvas id="particles"></canvas>
+<div id="pointerLight"></div>
 
 
-<!-- ==========================================================
-     HEADER
-     ========================================================== -->
+<!-- =========================================================
+     TOP HEADER
+     ========================================================= -->
 
 <header id="header">
 
     <div class="container nav">
 
-        <a href="#home" class="brand">
+        <a
+            href="#home"
+            class="brand"
+        >
 
             <img
                 id="navLogo"
-                class="brandLogo"
                 src="dark.png"
                 alt="Falcon"
             >
 
-            <span>FALCON</span>
+            <span>
+                FALCON
+            </span>
 
         </a>
 
 
         <nav class="navLinks">
 
-            <a href="#about" data-i18n="nav.about">
+            <a
+                href="#about"
+                data-i18n="nav.about"
+            >
                 Profilo
             </a>
 
-            <a href="#skills" data-i18n="nav.skills">
+            <a
+                href="#skills"
+                data-i18n="nav.skills"
+            >
                 Competenze
             </a>
 
-            <a href="#projects" data-i18n="nav.projects">
+            <a
+                href="#projects"
+                data-i18n="nav.projects"
+            >
                 Progetti
             </a>
 
-            <a href="#gallery" data-i18n="nav.gallery">
+            <a
+                href="#gallery"
+                data-i18n="nav.gallery"
+            >
                 Gallery
             </a>
 
-            <a href="#contact" data-i18n="nav.contact">
+            <a
+                href="#contact"
+                data-i18n="nav.contact"
+            >
                 Contatti
             </a>
 
         </nav>
 
 
-        <div class="navControls">
+        <div class="navActions">
 
             <button
-                class="navButton"
                 id="languageButton"
+                class="navButton"
                 type="button"
             >
+
                 <i class="fa-solid fa-language"></i>
-                <span id="languageLabel">IT</span>
+
+                <span id="languageLabel">
+                    IT
+                </span>
+
             </button>
 
+
             <button
-                class="navButton"
                 id="themeButton"
+                class="navButton"
                 type="button"
-                aria-label="Tema"
             >
+
                 <i
-                    class="fa-solid fa-volume-high"
                     id="themeIcon"
+                    class="fa-solid fa-sun"
                 ></i>
+
             </button>
 
         </div>
@@ -2673,52 +2642,56 @@ footer{
 </header>
 
 
-<!-- ==========================================================
-     SOUND BUTTON
-     ========================================================== -->
+<!-- =========================================================
+     SOUND
+     ========================================================= -->
 
 <button
-    class="soundControl"
-    id="soundControl"
+    class="soundButton"
+    id="soundButton"
+    type="button"
     aria-label="Attiva audio"
-    title="Audio"
 >
+
     <span class="soundBars">
-        <span class="soundBar"></span>
-        <span class="soundBar"></span>
-        <span class="soundBar"></span>
+
+        <i></i>
+        <i></i>
+        <i></i>
+
     </span>
+
 </button>
 
 
-<!-- ==========================================================
-     CURSOR
-     ========================================================== -->
+<!-- =========================================================
+     CUSTOM CURSOR
+     ========================================================= -->
 
 <div
-    class="cursorDot"
-    id="cursorDot"
+    class="customCursor"
+    id="cursorCore"
 ></div>
 
 <div
-    class="cursorRing"
-    id="cursorRing"
+    class="customCursor"
+    id="cursorHalo"
 ></div>
 
 
 <div id="progress"></div>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      MAIN
-     ========================================================== -->
+     ========================================================= -->
 
 <main id="home">
 
 
-<!-- ==========================================================
+<!-- =========================================================
      HERO
-     ========================================================== -->
+     ========================================================= -->
 
 <section class="hero">
 
@@ -2726,9 +2699,9 @@ footer{
 
         <div class="heroContent">
 
-            <div class="heroEyebrow">
+            <div class="eyebrow">
 
-                <span class="liveDot"></span>
+                <span class="eyebrowDot"></span>
 
                 <span
                     data-i18n="hero.status"
@@ -2741,27 +2714,19 @@ footer{
 
             <h1 class="heroTitle">
 
-                <span
-                    data-i18n="hero.line1"
-                    class="white"
-                >
+                <span class="bright">
                     BUILD.
                 </span>
 
                 <br>
 
-                <span
-                    data-i18n="hero.line2"
-                >
+                <span>
                     CREATE.
                 </span>
 
                 <br>
 
-                <span
-                    data-i18n="hero.line3"
-                    class="thin"
-                >
+                <span class="outline">
                     EVOLVE.
                 </span>
 
@@ -2769,7 +2734,7 @@ footer{
 
 
             <p
-                class="heroDescription"
+                class="heroText"
                 data-i18n="hero.description"
             >
                 Sviluppatore Python, GFX Artist e creatore di
@@ -2778,11 +2743,11 @@ footer{
             </p>
 
 
-            <div class="heroActions">
+            <div class="heroButtons">
 
                 <a
-                    class="btn btnPrimary magnetic"
                     href="#projects"
+                    class="button buttonPrimary magnetic"
                 >
 
                     <i class="fa-solid fa-arrow-down"></i>
@@ -2797,8 +2762,8 @@ footer{
 
 
                 <a
-                    class="btn btnSecondary magnetic"
                     href="#contact"
+                    class="button buttonSecondary magnetic"
                 >
 
                     <i class="fa-regular fa-paper-plane"></i>
@@ -2819,35 +2784,35 @@ footer{
 
 
     <!-- ======================================================
-         LOGO ENVIRONMENT
+         LOGO
          ====================================================== -->
 
     <div
-        class="heroVisual"
-        id="heroVisual"
+        id="logoDisplay"
+        class="logoDisplay"
     >
 
-        <div class="heroLogoOrbit"></div>
+        <div class="logoOrbit"></div>
 
-        <div class="heroLogoOrbit two"></div>
+        <div class="logoOrbit second"></div>
 
         <img
             id="heroLogo"
-            class="heroLogo"
+            class="logoImage"
             src="dark.png"
             alt="Falcon"
         >
 
-        <div class="logoSweep"></div>
+        <div class="logoScan"></div>
 
     </div>
 
 </section>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      ABOUT
-     ========================================================== -->
+     ========================================================= -->
 
 <section id="about">
 
@@ -2857,7 +2822,7 @@ footer{
 
             <div>
 
-                <div class="kicker">
+                <div class="sectionKicker">
                     01 // PROFILE
                 </div>
 
@@ -2883,7 +2848,7 @@ footer{
                 </div>
 
                 <div
-                    class="statLabel"
+                    class="statText"
                     data-i18n="stats.projects"
                 >
                     IDEE TRASFORMATE IN PROGETTI
@@ -2899,7 +2864,7 @@ footer{
                 </div>
 
                 <div
-                    class="statLabel"
+                    class="statText"
                     data-i18n="stats.creative"
                 >
                     CREATIVE MODE
@@ -2915,7 +2880,7 @@ footer{
                 </div>
 
                 <div
-                    class="statLabel"
+                    class="statText"
                     data-i18n="stats.learning"
                 >
                     APPRENDIMENTO CONTINUO
@@ -2931,7 +2896,7 @@ footer{
                 </div>
 
                 <div
-                    class="statLabel"
+                    class="statText"
                     data-i18n="stats.mindset"
                 >
                     MINDSET: BUILD BETTER
@@ -2946,9 +2911,9 @@ footer{
 </section>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      SKILLS
-     ========================================================== -->
+     ========================================================= -->
 
 <section id="skills">
 
@@ -2958,7 +2923,7 @@ footer{
 
             <div>
 
-                <div class="kicker">
+                <div class="sectionKicker">
                     02 // SKILLS
                 </div>
 
@@ -2985,21 +2950,25 @@ footer{
 
         <div class="skillsLayout">
 
-            <div
-                class="skillsPanel reveal"
-            >
+
+            <div class="panel reveal">
 
                 <div class="skill">
 
-                    <div class="skillTop">
+                    <div class="skillHead">
+
                         <div class="skillName">
+
                             <i class="fa-brands fa-python"></i>
+
                             Python
+
                         </div>
 
-                        <span class="skillPercent">
+                        <div class="skillValue">
                             91%
-                        </span>
+                        </div>
+
                     </div>
 
                     <div class="skillTrack">
@@ -3014,15 +2983,20 @@ footer{
 
                 <div class="skill">
 
-                    <div class="skillTop">
+                    <div class="skillHead">
+
                         <div class="skillName">
+
                             <i class="fa-solid fa-code"></i>
+
                             Web
+
                         </div>
 
-                        <span class="skillPercent">
+                        <div class="skillValue">
                             87%
-                        </span>
+                        </div>
+
                     </div>
 
                     <div class="skillTrack">
@@ -3037,15 +3011,20 @@ footer{
 
                 <div class="skill">
 
-                    <div class="skillTop">
+                    <div class="skillHead">
+
                         <div class="skillName">
+
                             <i class="fa-solid fa-cube"></i>
+
                             Roblox / Lua
+
                         </div>
 
-                        <span class="skillPercent">
+                        <div class="skillValue">
                             89%
-                        </span>
+                        </div>
+
                     </div>
 
                     <div class="skillTrack">
@@ -3060,15 +3039,20 @@ footer{
 
                 <div class="skill">
 
-                    <div class="skillTop">
+                    <div class="skillHead">
+
                         <div class="skillName">
+
                             <i class="fa-solid fa-palette"></i>
+
                             GFX
+
                         </div>
 
-                        <span class="skillPercent">
+                        <div class="skillValue">
                             86%
-                        </span>
+                        </div>
+
                     </div>
 
                     <div class="skillTrack">
@@ -3083,15 +3067,20 @@ footer{
 
                 <div class="skill">
 
-                    <div class="skillTop">
+                    <div class="skillHead">
+
                         <div class="skillName">
+
                             <i class="fa-brands fa-discord"></i>
+
                             Discord
+
                         </div>
 
-                        <span class="skillPercent">
+                        <div class="skillValue">
                             94%
-                        </span>
+                        </div>
+
                     </div>
 
                     <div class="skillTrack">
@@ -3107,17 +3096,17 @@ footer{
 
 
             <div
-                class="skillsPanel skillsQuote reveal"
+                class="panel quotePanel reveal"
             >
 
                 <div>
 
-                    <div class="kicker">
-                        PERSONAL PRINCIPLE
+                    <div class="sectionKicker">
+                        PRINCIPLE
                     </div>
 
                     <div
-                        class="quoteText"
+                        class="quote"
                         data-i18n="skills.quote"
                     >
                         “Non mi interessa soltanto
@@ -3128,31 +3117,22 @@ footer{
                 </div>
 
 
-                <div class="miniTerminal">
+                <div class="terminal">
 
                     <div>
-                        systems.check()
+                        environment = rain
                     </div>
 
                     <div>
-                        Python:
-                        <span style="color:#fff">
-                            READY
-                        </span>
+                        creativity = active
                     </div>
 
                     <div>
-                        Creative:
-                        <span style="color:#fff">
-                            ACTIVE
-                        </span>
+                        curiosity = infinite
                     </div>
 
                     <div>
-                        Curiosity:
-                        <span style="color:#fff">
-                            INFINITE
-                        </span>
+                        status = ready
                     </div>
 
                 </div>
@@ -3166,9 +3146,9 @@ footer{
 </section>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      PROJECTS
-     ========================================================== -->
+     ========================================================= -->
 
 <section id="projects">
 
@@ -3178,7 +3158,7 @@ footer{
 
             <div>
 
-                <div class="kicker">
+                <div class="sectionKicker">
                     03 // PROJECTS
                 </div>
 
@@ -3196,8 +3176,8 @@ footer{
                 class="sectionDescription"
                 data-i18n="projects.description"
             >
-                Progetti personali, sistemi sperimentali
-                e idee trasformate in qualcosa di utilizzabile.
+                Progetti personali, sistemi sperimentali e
+                idee trasformate in qualcosa di utilizzabile.
             </p>
 
         </div>
@@ -3208,7 +3188,7 @@ footer{
 
             <article class="project tilt reveal">
 
-                <div class="projectNumber">
+                <div class="projectId">
                     PROJECT // 001
                 </div>
 
@@ -3216,9 +3196,7 @@ footer{
                     <i class="fa-brands fa-discord"></i>
                 </div>
 
-                <h3>
-                    KibMod
-                </h3>
+                <h3>KibMod</h3>
 
                 <p
                     data-i18n="project.kibmod"
@@ -3237,7 +3215,7 @@ footer{
 
             <article class="project tilt reveal">
 
-                <div class="projectNumber">
+                <div class="projectId">
                     PROJECT // 002
                 </div>
 
@@ -3245,16 +3223,14 @@ footer{
                     <i class="fa-solid fa-gamepad"></i>
                 </div>
 
-                <h3>
-                    Roblox Systems
-                </h3>
+                <h3>Roblox Systems</h3>
 
                 <p
                     data-i18n="project.roblox"
                 >
                     Sistemi di gameplay, GUI,
-                    animazioni e meccaniche
-                    costruite con Roblox Lua.
+                    animazioni e meccaniche costruite
+                    con Roblox Lua.
                 </p>
 
                 <div class="projectArrow">
@@ -3266,7 +3242,7 @@ footer{
 
             <article class="project tilt reveal">
 
-                <div class="projectNumber">
+                <div class="projectId">
                     PROJECT // 003
                 </div>
 
@@ -3274,16 +3250,13 @@ footer{
                     <i class="fa-brands fa-python"></i>
                 </div>
 
-                <h3>
-                    Python Tools
-                </h3>
+                <h3>Python Tools</h3>
 
                 <p
                     data-i18n="project.python"
                 >
-                    Tool, automazioni,
-                    esperimenti AI e applicazioni
-                    desktop costruite in Python.
+                    Tool, automazioni, esperimenti AI e
+                    applicazioni desktop costruite in Python.
                 </p>
 
                 <div class="projectArrow">
@@ -3295,7 +3268,7 @@ footer{
 
             <article class="project tilt reveal">
 
-                <div class="projectNumber">
+                <div class="projectId">
                     PROJECT // 004
                 </div>
 
@@ -3303,16 +3276,13 @@ footer{
                     <i class="fa-solid fa-image"></i>
                 </div>
 
-                <h3>
-                    Visual Lab
-                </h3>
+                <h3>Visual Lab</h3>
 
                 <p
                     data-i18n="project.visual"
                 >
-                    Esperimenti grafici,
-                    GFX, interfacce e visual
-                    design sperimentale.
+                    Esperimenti grafici, GFX, interfacce
+                    e visual design sperimentale.
                 </p>
 
                 <div class="projectArrow">
@@ -3320,7 +3290,6 @@ footer{
                 </div>
 
             </article>
-
 
         </div>
 
@@ -3329,9 +3298,9 @@ footer{
 </section>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      GALLERY
-     ========================================================== -->
+     ========================================================= -->
 
 <section id="gallery">
 
@@ -3341,7 +3310,7 @@ footer{
 
             <div>
 
-                <div class="kicker">
+                <div class="sectionKicker">
                     04 // GALLERY
                 </div>
 
@@ -3367,7 +3336,7 @@ footer{
         </div>
 
 
-        <div class="galleryScene">
+        <div class="galleryWrap">
 
             <div
                 class="galleryParticles"
@@ -3375,12 +3344,10 @@ footer{
             ></div>
 
 
-            <div
-                class="galleryTop reveal"
-            >
+            <div class="galleryBar reveal">
 
                 <span id="galleryStatus">
-                    SCANSIONE...
+                    SCANNING...
                 </span>
 
                 <span>
@@ -3391,14 +3358,14 @@ footer{
 
 
             <div
-                class="galleryGrid"
                 id="galleryGrid"
+                class="galleryGrid"
             ></div>
 
 
             <div
-                class="galleryEmpty"
                 id="galleryEmpty"
+                class="galleryEmpty"
                 data-i18n="gallery.empty"
             >
                 Nessuna immagine trovata.
@@ -3411,17 +3378,20 @@ footer{
 </section>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      CONTACT
-     ========================================================== -->
+     ========================================================= -->
 
-<section id="contact" class="contact">
+<section
+    id="contact"
+    class="contact"
+>
 
     <div class="container">
 
         <div class="contactCard reveal">
 
-            <div class="kicker">
+            <div class="sectionKicker">
                 05 // CONTACT
             </div>
 
@@ -3433,6 +3403,7 @@ footer{
                 Facciamola
                 esistere.
             </h2>
+
 
             <p
                 class="contactText"
@@ -3456,9 +3427,7 @@ footer{
                     for_david_k
                 </span>
 
-                <span class="copyIcon">
-                    <i class="fa-regular fa-copy"></i>
-                </span>
+                <i class="fa-regular fa-copy"></i>
 
             </button>
 
@@ -3468,24 +3437,24 @@ footer{
 
 </section>
 
+
 </main>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      FOOTER
-     ========================================================== -->
+     ========================================================= -->
 
 <footer>
 
-    <div class="container footer">
+    <div class="container footerInner">
 
-        <div class="footerBrand">
+        <div>
             FALCON / DAVID
         </div>
 
         <div>
-            BLACK / WHITE / RAIN
-            ·
+            BLACK / WHITE / RAIN ·
             <span id="year"></span>
         </div>
 
@@ -3494,9 +3463,9 @@ footer{
 </footer>
 
 
-<!-- ==========================================================
+<!-- =========================================================
      LIGHTBOX
-     ========================================================== -->
+     ========================================================= -->
 
 <div
     class="lightbox"
@@ -3507,7 +3476,7 @@ footer{
     <button
         class="lightboxButton"
         id="lightboxClose"
-        aria-label="Close"
+        type="button"
     >
         <i class="fa-solid fa-xmark"></i>
     </button>
@@ -3515,17 +3484,16 @@ footer{
 
     <button
         class="lightboxButton"
-        id="lightboxPrev"
-        aria-label="Previous"
+        id="lightboxPrevious"
+        type="button"
     >
         <i class="fa-solid fa-chevron-left"></i>
     </button>
 
 
     <img
-        class="lightboxImage"
         id="lightboxImage"
-        src=""
+        class="lightboxImage"
         alt=""
     >
 
@@ -3533,7 +3501,7 @@ footer{
     <button
         class="lightboxButton"
         id="lightboxNext"
-        aria-label="Next"
+        type="button"
     >
         <i class="fa-solid fa-chevron-right"></i>
     </button>
@@ -3548,80 +3516,82 @@ footer{
 
 
 <div
-    class="copyToast"
-    id="copyToast"
+    class="toast"
+    id="toast"
 >
     Username Discord copiato
 </div>
 
 
 <script>
-/* ==========================================================
-   APPLICATION
-   ========================================================== */
+/* =========================================================
+   FALCON JAVASCRIPT
+   ========================================================= */
 
-/* ---------------- CONFIG ---------------- */
+"use strict";
+
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
 
 const CONFIG = {
-    user:"kibrisky1",
+    owner:"kibrisky1",
     repo:"Falcon",
     branch:"main",
-    discord:"for_david_k"
+    discord:"for_david_k",
+
+    explicitBloodwar:[
+        "bloodwar.png"
+    ]
 };
 
 
-/* ---------------- ELEMENTS ---------------- */
-
-const root =
-    document.documentElement;
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
 const body =
     document.body;
 
+const html =
+    document.documentElement;
+
 const header =
     document.getElementById("header");
 
-const heroVisual =
-    document.getElementById("heroVisual");
+const progress =
+    document.getElementById("progress");
 
-const heroLogo =
+const logo =
     document.getElementById("heroLogo");
 
 const navLogo =
     document.getElementById("navLogo");
 
-const progress =
-    document.getElementById("progress");
+const pointerLight =
+    document.getElementById("pointerLight");
 
-const cursorDot =
-    document.getElementById("cursorDot");
+const cursorCore =
+    document.getElementById("cursorCore");
 
-const cursorRing =
-    document.getElementById("cursorRing");
+const cursorHalo =
+    document.getElementById("cursorHalo");
 
-const cursorLight =
-    document.getElementById("cursorLight");
-
-const soundControl =
-    document.getElementById("soundControl");
-
-const rainCanvas =
-    document.getElementById("rainCanvas");
-
-const rainContext =
-    rainCanvas.getContext("2d");
+const heroVisual =
+    document.getElementById("logoDisplay");
 
 const galleryGrid =
     document.getElementById("galleryGrid");
-
-const galleryParticles =
-    document.getElementById("galleryParticles");
 
 const galleryStatus =
     document.getElementById("galleryStatus");
 
 const galleryEmpty =
     document.getElementById("galleryEmpty");
+
+const galleryParticles =
+    document.getElementById("galleryParticles");
 
 const lightbox =
     document.getElementById("lightbox");
@@ -3632,58 +3602,51 @@ const lightboxImage =
 const lightboxInfo =
     document.getElementById("lightboxInfo");
 
-const copyToast =
-    document.getElementById("copyToast");
+const toast =
+    document.getElementById("toast");
 
 
 document.getElementById("year").textContent =
     new Date().getFullYear();
 
 
-/* ==========================================================
+/* =========================================================
    THEME
-   ========================================================== */
+   ========================================================= */
 
 let theme =
     localStorage.getItem("falcon-theme") ||
     "dark";
 
-function applyTheme(next){
+function applyTheme(value){
 
-    theme = next;
+    theme =
+        value;
 
-    root.dataset.theme =
-        next;
+    html.dataset.theme =
+        value;
 
-    /*
-       Dark:
-         dark.png
-
-       Light:
-         dark1.png
-    */
-
-    const logo =
-        next === "dark"
+    const currentLogo =
+        value === "dark"
             ? "dark.png"
             : "dark1.png";
 
-    heroLogo.src =
-        logo;
+    logo.src =
+        currentLogo;
 
     navLogo.src =
-        logo;
+        currentLogo;
 
     document.getElementById(
         "themeIcon"
     ).className =
-        next === "dark"
+        value === "dark"
             ? "fa-solid fa-sun"
             : "fa-solid fa-moon";
 
     localStorage.setItem(
         "falcon-theme",
-        next
+        value
     );
 
 }
@@ -3695,18 +3658,20 @@ document
     .addEventListener(
         "click",
         ()=>{
+
             applyTheme(
                 theme === "dark"
-                ? "light"
-                : "dark"
+                    ? "light"
+                    : "dark"
             );
+
         }
     );
 
 
-/* ==========================================================
+/* =========================================================
    LANGUAGE
-   ========================================================== */
+   ========================================================= */
 
 const translations = {
 
@@ -3718,9 +3683,6 @@ const translations = {
         "nav.contact":"Contatti",
 
         "hero.status":"SISTEMA ONLINE · DISPONIBILE PER PROGETTI",
-        "hero.line1":"BUILD.",
-        "hero.line2":"CREATE.",
-        "hero.line3":"EVOLVE.",
         "hero.description":"Sviluppatore Python, GFX Artist e creatore di sistemi digitali. Trasformo idee grezze in esperienze interattive, strumenti e progetti.",
         "hero.projects":"Esplora i progetti",
         "hero.contact":"Contattami",
@@ -3760,9 +3722,6 @@ const translations = {
         "nav.contact":"Contact",
 
         "hero.status":"SYSTEM ONLINE · AVAILABLE FOR PROJECTS",
-        "hero.line1":"BUILD.",
-        "hero.line2":"CREATE.",
-        "hero.line3":"EVOLVE.",
         "hero.description":"Python developer, GFX artist and digital systems creator. Turning raw ideas into interactive experiences, tools and projects.",
         "hero.projects":"Explore projects",
         "hero.contact":"Contact me",
@@ -3802,27 +3761,29 @@ let language =
 
 function applyLanguage(){
 
-    document.documentElement.lang =
+    html.lang =
         language;
 
     document
         .querySelectorAll("[data-i18n]")
-        .forEach(element=>{
+        .forEach(
+            element=>{
 
-            const key =
-                element.dataset.i18n;
+                const key =
+                    element.dataset.i18n;
 
-            if(
-                translations[language] &&
-                translations[language][key] !== undefined
-            ){
+                if(
+                    translations[language] &&
+                    translations[language][key] !== undefined
+                ){
 
-                element.innerHTML =
-                    translations[language][key];
+                    element.innerHTML =
+                        translations[language][key];
+
+                }
 
             }
-
-        });
+        );
 
     document.getElementById(
         "languageLabel"
@@ -3842,52 +3803,58 @@ document
     .addEventListener(
         "click",
         ()=>{
+
             language =
                 language === "it"
                     ? "en"
                     : "it";
 
             applyLanguage();
+
         }
     );
 
 
-/* ==========================================================
-   HEADER + SCROLL
-   ========================================================== */
+/* =========================================================
+   DESKTOP CURSOR CHECK
+   ========================================================= */
 
-window.addEventListener(
-    "scroll",
-    ()=>{
+const finePointer =
+    window.matchMedia(
+        "(hover:hover) and (pointer:fine)"
+    ).matches;
 
-        const scrollTop =
-            window.scrollY;
+if(finePointer){
 
-        const max =
-            document.documentElement.scrollHeight -
-            window.innerHeight;
+    body.classList.add(
+        "customCursorEnabled"
+    );
 
-        const amount =
-            max > 0
-                ? scrollTop / max
-                : 0;
+}else{
 
-        progress.style.transform =
-            `scaleX(${amount})`;
+    /*
+       Force-disable custom cursor logic
+       for mobile/tablet devices.
+    */
 
-        header.classList.toggle(
-            "scrolled",
-            scrollTop > 20
-        );
+    body.classList.remove(
+        "customCursorEnabled"
+    );
 
-    },
-    {passive:true}
-);
+    cursorCore.style.display =
+        "none";
+
+    cursorHalo.style.display =
+        "none";
+
+    pointerLight.style.display =
+        "none";
+}
 
 
-/* ==========================================================
-   CURSOR
-   ========================================================== */
+/* =========================================================
+   CURSOR MOVEMENT
+   ========================================================= */
 
 let mouseX =
     innerWidth/2;
@@ -3895,126 +3862,174 @@ let mouseX =
 let mouseY =
     innerHeight/2;
 
-let ringX =
+let haloX =
     mouseX;
 
-let ringY =
+let haloY =
     mouseY;
 
-window.addEventListener(
-    "pointermove",
-    event=>{
+if(finePointer){
 
-        mouseX =
-            event.clientX;
+    window.addEventListener(
+        "pointermove",
+        event=>{
 
-        mouseY =
-            event.clientY;
+            mouseX =
+                event.clientX;
 
-        cursorDot.style.left =
-            `${mouseX}px`;
+            mouseY =
+                event.clientY;
 
-        cursorDot.style.top =
-            `${mouseY}px`;
+            cursorCore.style.left =
+                mouseX+"px";
 
-        cursorLight.style.left =
-            `${mouseX}px`;
+            cursorCore.style.top =
+                mouseY+"px";
 
-        cursorLight.style.top =
-            `${mouseY}px`;
+            pointerLight.style.left =
+                mouseX+"px";
 
-    }
-);
+            pointerLight.style.top =
+                mouseY+"px";
 
-function animateCursor(){
-
-    ringX +=
-        (mouseX-ringX)*.14;
-
-    ringY +=
-        (mouseY-ringY)*.14;
-
-    cursorRing.style.left =
-        `${ringX}px`;
-
-    cursorRing.style.top =
-        `${ringY}px`;
-
-    requestAnimationFrame(
-        animateCursor
+        }
     );
+
+    function cursorLoop(){
+
+        haloX +=
+            (mouseX-haloX)*.15;
+
+        haloY +=
+            (mouseY-haloY)*.15;
+
+        cursorHalo.style.left =
+            haloX+"px";
+
+        cursorHalo.style.top =
+            haloY+"px";
+
+        requestAnimationFrame(
+            cursorLoop
+        );
+    }
+
+    cursorLoop();
+
+    document
+        .querySelectorAll(
+            "a,button,.project,.stat,.galleryItem"
+        )
+        .forEach(
+            element=>{
+
+                element.addEventListener(
+                    "mouseenter",
+                    ()=>{
+                        body.classList.add(
+                            "cursorHover"
+                        );
+                    }
+                );
+
+                element.addEventListener(
+                    "mouseleave",
+                    ()=>{
+                        body.classList.remove(
+                            "cursorHover"
+                        );
+                    }
+                );
+
+            }
+        );
 }
 
-animateCursor();
 
-document
-    .querySelectorAll(
-        "a,button,.galleryItem,.project,.stat"
-    )
-    .forEach(element=>{
+/* =========================================================
+   SCROLL
+   ========================================================= */
 
-        element.addEventListener(
-            "mouseenter",
-            ()=>{
-                body.classList.add(
-                    "cursorHover"
-                );
-            }
-        );
+function updateScroll(){
 
-        element.addEventListener(
-            "mouseleave",
-            ()=>{
-                body.classList.remove(
-                    "cursorHover"
-                );
-            }
-        );
+    const scroll =
+        window.scrollY;
 
-    });
+    const max =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
 
+    const amount =
+        max > 0
+            ? scroll/max
+            : 0;
 
-/* ==========================================================
-   HERO PARALLAX
-   ========================================================== */
+    progress.style.transform =
+        `scaleX(${amount})`;
+
+    header.classList.toggle(
+        "scrolled",
+        scroll > 20
+    );
+
+}
 
 window.addEventListener(
-    "pointermove",
-    event=>{
-
-        if(
-            window.innerWidth < 850
-        ){
-            return;
-        }
-
-        const x =
-            event.clientX /
-            window.innerWidth -
-            .5;
-
-        const y =
-            event.clientY /
-            window.innerHeight -
-            .5;
-
-        heroVisual.style.transform =
-            `translateY(-50%)
-             translate3d(
-                ${x*22}px,
-                ${y*18}px,
-                0
-             )
-             rotateY(${x*3}deg)
-             rotateX(${-y*3}deg)`;
-
-    }
+    "scroll",
+    updateScroll,
+    {passive:true}
 );
 
+updateScroll();
 
-/* ==========================================================
-   REVEAL
-   ========================================================== */
+
+/* =========================================================
+   HERO PARALLAX
+   ========================================================= */
+
+if(finePointer){
+
+    window.addEventListener(
+        "pointermove",
+        event=>{
+
+            if(
+                innerWidth < 850
+            ){
+                return;
+            }
+
+            const x =
+                event.clientX/
+                innerWidth-
+                .5;
+
+            const y =
+                event.clientY/
+                innerHeight-
+                .5;
+
+            heroVisual.style.transform =
+                `
+                translateY(-50%)
+                translate3d(
+                    ${x*20}px,
+                    ${y*16}px,
+                    0
+                )
+                rotateY(${x*3}deg)
+                rotateX(${-y*3}deg)
+                `;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   REVEAL SYSTEM
+   ========================================================= */
 
 const revealObserver =
     new IntersectionObserver(
@@ -4047,7 +4062,9 @@ const revealObserver =
     );
 
 document
-    .querySelectorAll(".reveal")
+    .querySelectorAll(
+        ".reveal"
+    )
     .forEach(
         element=>
             revealObserver.observe(
@@ -4056,129 +4073,964 @@ document
     );
 
 
-/* ==========================================================
+/* =========================================================
    TILT
-   ========================================================== */
+   ========================================================= */
 
-document
-    .querySelectorAll(".tilt")
-    .forEach(card=>{
+if(finePointer){
 
-        card.addEventListener(
-            "pointermove",
-            event=>{
+    document
+        .querySelectorAll(".tilt")
+        .forEach(
+            card=>{
 
-                if(
-                    window.innerWidth < 800
-                ){
-                    return;
-                }
+                card.addEventListener(
+                    "pointermove",
+                    event=>{
 
-                const rect =
-                    card.getBoundingClientRect();
+                        if(
+                            innerWidth<800
+                        ){
+                            return;
+                        }
 
-                const x =
-                    (event.clientX-rect.left) /
-                    rect.width;
+                        const rect =
+                            card.getBoundingClientRect();
 
-                const y =
-                    (event.clientY-rect.top) /
-                    rect.height;
+                        const x =
+                            (
+                                event.clientX-
+                                rect.left
+                            )/
+                            rect.width;
 
-                const rotateY =
-                    (x-.5)*7;
+                        const y =
+                            (
+                                event.clientY-
+                                rect.top
+                            )/
+                            rect.height;
 
-                const rotateX =
-                    -(y-.5)*7;
+                        const rx =
+                            -(y-.5)*7;
 
-                card.style.transform =
-                    `perspective(1000px)
-                     rotateX(${rotateX}deg)
-                     rotateY(${rotateY}deg)
-                     translateY(-5px)`;
+                        const ry =
+                            (x-.5)*7;
 
-                card.style.setProperty(
-                    "--px",
-                    `${x*100}%`
+                        card.style.transform =
+                            `
+                            perspective(1000px)
+                            rotateX(${rx}deg)
+                            rotateY(${ry}deg)
+                            translateY(-5px)
+                            `;
+
+                        card.style.setProperty(
+                            "--px",
+                            `${x*100}%`
+                        );
+
+                        card.style.setProperty(
+                            "--py",
+                            `${y*100}%`
+                        );
+
+                    }
                 );
 
-                card.style.setProperty(
-                    "--py",
-                    `${y*100}%`
+                card.addEventListener(
+                    "pointerleave",
+                    ()=>{
+                        card.style.transform =
+                            "";
+                    }
                 );
 
             }
         );
 
-        card.addEventListener(
-            "pointerleave",
-            ()=>{
-                card.style.transform =
-                    "";
-            }
-        );
-
-    });
+}
 
 
-/* ==========================================================
+/* =========================================================
    MAGNETIC BUTTONS
-   ========================================================== */
+   ========================================================= */
 
-document
-    .querySelectorAll(".magnetic")
-    .forEach(button=>{
+if(finePointer){
 
-        button.addEventListener(
-            "pointermove",
-            event=>{
+    document
+        .querySelectorAll(".magnetic")
+        .forEach(
+            button=>{
+
+                button.addEventListener(
+                    "pointermove",
+                    event=>{
+
+                        if(
+                            innerWidth<800
+                        ){
+                            return;
+                        }
+
+                        const rect =
+                            button.getBoundingClientRect();
+
+                        const x =
+                            event.clientX-
+                            (
+                                rect.left+
+                                rect.width/2
+                            );
+
+                        const y =
+                            event.clientY-
+                            (
+                                rect.top+
+                                rect.height/2
+                            );
+
+                        button.style.transform =
+                            `
+                            translate(
+                                ${x*.11}px,
+                                ${y*.11}px
+                            )
+                            `;
+
+                    }
+                );
+
+                button.addEventListener(
+                    "pointerleave",
+                    ()=>{
+                        button.style.transform =
+                            "";
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   CITY SCENE
+   ========================================================= */
+
+const cityCanvas =
+    document.getElementById(
+        "cityCanvas"
+    );
+
+const cityContext =
+    cityCanvas.getContext(
+        "2d"
+    );
+
+let cityBuildings = [];
+let cityWindows = [];
+let cityPeople = [];
+let cityWidth = 0;
+let cityHeight = 0;
+
+function resizeCity(){
+
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            1.5
+        );
+
+    cityWidth =
+        innerWidth;
+
+    cityHeight =
+        innerHeight;
+
+    cityCanvas.width =
+        cityWidth*dpr;
+
+    cityCanvas.height =
+        cityHeight*dpr;
+
+    cityCanvas.style.width =
+        cityWidth+"px";
+
+    cityCanvas.style.height =
+        cityHeight+"px";
+
+    cityContext.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    createCity();
+
+}
+
+function randomBetween(min,max){
+    return min+
+        Math.random()*(max-min);
+}
+
+function createCity(){
+
+    cityBuildings=[];
+    cityWindows=[];
+    cityPeople=[];
+
+    /*
+       Back skyline.
+    */
+
+    const count =
+        Math.ceil(
+            cityWidth/70
+        );
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        const width =
+            randomBetween(35,85);
+
+        const height =
+            randomBetween(
+                cityHeight*.16,
+                cityHeight*.42
+            );
+
+        cityBuildings.push({
+            x:i*75+
+                randomBetween(-15,15),
+
+            y:
+                cityHeight*.64-
+                height,
+
+            width,
+            height,
+
+            darkness:
+                randomBetween(.18,.32),
+
+            antenna:
+                Math.random()>.8
+        });
+
+    }
+
+    /*
+       Windows for buildings.
+    */
+
+    cityBuildings.forEach(building=>{
+
+        const cols =
+            Math.max(
+                2,
+                Math.floor(
+                    building.width/12
+                )
+            );
+
+        const rows =
+            Math.max(
+                3,
+                Math.floor(
+                    building.height/18
+                )
+            );
+
+        for(
+            let row=0;
+            row<rows;
+            row++
+        ){
+
+            for(
+                let col=0;
+                col<cols;
+                col++
+            ){
 
                 if(
-                    window.innerWidth < 800
+                    Math.random()>.58
                 ){
-                    return;
+                    continue;
                 }
 
-                const rect =
-                    button.getBoundingClientRect();
+                cityWindows.push({
 
-                const x =
-                    event.clientX -
-                    (
-                        rect.left+
-                        rect.width/2
-                    );
+                    x:
+                        building.x+
+                        7+
+                        col*
+                        (building.width-12)/
+                        cols,
 
-                const y =
-                    event.clientY -
-                    (
-                        rect.top+
-                        rect.height/2
-                    );
+                    y:
+                        building.y+
+                        8+
+                        row*
+                        (building.height-15)/
+                        rows,
 
-                button.style.transform =
-                    `translate(
-                        ${x*.12}px,
-                        ${y*.12}px
-                    )`;
+                    w:
+                        Math.max(
+                            2,
+                            building.width/
+                            cols-
+                            5
+                        ),
+
+                    h:2.5,
+
+                    glow:
+                        Math.random(),
+
+                    speed:
+                        randomBetween(
+                            1.5,
+                            5
+                        ),
+
+                    phase:
+                        Math.random()*
+                        Math.PI*2
+
+                });
 
             }
-        );
 
-        button.addEventListener(
-            "pointerleave",
-            ()=>{
-                button.style.transform =
-                    "";
-            }
-        );
+        }
 
     });
 
+    /*
+       Main skyscraper.
+       This is the dominant vertical object.
+    */
 
-/* ==========================================================
-   RAIN ENGINE
-   ========================================================== */
+    const towerWidth =
+        Math.max(
+            145,
+            cityWidth*.18
+        );
+
+    const towerHeight =
+        Math.max(
+            cityHeight*.72,
+            520
+        );
+
+    const towerX =
+        cityWidth*.63;
+
+    cityBuildings.push({
+
+        main:true,
+
+        x:towerX,
+
+        y:cityHeight*.69-
+            towerHeight,
+
+        width:towerWidth,
+
+        height:towerHeight
+
+    });
+
+    /*
+       Main tower windows.
+    */
+
+    const mainCols =
+        Math.floor(
+            towerWidth/13
+        );
+
+    const mainRows =
+        Math.floor(
+            towerHeight/17
+        );
+
+    for(
+        let row=0;
+        row<mainRows;
+        row++
+    ){
+
+        for(
+            let col=0;
+            col<mainCols;
+            col++
+        ){
+
+            if(
+                Math.random()>.66
+            ){
+                continue;
+            }
+
+            cityWindows.push({
+
+                x:
+                    towerX+
+                    8+
+                    col*
+                    (towerWidth-16)/
+                    mainCols,
+
+                y:
+                    cityHeight*.69-
+                    towerHeight+
+                    10+
+                    row*
+                    (towerHeight-20)/
+                    mainRows,
+
+                w:
+                    Math.max(
+                        3,
+                        towerWidth/mainCols-4
+                    ),
+
+                h:
+                    3,
+
+                main:true,
+
+                glow:
+                    Math.random(),
+
+                speed:
+                    randomBetween(
+                        1.2,
+                        4
+                    ),
+
+                phase:
+                    Math.random()*
+                    Math.PI*2
+
+            });
+
+        }
+
+    }
+
+    /*
+       Alley people at street level.
+    */
+
+    for(
+        let i=0;
+        i<10;
+        i++
+    ){
+
+        cityPeople.push({
+
+            x:
+                cityWidth*.18+
+                Math.random()*
+                cityWidth*.54,
+
+            baseY:
+                cityHeight*.86+
+                Math.random()*
+                cityHeight*.08,
+
+            scale:
+                randomBetween(
+                    .65,
+                    1.15
+                ),
+
+            speed:
+                randomBetween(
+                    .15,
+                    .65
+                ),
+
+            phase:
+                Math.random()*
+                Math.PI*2,
+
+            direction:
+                Math.random()>.5
+                ? 1
+                : -1,
+
+            action:
+                Math.random()
+
+        });
+
+    }
+
+}
+
+function drawSkyline(){
+
+    cityContext.clearRect(
+        0,
+        0,
+        cityWidth,
+        cityHeight
+    );
+
+    /*
+       Distant skyline.
+    */
+
+    cityBuildings.forEach(
+        building=>{
+
+            const fill =
+                building.main
+                ? "#111"
+                : "#0b0b0b";
+
+            cityContext.fillStyle =
+                fill;
+
+            cityContext.fillRect(
+                building.x,
+                building.y,
+                building.width,
+                building.height
+            );
+
+            if(
+                building.antenna
+            ){
+
+                cityContext.fillStyle =
+                    "rgba(255,255,255,.06)";
+
+                cityContext.fillRect(
+                    building.x+
+                    building.width/2,
+                    building.y-30,
+                    1,
+                    30
+                );
+
+            }
+
+            /*
+               Main building edge.
+            */
+
+            if(
+                building.main
+            ){
+
+                cityContext.strokeStyle =
+                    "rgba(255,255,255,.07)";
+
+                cityContext.strokeRect(
+                    building.x,
+                    building.y,
+                    building.width,
+                    building.height
+                );
+
+                /*
+                   rooftop lights
+                */
+
+                cityContext.fillStyle =
+                    "rgba(255,255,255,.15)";
+
+                cityContext.fillRect(
+                    building.x+
+                    building.width*.45,
+                    building.y-10,
+                    building.width*.1,
+                    10
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Windows.
+    */
+
+    const time =
+        performance.now()/1000;
+
+    cityWindows.forEach(
+        window=>{
+
+            const flicker =
+                .68+
+                Math.sin(
+                    time/window.speed+
+                    window.phase
+                )*.12;
+
+            const alpha =
+                (
+                    window.glow>.72
+                    ? flicker
+                    : flicker*.48
+                );
+
+            cityContext.fillStyle =
+                `rgba(255,255,255,${alpha})`;
+
+            cityContext.fillRect(
+                window.x,
+                window.y,
+                window.w,
+                window.h
+            );
+
+            /*
+               occasional window glow
+            */
+
+            if(
+                window.main &&
+                window.glow>.8
+            ){
+
+                cityContext.shadowColor =
+                    "rgba(255,255,255,.25)";
+
+                cityContext.shadowBlur =
+                    5;
+
+                cityContext.fillRect(
+                    window.x,
+                    window.y,
+                    window.w,
+                    window.h
+                );
+
+                cityContext.shadowBlur =
+                    0;
+
+            }
+
+        }
+    );
+
+
+    /*
+       Street.
+    */
+
+    const streetTop =
+        cityHeight*.72;
+
+    cityContext.fillStyle =
+        "#070707";
+
+    cityContext.fillRect(
+        0,
+        streetTop,
+        cityWidth,
+        cityHeight-streetTop
+    );
+
+    /*
+       Street perspective lines.
+    */
+
+    cityContext.strokeStyle =
+        "rgba(255,255,255,.055)";
+
+    cityContext.lineWidth =
+        1;
+
+    for(
+        let i=-5;
+        i<=5;
+        i++
+    ){
+
+        cityContext.beginPath();
+
+        cityContext.moveTo(
+            cityWidth/2,
+            streetTop
+        );
+
+        cityContext.lineTo(
+            cityWidth/2+
+            i*170,
+            cityHeight
+        );
+
+        cityContext.stroke();
+
+    }
+
+    /*
+       Street light pools.
+    */
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const x =
+            cityWidth*.18+
+            i*
+            cityWidth*.1;
+
+        const gradient =
+            cityContext.createRadialGradient(
+                x,
+                cityHeight*.82,
+                0,
+                x,
+                cityHeight*.82,
+                70
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,255,255,.025)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "transparent"
+        );
+
+        cityContext.fillStyle =
+            gradient;
+
+        cityContext.beginPath();
+
+        cityContext.arc(
+            x,
+            cityHeight*.82,
+            70,
+            0,
+            Math.PI*2
+        );
+
+        cityContext.fill();
+
+    }
+
+
+    /*
+       Alley walls.
+    */
+
+    cityContext.fillStyle =
+        "#080808";
+
+    cityContext.fillRect(
+        0,
+        cityHeight*.82,
+        cityWidth*.18,
+        cityHeight*.18
+    );
+
+    cityContext.fillRect(
+        cityWidth*.82,
+        cityHeight*.82,
+        cityWidth*.18,
+        cityHeight*.18
+    );
+
+
+    /*
+       People.
+    */
+
+    const now =
+        performance.now()/1000;
+
+    cityPeople.forEach(
+        person=>{
+
+            const x =
+                person.x+
+                Math.sin(
+                    now*person.speed+
+                    person.phase
+                )*10;
+
+            const y =
+                person.baseY;
+
+            const s =
+                person.scale;
+
+            cityContext.save();
+
+            cityContext.translate(
+                x,
+                y
+            );
+
+            cityContext.scale(
+                s,
+                s
+            );
+
+            cityContext.fillStyle =
+                "rgba(0,0,0,.9)";
+
+            /*
+               head
+            */
+
+            cityContext.beginPath();
+
+            cityContext.arc(
+                0,
+                -35,
+                6,
+                0,
+                Math.PI*2
+            );
+
+            cityContext.fill();
+
+            /*
+               body
+            */
+
+            cityContext.fillRect(
+                -6,
+                -28,
+                12,
+                25
+            );
+
+            /*
+               legs
+            */
+
+            const walk =
+                Math.sin(
+                    now*
+                    person.speed*
+                    5+
+                    person.phase
+                )*7;
+
+            cityContext.strokeStyle =
+                "rgba(0,0,0,.95)";
+
+            cityContext.lineWidth =
+                4;
+
+            cityContext.beginPath();
+
+            cityContext.moveTo(
+                0,
+                -4
+            );
+
+            cityContext.lineTo(
+                -5+walk,
+                15
+            );
+
+            cityContext.moveTo(
+                0,
+                -4
+            );
+
+            cityContext.lineTo(
+                5-walk,
+                15
+            );
+
+            cityContext.stroke();
+
+            /*
+               arm movement
+            */
+
+            const arm =
+                Math.sin(
+                    now*
+                    person.speed*
+                    3+
+                    person.phase
+                )*5;
+
+            cityContext.beginPath();
+
+            cityContext.moveTo(
+                -5,
+                -22
+            );
+
+            cityContext.lineTo(
+                -13+arm,
+                -7
+            );
+
+            cityContext.moveTo(
+                5,
+                -22
+            );
+
+            cityContext.lineTo(
+                13-arm,
+                -7
+            );
+
+            cityContext.stroke();
+
+            cityContext.restore();
+
+        }
+    );
+
+}
+
+function cityLoop(){
+
+    drawSkyline();
+
+    requestAnimationFrame(
+        cityLoop
+    );
+
+}
+
+resizeCity();
+cityLoop();
+
+window.addEventListener(
+    "resize",
+    resizeCity
+);
+
+
+/* =========================================================
+   RAIN
+   ========================================================= */
 
 let rainDrops = [];
 
@@ -4190,43 +5042,33 @@ function resizeRain(){
             1.5
         );
 
-    rainCanvas.width =
+    const canvas =
+        document.getElementById(
+            "rainCanvas"
+        );
+
+    canvas.width =
         innerWidth*dpr;
 
-    rainCanvas.height =
+    canvas.height =
         innerHeight*dpr;
 
-    rainCanvas.style.width =
+    canvas.style.width =
         innerWidth+"px";
 
-    rainCanvas.style.height =
+    canvas.style.height =
         innerHeight+"px";
 
-    rainContext.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
+    rainDrops=[];
 
-    createRain();
-
-}
-
-function createRain(){
-
-    const count =
-        innerWidth < 700
-            ? 130
-            : 280;
-
-    rainDrops = [];
+    const amount =
+        innerWidth<700
+            ? 150
+            : 300;
 
     for(
         let i=0;
-        i<count;
+        i<amount;
         i++
     ){
 
@@ -4242,13 +5084,10 @@ function createRain(){
                 Math.random()*18+8,
 
             speed:
-                Math.random()*15+10,
+                Math.random()*13+10,
 
-            width:
-                Math.random()*.75+.25,
-
-            opacity:
-                Math.random()*.32+.08
+            alpha:
+                Math.random()*.22+.05
 
         });
 
@@ -4256,94 +5095,17 @@ function createRain(){
 
 }
 
-function animateRain(){
+function rainLoop(){
 
-    rainContext.clearRect(
-        0,
-        0,
-        innerWidth,
-        innerHeight
-    );
-
-    rainContext.lineCap =
-        "round";
-
-    rainDrops.forEach(drop=>{
-
-        drop.y +=
-            drop.speed;
-
-        drop.x +=
-            drop.speed*.08;
-
-        if(
-            drop.y >
-            innerHeight+30
-        ){
-
-            drop.y =
-                -drop.length;
-
-            drop.x =
-                Math.random()*
-                (innerWidth+100)-50;
-
-        }
-
-        rainContext.beginPath();
-
-        rainContext.moveTo(
-            drop.x,
-            drop.y
+    const canvas =
+        document.getElementById(
+            "rainCanvas"
         );
 
-        rainContext.lineTo(
-            drop.x-drop.length*.08,
-            drop.y-drop.length
+    const context =
+        canvas.getContext(
+            "2d"
         );
-
-        rainContext.strokeStyle =
-            `rgba(255,255,255,${drop.opacity})`;
-
-        rainContext.lineWidth =
-            drop.width;
-
-        rainContext.stroke();
-
-    });
-
-    requestAnimationFrame(
-        animateRain
-    );
-
-}
-
-resizeRain();
-animateRain();
-
-window.addEventListener(
-    "resize",
-    resizeRain
-);
-
-
-/* ==========================================================
-   AMBIENT PARTICLES
-   ========================================================== */
-
-const particleCanvas =
-    document.getElementById(
-        "particles"
-    );
-
-const particleContext =
-    particleCanvas.getContext(
-        "2d"
-    );
-
-let particles = [];
-
-function resizeParticles(){
 
     const dpr =
         Math.min(
@@ -4351,121 +5113,90 @@ function resizeParticles(){
             1.5
         );
 
-    particleCanvas.width =
-        innerWidth*dpr;
-
-    particleCanvas.height =
-        innerHeight*dpr;
-
-    particleCanvas.style.width =
-        innerWidth+"px";
-
-    particleCanvas.style.height =
-        innerHeight+"px";
-
-    particleContext.setTransform(
+    context.setTransform(
         dpr,0,0,dpr,0,0
     );
 
-}
-
-function createParticles(){
-
-    particles=[];
-
-    const count =
-        innerWidth < 700
-            ? 28
-            : 55;
-
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
-
-        particles.push({
-
-            x:Math.random()*innerWidth,
-            y:Math.random()*innerHeight,
-
-            size:
-                Math.random()*1.5+.25,
-
-            speed:
-                Math.random()*.17+.03,
-
-            alpha:
-                Math.random()*.22+.03
-
-        });
-
-    }
-
-}
-
-function animateParticles(){
-
-    particleContext.clearRect(
+    context.clearRect(
         0,
         0,
         innerWidth,
         innerHeight
     );
 
-    particles.forEach(p=>{
+    context.lineCap =
+        "round";
 
-        p.y -=
-            p.speed;
+    rainDrops.forEach(
+        drop=>{
 
-        if(p.y < -10){
-            p.y =
-                innerHeight+10;
+            drop.y +=
+                drop.speed;
+
+            drop.x +=
+                drop.speed*.07;
+
+            if(
+                drop.y >
+                innerHeight+25
+            ){
+
+                drop.y =
+                    -drop.length;
+
+                drop.x =
+                    Math.random()*
+                    innerWidth;
+
+            }
+
+            context.beginPath();
+
+            context.moveTo(
+                drop.x,
+                drop.y
+            );
+
+            context.lineTo(
+                drop.x-
+                drop.length*.07,
+                drop.y-
+                drop.length
+            );
+
+            context.strokeStyle =
+                `rgba(255,255,255,${drop.alpha})`;
+
+            context.lineWidth =
+                Math.random()*.7+.25;
+
+            context.stroke();
+
         }
-
-        particleContext.beginPath();
-
-        particleContext.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            Math.PI*2
-        );
-
-        particleContext.fillStyle =
-            `rgba(255,255,255,${p.alpha})`;
-
-        particleContext.fill();
-
-    });
+    );
 
     requestAnimationFrame(
-        animateParticles
+        rainLoop
     );
 
 }
 
-resizeParticles();
-createParticles();
-animateParticles();
+resizeRain();
+rainLoop();
 
 window.addEventListener(
     "resize",
-    ()=>{
-        resizeParticles();
-        createParticles();
-    }
+    resizeRain
 );
 
 
-/* ==========================================================
+/* =========================================================
    GALLERY PARTICLES
-   ========================================================== */
+   ========================================================= */
 
-function createGalleryParticles(){
+function buildGalleryParticles(){
 
-    galleryParticles.innerHTML = "";
+    galleryParticles.innerHTML="";
 
     for(
         let i=0;
@@ -4482,30 +5213,31 @@ function createGalleryParticles(){
             "galleryParticle";
 
         particle.style.left =
-            `${Math.random()*100}%`;
+            Math.random()*100+"%";
 
         particle.style.top =
-            `${60+Math.random()*40}%`;
-
-        particle.style.setProperty(
-            "--opacity",
-            (
-                Math.random()*.4+.1
-            ).toFixed(2)
-        );
+            60+
+            Math.random()*40+
+            "%";
 
         particle.style.setProperty(
             "--duration",
-            `${3+Math.random()*6}s`
+            3+
+            Math.random()*6+
+            "s"
         );
 
         particle.style.setProperty(
-            "--driftX",
-            `${(Math.random()-.5)*100}px`
+            "--delay",
+            Math.random()*5+
+            "s"
         );
 
-        particle.style.animationDelay =
-            `${Math.random()*5}s`;
+        particle.style.setProperty(
+            "--dx",
+            (Math.random()-.5)*100+
+            "px"
+        );
 
         galleryParticles.appendChild(
             particle
@@ -4515,305 +5247,17 @@ function createGalleryParticles(){
 
 }
 
-createGalleryParticles();
+buildGalleryParticles();
 
 
-/* ==========================================================
-   SIMPLE AUDIO ENGINE
-   ==========================================================
-
-   Browsers block autoplay.
-
-   Audio therefore begins only after the user presses
-   the sound button.
-
-   Environment:
-     low wind
-     rain texture
-     distant room tone
-
-   Gallery:
-     click/interaction creates a different
-     short crystalline sound.
-   ========================================================== */
-
-let audioContext = null;
-let masterGain = null;
-let rainSource = null;
-let rainGain = null;
-let ambienceTimer = null;
-
-function initAudio(){
-
-    if(audioContext){
-        return;
-    }
-
-    const AudioCtx =
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-    if(!AudioCtx){
-        return;
-    }
-
-    audioContext =
-        new AudioCtx();
-
-    masterGain =
-        audioContext.createGain();
-
-    masterGain.gain.value =
-        .035;
-
-    masterGain.connect(
-        audioContext.destination
-    );
-
-
-    /*
-       Soft noise source
-    */
-
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate*2,
-            audioContext.sampleRate
-        );
-
-    const data =
-        buffer.getChannelData(0);
-
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-        data[i] =
-            Math.random()*2-1;
-    }
-
-    rainSource =
-        audioContext.createBufferSource();
-
-    rainSource.buffer =
-        buffer;
-
-    rainSource.loop =
-        true;
-
-
-    const rainFilter =
-        audioContext.createBiquadFilter();
-
-    rainFilter.type =
-        "highpass";
-
-    rainFilter.frequency.value =
-        1600;
-
-
-    rainGain =
-        audioContext.createGain();
-
-    rainGain.gain.value =
-        .13;
-
-
-    rainSource
-        .connect(rainFilter)
-        .connect(rainGain)
-        .connect(masterGain);
-
-    rainSource.start();
-
-    createAmbientPulse();
-
-}
-
-
-function createAmbientPulse(){
-
-    ambienceTimer =
-        setInterval(
-            ()=>{
-
-                if(
-                    !audioContext ||
-                    audioContext.state ===
-                    "suspended"
-                ){
-                    return;
-                }
-
-                const oscillator =
-                    audioContext.createOscillator();
-
-                const gain =
-                    audioContext.createGain();
-
-                oscillator.type =
-                    "sine";
-
-                oscillator.frequency.value =
-                    46+Math.random()*12;
-
-                gain.gain.setValueAtTime(
-                    0.0001,
-                    audioContext.currentTime
-                );
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .015,
-                    audioContext.currentTime+.8
-                );
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .0001,
-                    audioContext.currentTime+4
-                );
-
-                oscillator
-                    .connect(gain)
-                    .connect(masterGain);
-
-                oscillator.start();
-
-                oscillator.stop(
-                    audioContext.currentTime+4
-                );
-
-            },
-            6000
-        );
-
-}
-
-
-function playGallerySound(){
-
-    if(
-        !audioContext ||
-        audioContext.state !== "running"
-    ){
-        return;
-    }
-
-    const now =
-        audioContext.currentTime;
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
-    oscillator.type =
-        "sine";
-
-    oscillator.frequency.setValueAtTime(
-        900,
-        now
-    );
-
-    oscillator.frequency.exponentialRampToValueAtTime(
-        1600,
-        now+.13
-    );
-
-    oscillator.frequency.exponentialRampToValueAtTime(
-        620,
-        now+.38
-    );
-
-    gain.gain.setValueAtTime(
-        .0001,
-        now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .035,
-        now+.025
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now+.42
-    );
-
-    oscillator
-        .connect(gain)
-        .connect(masterGain);
-
-    oscillator.start(now);
-    oscillator.stop(now+.42);
-
-}
-
-
-/* ==========================================================
-   SOUND BUTTON
-   ========================================================== */
-
-let soundEnabled =
-    false;
-
-soundControl.addEventListener(
-    "click",
-    async()=>{
-
-        initAudio();
-
-        if(!audioContext){
-            return;
-        }
-
-        if(
-            audioContext.state ===
-            "suspended"
-        ){
-
-            await audioContext.resume();
-
-        }
-
-        soundEnabled =
-            !soundEnabled;
-
-        soundControl.classList.toggle(
-            "active",
-            soundEnabled
-        );
-
-        if(!soundEnabled){
-
-            masterGain.gain.linearRampToValueAtTime(
-                0,
-                audioContext.currentTime+.5
-            );
-
-        }else{
-
-            masterGain.gain.linearRampToValueAtTime(
-                .035,
-                audioContext.currentTime+.7
-            );
-
-        }
-
-    }
-);
-
-
-/* ==========================================================
+/* =========================================================
    GALLERY
-   ========================================================== */
+   ========================================================= */
 
 let galleryItems = [];
-let galleryIndex = 0;
+let currentGalleryIndex = 0;
 
-function imageFile(name){
+function validImage(name){
 
     return /\.(png|jpe?g|webp|gif|avif)$/i.test(
         name
@@ -4821,7 +5265,7 @@ function imageFile(name){
 
 }
 
-function galleryFile(name){
+function isGalleryImage(name){
 
     const lower =
         name.toLowerCase();
@@ -4833,39 +5277,41 @@ function galleryFile(name){
 
 }
 
-function prettyName(name){
+function displayName(name){
 
     return name
-        .replace(/\.[^/.]+$/,"")
+        .replace(/\.[^.]+$/,"")
         .replace(/[_-]+/g," ")
-        .replace(/\b\w/g,c=>c.toUpperCase());
+        .replace(/\b[a-z]/g,
+            c=>c.toUpperCase()
+        );
 
 }
 
-function safeURL(url){
+function escapeHTML(value){
 
-    return String(url)
+    return String(value)
         .replace(/&/g,"&amp;")
-        .replace(/"/g,"&quot;")
         .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;");
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
-
 
 async function loadGallery(){
 
     galleryStatus.textContent =
         "SCANNING DIRECTORY...";
 
-    const endpoint =
-        `https://api.github.com/repos/${CONFIG.user}/${CONFIG.repo}/contents/?ref=${CONFIG.branch}`;
+    const url =
+        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/?ref=${CONFIG.branch}`;
 
     try{
 
         const response =
             await fetch(
-                endpoint,
+                url,
                 {
                     cache:"no-store",
                     headers:{
@@ -4877,14 +5323,14 @@ async function loadGallery(){
 
         if(!response.ok){
             throw new Error(
-                "GitHub request failed"
+                `GitHub API ${response.status}`
             );
         }
 
         const files =
             await response.json();
 
-        const results =
+        const found =
             files
             .filter(
                 file =>
@@ -4892,35 +5338,97 @@ async function loadGallery(){
             )
             .filter(
                 file =>
-                    imageFile(file.name)
+                    validImage(file.name)
             )
             .filter(
                 file =>
-                    galleryFile(file.name)
+                    isGalleryImage(file.name)
             )
             .map(
-                file => ({
+                file=>({
                     name:file.name,
                     url:file.download_url
                 })
             );
 
+        /*
+           Explicit Bloodwar fallback.
+        */
 
-        results.sort(
+        CONFIG.explicitBloodwar.forEach(
+            fileName=>{
+
+                const exists =
+                    found.some(
+                        image =>
+                            image.name.toLowerCase() ===
+                            fileName.toLowerCase()
+                    );
+
+                if(
+                    !exists
+                ){
+
+                    found.push({
+                        name:fileName,
+                        url:fileName
+                    });
+
+                }
+
+            }
+        );
+
+
+        /*
+           Remove duplicates.
+        */
+
+        const unique = [];
+
+        const seen =
+            new Set();
+
+        found.forEach(
+            item=>{
+
+                const key =
+                    item.name.toLowerCase();
+
+                if(
+                    !seen.has(key)
+                ){
+
+                    seen.add(key);
+                    unique.push(item);
+
+                }
+
+            }
+        );
+
+
+        unique.sort(
             (a,b)=>{
 
-                const aa =
+                const aBlood =
                     a.name
                         .toLowerCase()
-                        .includes("bloodwar");
+                        .includes(
+                            "bloodwar"
+                        );
 
-                const bb =
+                const bBlood =
                     b.name
                         .toLowerCase()
-                        .includes("bloodwar");
+                        .includes(
+                            "bloodwar"
+                        );
 
-                if(aa !== bb){
-                    return aa
+                if(
+                    aBlood !== bBlood
+                ){
+                    return aBlood
                         ? -1
                         : 1;
                 }
@@ -4939,19 +5447,24 @@ async function loadGallery(){
 
 
         galleryItems =
-            results;
+            unique;
 
         renderGallery();
 
     }catch(error){
 
         console.warn(
-            "Gallery:",
+            "Gallery scanner:",
             error
         );
 
         galleryItems =
-            [];
+            CONFIG.explicitBloodwar.map(
+                name=>({
+                    name,
+                    url:name
+                })
+            );
 
         renderGallery();
 
@@ -4962,7 +5475,7 @@ async function loadGallery(){
 
 function renderGallery(){
 
-    galleryGrid.innerHTML = "";
+    galleryGrid.innerHTML="";
 
     if(
         !galleryItems.length
@@ -4975,6 +5488,7 @@ function renderGallery(){
             "0 FILES FOUND";
 
         return;
+
     }
 
     galleryEmpty.style.display =
@@ -4997,25 +5511,28 @@ function renderGallery(){
 
             card.style.setProperty(
                 "--delay",
-                `${Math.min(
-                    index*70,
-                    800
-                )}ms`
+                Math.min(
+                    index*75,
+                    850
+                )+
+                "ms"
             );
 
             card.innerHTML = `
 
                 <img
-                    src="${safeURL(item.url)}"
-                    alt="${safeURL(prettyName(item.name))}"
+                    src="${escapeHTML(item.url)}"
+                    alt="${escapeHTML(displayName(item.name))}"
                     loading="${index<3?"eager":"lazy"}"
                 >
+
+                <div class="galleryShine"></div>
 
                 <div class="galleryOverlay">
 
                     <div class="galleryTitle">
-                        ${safeURL(
-                            prettyName(item.name)
+                        ${escapeHTML(
+                            displayName(item.name)
                         )}
                     </div>
 
@@ -5036,27 +5553,8 @@ function renderGallery(){
             card.addEventListener(
                 "click",
                 ()=>{
-
-                    openGallery(
-                        index
-                    );
-
+                    openLightbox(index);
                     playGallerySound();
-
-                }
-            );
-
-
-            card.addEventListener(
-                "mouseenter",
-                ()=>{
-
-                    if(
-                        soundEnabled
-                    ){
-                        playGalleryHoverSound();
-                    }
-
                 }
             );
 
@@ -5071,7 +5569,11 @@ function renderGallery(){
 }
 
 
-function openGallery(index){
+/* =========================================================
+   LIGHTBOX
+   ========================================================= */
+
+function openLightbox(index){
 
     if(
         !galleryItems.length
@@ -5079,28 +5581,28 @@ function openGallery(index){
         return;
     }
 
-    galleryIndex =
+    currentGalleryIndex =
         (
-            index +
+            index+
             galleryItems.length
-        ) %
+        )%
         galleryItems.length;
 
     const item =
         galleryItems[
-            galleryIndex
+            currentGalleryIndex
         ];
 
     lightboxImage.src =
         item.url;
 
     lightboxImage.alt =
-        prettyName(
+        displayName(
             item.name
         );
 
     lightboxInfo.textContent =
-        `${galleryIndex+1} / ${galleryItems.length}  ·  ${item.name}`;
+        `${currentGalleryIndex+1} / ${galleryItems.length}  ·  ${item.name}`;
 
     lightbox.classList.add(
         "open"
@@ -5112,13 +5614,12 @@ function openGallery(index){
     );
 
     body.classList.add(
-        "no-scroll"
+        "locked"
     );
 
 }
 
-
-function closeGallery(){
+function closeLightbox(){
 
     lightbox.classList.remove(
         "open"
@@ -5130,22 +5631,16 @@ function closeGallery(){
     );
 
     body.classList.remove(
-        "no-scroll"
+        "locked"
     );
 
 }
 
+function moveLightbox(direction){
 
-function moveGallery(direction){
-
-    if(
-        !galleryItems.length
-    ){
-        return;
-    }
-
-    openGallery(
-        galleryIndex+direction
+    openLightbox(
+        currentGalleryIndex+
+        direction
     );
 
 }
@@ -5155,25 +5650,26 @@ document
     .getElementById("lightboxClose")
     .addEventListener(
         "click",
-        closeGallery
+        closeLightbox
     );
-
 
 document
-    .getElementById("lightboxPrev")
+    .getElementById("lightboxPrevious")
     .addEventListener(
         "click",
-        ()=>moveGallery(-1)
+        ()=>{
+            moveLightbox(-1);
+        }
     );
-
 
 document
     .getElementById("lightboxNext")
     .addEventListener(
         "click",
-        ()=>moveGallery(1)
+        ()=>{
+            moveLightbox(1);
+        }
     );
-
 
 lightbox.addEventListener(
     "click",
@@ -5184,77 +5680,13 @@ lightbox.addEventListener(
             lightbox
         ){
 
-            closeGallery();
+            closeLightbox();
 
         }
 
     }
 );
 
-
-/* ==========================================================
-   GALLERY HOVER SOUND
-   ========================================================== */
-
-function playGalleryHoverSound(){
-
-    if(
-        !audioContext ||
-        audioContext.state !== "running"
-    ){
-        return;
-    }
-
-    const now =
-        audioContext.currentTime;
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
-    oscillator.type =
-        "triangle";
-
-    oscillator.frequency.setValueAtTime(
-        520,
-        now
-    );
-
-    oscillator.frequency.exponentialRampToValueAtTime(
-        700,
-        now+.07
-    );
-
-    gain.gain.setValueAtTime(
-        .0001,
-        now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .007,
-        now+.015
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now+.14
-    );
-
-    oscillator
-        .connect(gain)
-        .connect(masterGain);
-
-    oscillator.start(now);
-    oscillator.stop(now+.15);
-
-}
-
-
-/* ==========================================================
-   KEYBOARD LIGHTBOX CONTROLS
-   ========================================================== */
 
 document.addEventListener(
     "keydown",
@@ -5271,36 +5703,37 @@ document.addEventListener(
         if(
             event.key === "Escape"
         ){
-            closeGallery();
+            closeLightbox();
         }
 
         if(
             event.key === "ArrowLeft"
         ){
-            moveGallery(-1);
+            moveLightbox(-1);
         }
 
         if(
             event.key === "ArrowRight"
         ){
-            moveGallery(1);
+            moveLightbox(1);
         }
 
     }
 );
 
 
-/* ==========================================================
+/* =========================================================
    TOUCH SWIPE
-   ========================================================== */
+   ========================================================= */
 
-let touchStart = 0;
+let touchStartX =
+    0;
 
 lightbox.addEventListener(
     "touchstart",
     event=>{
 
-        touchStart =
+        touchStartX =
             event.changedTouches[0]
                 .screenX;
 
@@ -5312,25 +5745,25 @@ lightbox.addEventListener(
     "touchend",
     event=>{
 
-        const touchEnd =
+        const endX =
             event.changedTouches[0]
                 .screenX;
 
-        const difference =
-            touchEnd-touchStart;
+        const diff =
+            endX-touchStartX;
 
         if(
-            Math.abs(difference) < 45
+            Math.abs(diff)<45
         ){
             return;
         }
 
         if(
-            difference > 0
+            diff>0
         ){
-            moveGallery(-1);
+            moveLightbox(-1);
         }else{
-            moveGallery(1);
+            moveLightbox(1);
         }
 
     },
@@ -5338,9 +5771,287 @@ lightbox.addEventListener(
 );
 
 
-/* ==========================================================
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
+let audioContext =
+    null;
+
+let masterGain =
+    null;
+
+let audioEnabled =
+    false;
+
+function setupAudio(){
+
+    if(
+        audioContext
+    ){
+        return;
+    }
+
+    const AudioContextClass =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+    if(
+        !AudioContextClass
+    ){
+        return;
+    }
+
+    audioContext =
+        new AudioContextClass();
+
+    masterGain =
+        audioContext.createGain();
+
+    masterGain.gain.value =
+        0;
+
+    masterGain.connect(
+        audioContext.destination
+    );
+
+    /*
+       Rain noise
+    */
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            audioContext.sampleRate*2,
+            audioContext.sampleRate
+        );
+
+    const data =
+        buffer.getChannelData(0);
+
+    for(
+        let i=0;
+        i<data.length;
+        i++
+    ){
+
+        data[i] =
+            Math.random()*2-1;
+
+    }
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer =
+        buffer;
+
+    source.loop =
+        true;
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type =
+        "highpass";
+
+    filter.frequency.value =
+        1700;
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.value =
+        .15;
+
+    source
+        .connect(filter)
+        .connect(gain)
+        .connect(masterGain);
+
+    source.start();
+
+
+    /*
+       Distant low ambience.
+    */
+
+    setInterval(
+        ()=>{
+
+            if(
+                !audioContext ||
+                !audioEnabled
+            ){
+                return;
+            }
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gainNode =
+                audioContext.createGain();
+
+            oscillator.type =
+                "sine";
+
+            oscillator.frequency.value =
+                42+
+                Math.random()*12;
+
+            gainNode.gain.setValueAtTime(
+                .0001,
+                audioContext.currentTime
+            );
+
+            gainNode.gain.exponentialRampToValueAtTime(
+                .008,
+                audioContext.currentTime+.8
+            );
+
+            gainNode.gain.exponentialRampToValueAtTime(
+                .0001,
+                audioContext.currentTime+4
+            );
+
+            oscillator
+                .connect(gainNode)
+                .connect(masterGain);
+
+            oscillator.start();
+
+            oscillator.stop(
+                audioContext.currentTime+4
+            );
+
+        },
+        6500
+    );
+
+}
+
+
+async function toggleAudio(){
+
+    setupAudio();
+
+    if(
+        !audioContext
+    ){
+        return;
+    }
+
+    if(
+        audioContext.state ===
+        "suspended"
+    ){
+        await audioContext.resume();
+    }
+
+    audioEnabled =
+        !audioEnabled;
+
+    masterGain.gain.cancelScheduledValues(
+        audioContext.currentTime
+    );
+
+    masterGain.gain.linearRampToValueAtTime(
+        audioEnabled
+            ? .035
+            : 0,
+        audioContext.currentTime+.6
+    );
+
+    document
+        .getElementById(
+            "soundButton"
+        )
+        .classList.toggle(
+            "active",
+            audioEnabled
+        );
+
+}
+
+document
+    .getElementById("soundButton")
+    .addEventListener(
+        "click",
+        toggleAudio
+    );
+
+
+/* =========================================================
+   GALLERY SOUND
+   ========================================================= */
+
+function playGallerySound(){
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const now =
+        audioContext.currentTime;
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type =
+        "sine";
+
+    oscillator.frequency.setValueAtTime(
+        920,
+        now
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        1500,
+        now+.13
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        620,
+        now+.34
+    );
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .035,
+        now+.02
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now+.4
+    );
+
+    oscillator
+        .connect(gain)
+        .connect(masterGain);
+
+    oscillator.start(now);
+
+    oscillator.stop(
+        now+.4
+    );
+
+}
+
+
+/* =========================================================
    DISCORD COPY
-   ========================================================== */
+   ========================================================= */
 
 document
     .getElementById("discordCopy")
@@ -5356,46 +6067,46 @@ document
 
             }catch{
 
-                const area =
+                const textarea =
                     document.createElement(
                         "textarea"
                     );
 
-                area.value =
+                textarea.value =
                     CONFIG.discord;
 
-                area.style.position =
+                textarea.style.position =
                     "fixed";
 
-                area.style.opacity =
+                textarea.style.opacity =
                     "0";
 
                 document.body.appendChild(
-                    area
+                    textarea
                 );
 
-                area.select();
+                textarea.select();
 
                 document.execCommand(
                     "copy"
                 );
 
-                area.remove();
+                textarea.remove();
 
             }
 
-            copyToast.textContent =
+            toast.textContent =
                 language === "it"
-                ? "Username Discord copiato"
-                : "Discord username copied";
+                    ? "Username Discord copiato"
+                    : "Discord username copied";
 
-            copyToast.classList.add(
+            toast.classList.add(
                 "show"
             );
 
             setTimeout(
                 ()=>{
-                    copyToast.classList.remove(
+                    toast.classList.remove(
                         "show"
                     );
                 },
@@ -5406,9 +6117,9 @@ document
     );
 
 
-/* ==========================================================
-   ANCHORS
-   ========================================================== */
+/* =========================================================
+   ANCHOR NAVIGATION
+   ========================================================= */
 
 document
     .querySelectorAll(
@@ -5421,14 +6132,14 @@ document
                 "click",
                 event=>{
 
-                    const selector =
+                    const targetSelector =
                         link.getAttribute(
                             "href"
                         );
 
                     const target =
                         document.querySelector(
-                            selector
+                            targetSelector
                         );
 
                     if(!target){
@@ -5438,8 +6149,10 @@ document
                     event.preventDefault();
 
                     target.scrollIntoView({
-                        behavior:"smooth",
-                        block:"start"
+                        behavior:
+                            "smooth",
+                        block:
+                            "start"
                     });
 
                 }
@@ -5449,9 +6162,9 @@ document
     );
 
 
-/* ==========================================================
-   INITIALIZE
-   ========================================================== */
+/* =========================================================
+   INITIAL GALLERY
+   ========================================================= */
 
 loadGallery();
 
