@@ -177,6 +177,31 @@ button{
 }
 
 /* =========================================================
+   SUBTLE TIME CYCLE INDICATOR
+   ========================================================= */
+
+.sceneTime{
+    position:absolute;
+    right:24px;
+    bottom:24px;
+    z-index:7;
+    color:rgba(255,255,255,.30);
+    font:9px var(--mono);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    pointer-events:none;
+    mix-blend-mode:screen;
+}
+
+@media(max-width:560px){
+    .sceneTime{
+        right:14px;
+        bottom:14px;
+        font-size:8px;
+    }
+}
+
+/* =========================================================
    CURSOR
    ========================================================= */
 
@@ -1722,6 +1747,8 @@ footer{
 
     <div class="sceneFog"></div>
 
+    <div class="sceneTime" id="sceneTime">22:00 · RAIN</div>
+
     <div class="sceneVignette"></div>
 
 </div>
@@ -3263,1375 +3290,668 @@ if(finePointer){
 
 
 /* =========================================================
-   CITY ENGINE
+   AMBIENT NIGHT ENGINE
+   Rain + blurred light field + time cycle + sound events.
+   No buildings. No people. The visual layer is deliberately
+   abstract so the environment feels atmospheric rather than
+   like a game HUD.
    ========================================================= */
 
-const cityCanvas =
-    document.getElementById(
-        "cityCanvas"
-    );
+const sceneCanvas =
+    document.getElementById("cityCanvas");
 
-const cityContext =
-    cityCanvas.getContext(
-        "2d"
-    );
+const sceneContext =
+    sceneCanvas.getContext("2d");
 
-let cityWidth =
-    0;
+const sceneTimeEl =
+    document.getElementById("sceneTime");
 
-let cityHeight =
-    0;
+let sceneWidth = 0;
+let sceneHeight = 0;
 
-let buildings =
-    [];
+/* ---------------------------------------------------------
+   BLURRED LIGHT FIELD
+   --------------------------------------------------------- */
 
-let windows =
-    [];
+const lightSources = [];
+const lightStreaks = [];
 
-let people =
-    [];
+function createLightField(){
 
+    lightSources.length = 0;
+    lightStreaks.length = 0;
 
-/* ---------------- RESIZE ---------------- */
+    const count =
+        sceneWidth < 700 ? 20 : 34;
 
-function resizeCity(){
+    for(let i=0;i<count;i++){
 
-    const ratio =
+        lightSources.push({
+
+            x:
+                Math.random() * sceneWidth,
+
+            y:
+                sceneHeight *
+                (.15 + Math.random() * .65),
+
+            radius:
+                18 + Math.random() * 65,
+
+            base:
+                .035 + Math.random() * .11,
+
+            phase:
+                Math.random() * Math.PI * 2,
+
+            speed:
+                .4 + Math.random() * 1.8,
+
+            drift:
+                (Math.random() - .5) * .12,
+
+            depth:
+                .35 + Math.random() * .65
+
+        });
+
+    }
+
+    for(let i=0;i<7;i++){
+
+        lightStreaks.push({
+
+            x:
+                Math.random() * sceneWidth,
+
+            y:
+                sceneHeight *
+                (.62 + Math.random() * .27),
+
+            length:
+                40 + Math.random() * 130,
+
+            speed:
+                .08 + Math.random() * .35,
+
+            alpha:
+                .025 + Math.random() * .045
+
+        });
+
+    }
+}
+
+function resizeSceneCanvas(){
+
+    const dpr =
         Math.min(
             window.devicePixelRatio || 1,
             1.5
         );
 
-    cityWidth =
-        innerWidth;
+    sceneWidth =
+        window.innerWidth;
 
-    cityHeight =
-        innerHeight;
+    sceneHeight =
+        window.innerHeight;
 
-    cityCanvas.width =
-        cityWidth*ratio;
+    sceneCanvas.width =
+        sceneWidth * dpr;
 
-    cityCanvas.height =
-        cityHeight*ratio;
+    sceneCanvas.height =
+        sceneHeight * dpr;
 
-    cityCanvas.style.width =
-        cityWidth+"px";
+    sceneCanvas.style.width =
+        sceneWidth + "px";
 
-    cityCanvas.style.height =
-        cityHeight+"px";
+    sceneCanvas.style.height =
+        sceneHeight + "px";
 
-    cityContext.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
+    sceneContext.setTransform(
+        dpr,0,0,dpr,0,0
     );
 
-    buildCity();
-
+    createLightField();
 }
 
 
-/* ---------------- BUILD CITY ---------------- */
+/* ---------------------------------------------------------
+   EVENT VISUALS
+   --------------------------------------------------------- */
 
-function buildCity(){
+let visualEvent = {
+    type:"idle",
+    started:0,
+    intensity:0
+};
 
-    buildings=[];
-    windows=[];
-    people=[];
+const visualFlash = {
+    value:0
+};
 
-    /*
-       BACKGROUND BUILDINGS
-    */
+function triggerVisualEvent(type){
 
-    const backCount =
-        Math.ceil(
-            cityWidth/52
-        );
+    visualEvent.type =
+        type;
 
-    for(
-        let i=0;
-        i<backCount;
-        i++
-    ){
+    visualEvent.started =
+        performance.now();
 
-        const width =
-            35+
-            Math.random()*50;
-
-        const height =
-            cityHeight*.18+
-            Math.random()*
-            cityHeight*.24;
-
-        buildings.push({
-
-            x:
-                i*55+
-                Math.random()*20,
-
-            y:
-                cityHeight*.66-
-                height,
-
-            width,
-            height,
-
-            layer:0,
-
-            rooftop:
-                Math.random()>.72
-
-        });
-
+    if(type === "gunshot"){
+        visualFlash.value =
+            1;
     }
 
-
-    /*
-       MIDGROUND
-    */
-
-    const midCount =
-        Math.ceil(
-            cityWidth/95
-        );
-
-    for(
-        let i=0;
-        i<midCount;
-        i++
-    ){
-
-        const width =
-            60+
-            Math.random()*65;
-
-        const height =
-            cityHeight*.28+
-            Math.random()*
-            cityHeight*.27;
-
-        buildings.push({
-
-            x:
-                i*100+
-                Math.random()*35,
-
-            y:
-                cityHeight*.68-
-                height,
-
-            width,
-            height,
-
-            layer:1,
-
-            rooftop:
-                Math.random()>.65
-
-        });
-
+    if(type === "siren"){
+        visualEvent.intensity =
+            1;
     }
 
-
-    /*
-       MAIN SKYSCRAPER
-    */
-
-    const towerWidth =
-        Math.max(
-            160,
-            cityWidth*.17
-        );
-
-    const towerHeight =
-        Math.max(
-            cityHeight*.74,
-            540
-        );
-
-    const towerX =
-        cityWidth*.60;
-
-    buildings.push({
-
-        main:true,
-
-        x:
-            towerX,
-
-        y:
-            cityHeight*.68-
-            towerHeight,
-
-        width:
-            towerWidth,
-
-        height:
-            towerHeight
-
-    });
-
-
-    /*
-       SIDE LARGE BUILDING
-    */
-
-    buildings.push({
-
-        x:
-            cityWidth*.42,
-
-        y:
-            cityHeight*.68-
-            cityHeight*.47,
-
-        width:
-            cityWidth*.13,
-
-        height:
-            cityHeight*.47,
-
-        layer:1,
-
-        rooftop:true
-
-    });
-
-
-    /*
-       WINDOWS
-    */
-
-    buildings.forEach(
-        building=>{
-
-            const columns =
-                Math.max(
-                    3,
-                    Math.floor(
-                        building.width/12
-                    )
-                );
-
-            const rows =
-                Math.max(
-                    4,
-                    Math.floor(
-                        building.height/17
-                    )
-                );
-
-            for(
-                let row=0;
-                row<rows;
-                row++
-            ){
-
-                for(
-                    let column=0;
-                    column<columns;
-                    column++
-                ){
-
-                    if(
-                        Math.random()>.64
-                    ){
-                        continue;
-                    }
-
-                    const isMain =
-                        building.main===true;
-
-                    windows.push({
-
-                        x:
-                            building.x+
-                            7+
-                            column*
-                            (
-                                building.width-14
-                            )/
-                            columns,
-
-                        y:
-                            building.y+
-                            9+
-                            row*
-                            (
-                                building.height-18
-                            )/
-                            rows,
-
-                        width:
-                            Math.max(
-                                2.5,
-                                building.width/
-                                columns-4
-                            ),
-
-                        height:
-                            isMain
-                            ? 3
-                            : 2.5,
-
-                        brightness:
-                            Math.random(),
-
-                        pulse:
-                            1+
-                            Math.random()*4,
-
-                        phase:
-                            Math.random()*
-                            Math.PI*2,
-
-                        main:isMain
-
-                    });
-
-                }
-
-            }
-
-        }
-    );
-
-
-    /*
-       EXACTLY THREE PEOPLE
-    */
-
-    people=[
-        {
-            name:"A",
-            x:cityWidth*.38,
-            y:cityHeight*.90,
-            scale:1.23,
-            state:"talk",
-            phase:0,
-            facing:1,
-            actionTimer:0,
-            gesture:0
-        },
-
-        {
-            name:"B",
-            x:cityWidth*.50,
-            y:cityHeight*.905,
-            scale:1.18,
-            state:"listen",
-            phase:1.8,
-            facing:-1,
-            actionTimer:1.8,
-            gesture:0
-        },
-
-        {
-            name:"C",
-            x:cityWidth*.63,
-            y:cityHeight*.90,
-            scale:1.27,
-            state:"talk",
-            phase:3.2,
-            facing:-1,
-            actionTimer:3.2,
-            gesture:0
-        }
-    ];
+    if(type === "ambulance"){
+        visualEvent.intensity =
+            1;
+    }
 
 }
 
+function eventFlash(decay){
 
-/* ---------------- PEOPLE ---------------- */
+    visualFlash.value =
+        Math.max(
+            0,
+            visualFlash.value -
+            decay
+        );
+}
 
-function drawPerson(
-    person,
-    time
-){
 
-    const x =
-        person.x+
-        Math.sin(
-            time*.35+
-            person.phase
-        )*1.8;
+/* ---------------------------------------------------------
+   TIME CYCLE
+   120 seconds = 22:00 -> 04:00
+   --------------------------------------------------------- */
 
-    const baseY =
-        person.y;
+const CYCLE_LENGTH_MS =
+    120000;
 
-    const breathing =
-        Math.sin(
-            time*1.4+
-            person.phase
-        )*1.3;
+const cycleStart =
+    performance.now();
 
-    const idleSway =
-        Math.sin(
-            time*.85+
-            person.phase
-        )*1.5;
+function getCycleSeconds(){
 
-    const scale =
-        person.scale;
+    return (
+        (performance.now() -
+            cycleStart) /
+        1000
+    ) % 120;
 
-    /*
-       TALK / LISTEN CYCLE
-    */
+}
+
+function updateSceneClock(){
+
+    const cycleSeconds =
+        getCycleSeconds();
+
+    const totalMinutes =
+        (
+            22 * 60 +
+            Math.floor(
+                cycleSeconds /
+                120 *
+                360
+            )
+        ) % 1440;
+
+    const hours =
+        String(
+            Math.floor(
+                totalMinutes / 60
+            )
+        ).padStart(2,"0");
+
+    const minutes =
+        String(
+            totalMinutes % 60
+        ).padStart(2,"0");
+
+    sceneTimeEl.textContent =
+        `${hours}:${minutes} · RAIN`;
+
+}
+
+setInterval(
+    updateSceneClock,
+    1000
+);
+
+
+/* ---------------------------------------------------------
+   DRAW ABSTRACT NIGHT
+   --------------------------------------------------------- */
+
+function drawAmbientLights(){
+
+    sceneContext.clearRect(
+        0,
+        0,
+        sceneWidth,
+        sceneHeight
+    );
+
+    const now =
+        performance.now() / 1000;
 
     const cycle =
-        (
-            time+
-            person.phase
-        )%10;
-
-    let speaking =
-        false;
-
-    if(
-        person.name==="A"
-    ){
-
-        speaking =
-            cycle<3.2;
-
-    }else if(
-        person.name==="B"
-    ){
-
-        speaking =
-            cycle>3.5 &&
-            cycle<6.4;
-
-    }else{
-
-        speaking =
-            cycle>6.8;
-    }
-
+        getCycleSeconds();
 
     /*
-       gesture amount
+       Night remains dark, but dawn introduces
+       a very subtle lift toward the end.
     */
 
-    const gesture =
-        speaking
-        ? Math.sin(
-            time*3.4+
-            person.phase
-        )
-        : Math.sin(
-            time*.6+
-            person.phase
-        )*.15;
+    let timeBrightness =
+        .62;
 
+    if(cycle > 90){
 
-    cityContext.save();
-
-    cityContext.translate(
-        x+idleSway,
-        baseY+
-        breathing
-    );
-
-    cityContext.scale(
-        scale,
-        scale
-    );
-
-
-    /*
-       soft ground shadow
-    */
-
-    cityContext.fillStyle =
-        "rgba(0,0,0,.55)";
-
-    cityContext.beginPath();
-
-    cityContext.ellipse(
-        0,
-        19,
-        20,
-        6,
-        0,
-        0,
-        Math.PI*2
-    );
-
-    cityContext.fill();
-
-
-    /*
-       body jacket
-    */
-
-    cityContext.fillStyle =
-        "rgba(2,2,2,.98)";
-
-    cityContext.beginPath();
-
-    cityContext.roundRect(
-        -11,
-        -32,
-        22,
-        33,
-        5
-    );
-
-    cityContext.fill();
-
-
-    /*
-       torso highlight edge
-    */
-
-    cityContext.strokeStyle =
-        "rgba(255,255,255,.15)";
-
-    cityContext.lineWidth =
-        1.2;
-
-    cityContext.stroke();
-
-
-    /*
-       HEAD
-    */
-
-    cityContext.fillStyle =
-        "rgba(3,3,3,1)";
-
-    cityContext.beginPath();
-
-    cityContext.arc(
-        0,
-        -42,
-        7.5,
-        0,
-        Math.PI*2
-    );
-
-    cityContext.fill();
-
-
-    /*
-       shoulders
-    */
-
-    cityContext.strokeStyle =
-        "#020202";
-
-    cityContext.lineWidth =
-        5;
-
-    cityContext.beginPath();
-
-    cityContext.moveTo(
-        -8,
-        -27
-    );
-
-    cityContext.lineTo(
-        8,
-        -27
-    );
-
-    cityContext.stroke();
-
-
-    /*
-       LEFT ARM
-    */
-
-    const armA =
-        speaking
-        ? gesture*7
-        : Math.sin(
-            time+
-            person.phase
-        )*2;
-
-    cityContext.strokeStyle =
-        "#030303";
-
-    cityContext.lineWidth =
-        4.5;
-
-    cityContext.beginPath();
-
-    cityContext.moveTo(
-        -9,
-        -25
-    );
-
-    cityContext.lineTo(
-        -17,
-        -8+
-        armA
-    );
-
-    cityContext.stroke();
-
-
-    /*
-       RIGHT ARM / CONVERSATIONAL GESTURE
-    */
-
-    const armB =
-        speaking
-        ? -gesture*11
-        : 2;
-
-    cityContext.beginPath();
-
-    cityContext.moveTo(
-        9,
-        -25
-    );
-
-    cityContext.lineTo(
-        18,
-        -10+
-        armB
-    );
-
-    cityContext.stroke();
-
-
-    /*
-       FOREARMS
-    */
-
-    cityContext.lineWidth =
-        3.5;
-
-    if(
-        speaking
-    ){
-
-        cityContext.beginPath();
-
-        cityContext.moveTo(
-            18,
-            -10+
-            armB
-        );
-
-        cityContext.lineTo(
-            24,
-            -17+
-            armB
-        );
-
-        cityContext.stroke();
+        timeBrightness =
+            .62 +
+            (
+                (cycle - 90) /
+                30
+            ) * .18;
 
     }
 
+    if(cycle < 20){
 
-    /*
-       LEGS
-    */
-
-    const walk =
-        Math.sin(
-            time*1.6+
-            person.phase
-        )*3;
-
-    cityContext.lineWidth =
-        5;
-
-    cityContext.beginPath();
-
-    cityContext.moveTo(
-        -4,
-        0
-    );
-
-    cityContext.lineTo(
-        -7+
-        walk,
-        19
-    );
-
-    cityContext.moveTo(
-        4,
-        0
-    );
-
-    cityContext.lineTo(
-        7-
-        walk,
-        19
-    );
-
-    cityContext.stroke();
-
-
-    /*
-       little hand gesture during speech
-    */
-
-    if(
-        speaking &&
-        Math.abs(gesture)>.45
-    ){
-
-        cityContext.strokeStyle =
-            "rgba(255,255,255,.12)";
-
-        cityContext.lineWidth =
-            1;
-
-        cityContext.beginPath();
-
-        cityContext.moveTo(
-            18,
-            -10+
-            armB
-        );
-
-        cityContext.lineTo(
-            30,
-            -15+
-            armB
-        );
-
-        cityContext.stroke();
+        timeBrightness =
+            .68 -
+            (cycle / 20) * .06;
 
     }
 
+    /* ambient haze */
 
-    /*
-       subtle rim light
-    */
-
-    cityContext.strokeStyle =
-        "rgba(255,255,255,.09)";
-
-    cityContext.lineWidth =
-        .9;
-
-    cityContext.beginPath();
-
-    cityContext.moveTo(
-        -8,
-        -30
-    );
-
-    cityContext.lineTo(
-        -8,
-        -8
-    );
-
-    cityContext.stroke();
-
-
-    cityContext.restore();
-
-
-    /*
-       visible speech marker
-       placed ABOVE the character.
-    */
-
-    if(
-        speaking &&
-        Math.sin(
-            time*2+
-            person.phase
-        )>.15
-    ){
-
-        const bubbleWidth =
-            58;
-
-        const bubbleHeight =
-            22;
-
-        const bubbleX =
-            x-
-            bubbleWidth/2;
-
-        const bubbleY =
-            baseY-
-            person.scale*80;
-
-        cityContext.fillStyle =
-            "rgba(240,240,240,.88)";
-
-        cityContext.beginPath();
-
-        cityContext.roundRect(
-            bubbleX,
-            bubbleY,
-            bubbleWidth,
-            bubbleHeight,
-            8
-        );
-
-        cityContext.fill();
-
-
-        cityContext.fillStyle =
-            "#050505";
-
-        cityContext.font =
-            "7px Inter";
-
-        cityContext.textAlign =
-            "center";
-
-        cityContext.fillText(
-            "talking...",
-            x,
-            bubbleY+14
-        );
-
-
-        /*
-           little triangle
-        */
-
-        cityContext.beginPath();
-
-        cityContext.moveTo(
-            x-5,
-            bubbleY+
-            bubbleHeight
-        );
-
-        cityContext.lineTo(
-            x,
-            bubbleY+
-            bubbleHeight+6
-        );
-
-        cityContext.lineTo(
-            x+5,
-            bubbleY+
-            bubbleHeight
-        );
-
-        cityContext.closePath();
-
-        cityContext.fill();
-
-    }
-
-}
-
-
-/* ---------------- DRAW CITY ---------------- */
-
-function drawCity(){
-
-    cityContext.clearRect(
-        0,
-        0,
-        cityWidth,
-        cityHeight
-    );
-
-
-    /*
-       sky glow
-    */
-
-    const sky =
-        cityContext.createLinearGradient(
+    const haze =
+        sceneContext.createRadialGradient(
+            sceneWidth * .50,
+            sceneHeight * .48,
             0,
-            0,
-            0,
-            cityHeight
+            sceneWidth * .50,
+            sceneHeight * .48,
+            sceneHeight * .75
         );
 
-    sky.addColorStop(
+    haze.addColorStop(
         0,
-        "rgba(255,255,255,.045)"
+        `rgba(255,255,255,${.025 * timeBrightness})`
     );
 
-    sky.addColorStop(
-        .52,
-        "rgba(255,255,255,.01)"
-    );
-
-    sky.addColorStop(
+    haze.addColorStop(
         1,
         "rgba(0,0,0,0)"
     );
 
-    cityContext.fillStyle =
-        sky;
+    sceneContext.fillStyle =
+        haze;
 
-    cityContext.fillRect(
+    sceneContext.fillRect(
         0,
         0,
-        cityWidth,
-        cityHeight
+        sceneWidth,
+        sceneHeight
     );
 
 
     /*
-       Buildings.
+       BOKEH LIGHTS
     */
 
-    buildings.forEach(
-        building=>{
+    lightSources.forEach(
+        light=>{
 
-            cityContext.fillStyle =
-                building.main
-                ? "#111"
-                : building.layer===1
-                    ? "#0b0b0b"
-                    : "#080808";
-
-            cityContext.fillRect(
-                building.x,
-                building.y,
-                building.width,
-                building.height
-            );
-
+            light.x +=
+                light.drift;
 
             if(
-                building.main
+                light.x < -100
             ){
-
-                cityContext.strokeStyle =
-                    "rgba(255,255,255,.085)";
-
-                cityContext.strokeRect(
-                    building.x,
-                    building.y,
-                    building.width,
-                    building.height
-                );
-
-
-                /*
-                   Roof crown
-                */
-
-                cityContext.fillStyle =
-                    "#171717";
-
-                cityContext.fillRect(
-                    building.x+
-                    building.width*.30,
-                    building.y-
-                    10,
-                    building.width*.40,
-                    10
-                );
-
-
-                /*
-                   antenna
-                */
-
-                cityContext.fillStyle =
-                    "rgba(255,255,255,.10)";
-
-                cityContext.fillRect(
-                    building.x+
-                    building.width/2,
-                    building.y-
-                    48,
-                    1,
-                    38
-                );
-
-            }else{
-
-                if(
-                    building.rooftop
-                ){
-
-                    cityContext.fillStyle =
-                        "#111";
-
-                    cityContext.fillRect(
-                        building.x+
-                        building.width*.25,
-                        building.y-
-                        8,
-                        building.width*.5,
-                        8
-                    );
-
-                }
-
+                light.x =
+                    sceneWidth + 100;
             }
 
-        }
-    );
+            if(
+                light.x > sceneWidth + 100
+            ){
+                light.x =
+                    -100;
+            }
 
-
-    /*
-       windows
-    */
-
-    const now =
-        performance.now()/1000;
-
-    windows.forEach(
-        win=>{
-
-            let pulse =
-                .68+
-                Math.sin(
-                    now/
-                    win.pulse+
-                    win.phase
-                )*.12;
+            const breathing =
+                (
+                    Math.sin(
+                        now *
+                        light.speed +
+                        light.phase
+                    ) + 1
+                ) / 2;
 
             let alpha =
-                win.main
-                ? pulse
-                : pulse*.62;
-
-            cityContext.fillStyle =
-                `rgba(255,255,255,${alpha})`;
-
-            cityContext.fillRect(
-                win.x,
-                win.y,
-                win.width,
-                win.height
-            );
-
-            if(
-                win.main &&
-                win.brightness>.84
-            ){
-
-                cityContext.shadowColor =
-                    "rgba(255,255,255,.30)";
-
-                cityContext.shadowBlur =
-                    6;
-
-                cityContext.fillRect(
-                    win.x,
-                    win.y,
-                    win.width,
-                    win.height
+                (
+                    light.base *
+                    (.65 + breathing * .35) *
+                    timeBrightness
                 );
 
-                cityContext.shadowBlur =
-                    0;
+            /*
+               Police / ambulance visual sweep.
+            */
+
+            if(
+                visualEvent.type === "siren" ||
+                visualEvent.type === "ambulance"
+            ){
+
+                const elapsed =
+                    performance.now() -
+                    visualEvent.started;
+
+                const pulse =
+                    (
+                        Math.sin(
+                            elapsed / 150
+                        ) + 1
+                    ) / 2;
+
+                alpha +=
+                    pulse *
+                    .045;
 
             }
+
+            const radius =
+                light.radius *
+                (
+                    .82 +
+                    breathing * .18
+                );
+
+            const gradient =
+                sceneContext.createRadialGradient(
+                    light.x,
+                    light.y,
+                    0,
+                    light.x,
+                    light.y,
+                    radius
+                );
+
+            gradient.addColorStop(
+                0,
+                `rgba(255,255,255,${alpha})`
+            );
+
+            gradient.addColorStop(
+                .28,
+                `rgba(255,255,255,${alpha*.52})`
+            );
+
+            gradient.addColorStop(
+                1,
+                "rgba(255,255,255,0)"
+            );
+
+            sceneContext.fillStyle =
+                gradient;
+
+            sceneContext.beginPath();
+
+            sceneContext.arc(
+                light.x,
+                light.y,
+                radius,
+                0,
+                Math.PI * 2
+            );
+
+            sceneContext.fill();
 
         }
     );
 
 
     /*
-       STREET
+       Distant moving headlight streaks.
     */
 
-    const streetTop =
-        cityHeight*.70;
+    lightStreaks.forEach(
+        streak=>{
 
-    cityContext.fillStyle =
-        "#060606";
+            streak.x +=
+                streak.speed;
 
-    cityContext.fillRect(
-        0,
-        streetTop,
-        cityWidth,
-        cityHeight-streetTop
+            if(
+                streak.x >
+                sceneWidth + streak.length
+            ){
+                streak.x =
+                    -streak.length;
+            }
+
+            const gradient =
+                sceneContext.createLinearGradient(
+                    streak.x,
+                    streak.y,
+                    streak.x +
+                        streak.length,
+                    streak.y
+                );
+
+            gradient.addColorStop(
+                0,
+                "rgba(255,255,255,0)"
+            );
+
+            gradient.addColorStop(
+                .5,
+                `rgba(255,255,255,${streak.alpha})`
+            );
+
+            gradient.addColorStop(
+                1,
+                "rgba(255,255,255,0)"
+            );
+
+            sceneContext.fillStyle =
+                gradient;
+
+            sceneContext.fillRect(
+                streak.x,
+                streak.y,
+                streak.length,
+                2
+            );
+
+        }
     );
 
 
     /*
-       wet road reflection
+       EVENT-SPECIFIC BLOOMS
     */
 
-    const reflection =
-        cityContext.createLinearGradient(
+    if(
+        visualEvent.type === "scream"
+    ){
+
+        const elapsed =
+            performance.now() -
+            visualEvent.started;
+
+        if(elapsed < 6500){
+
+            const pulse =
+                .5 +
+                Math.sin(
+                    elapsed / 190
+                ) * .5;
+
+            sceneContext.fillStyle =
+                `rgba(255,255,255,${.012 * pulse})`;
+
+            sceneContext.fillRect(
+                0,
+                0,
+                sceneWidth,
+                sceneHeight
+            );
+
+        }
+
+    }
+
+
+    /*
+       Gunshots become brief white reflections.
+    */
+
+    if(
+        visualFlash.value > 0
+    ){
+
+        sceneContext.fillStyle =
+            `rgba(
+                255,
+                255,
+                255,
+                ${visualFlash.value * .075}
+            )`;
+
+        sceneContext.fillRect(
             0,
-            streetTop,
             0,
-            cityHeight
+            sceneWidth,
+            sceneHeight
         );
 
-    reflection.addColorStop(
+        eventFlash(.06);
+
+    }
+
+
+    /*
+       Subtle reflection on wet ground.
+    */
+
+    const groundY =
+        sceneHeight * .77;
+
+    const reflectionGradient =
+        sceneContext.createLinearGradient(
+            0,
+            groundY,
+            0,
+            sceneHeight
+        );
+
+    reflectionGradient.addColorStop(
         0,
-        "rgba(255,255,255,.03)"
+        "rgba(255,255,255,.018)"
     );
 
-    reflection.addColorStop(
+    reflectionGradient.addColorStop(
         1,
-        "rgba(255,255,255,.005)"
+        "rgba(255,255,255,0)"
     );
 
-    cityContext.fillStyle =
-        reflection;
+    sceneContext.fillStyle =
+        reflectionGradient;
 
-    cityContext.fillRect(
+    sceneContext.fillRect(
         0,
-        streetTop,
-        cityWidth,
-        cityHeight-streetTop
+        groundY,
+        sceneWidth,
+        sceneHeight -
+        groundY
     );
 
-
-    /*
-       perspective lines
-    */
-
-    cityContext.strokeStyle =
-        "rgba(255,255,255,.055)";
-
-    cityContext.lineWidth =
-        1;
-
-    for(
-        let i=-5;
-        i<=5;
-        i++
-    ){
-
-        cityContext.beginPath();
-
-        cityContext.moveTo(
-            cityWidth/2,
-            streetTop
-        );
-
-        cityContext.lineTo(
-            cityWidth/2+
-            i*180,
-            cityHeight
-        );
-
-        cityContext.stroke();
-
-    }
-
-
-    /*
-       bright puddles
-    */
-
-    for(
-        let i=0;
-        i<9;
-        i++
-    ){
-
-        const px =
-            Math.random()*
-            cityWidth;
-
-        const py =
-            streetTop+
-            Math.random()*
-            cityHeight*.24;
-
-        cityContext.fillStyle =
-            "rgba(255,255,255,.016)";
-
-        cityContext.beginPath();
-
-        cityContext.ellipse(
-            px,
-            py,
-            32+
-            Math.random()*45,
-            3+
-            Math.random()*4,
-            0,
-            0,
-            Math.PI*2
-        );
-
-        cityContext.fill();
-
-    }
-
-
-    /*
-       ALLEY LEFT / RIGHT WALLS
-    */
-
-    cityContext.fillStyle =
-        "#060606";
-
-    cityContext.fillRect(
-        0,
-        cityHeight*.82,
-        cityWidth*.17,
-        cityHeight*.18
-    );
-
-    cityContext.fillRect(
-        cityWidth*.83,
-        cityHeight*.82,
-        cityWidth*.17,
-        cityHeight*.18
-    );
-
-
-    /*
-       ALLEY door
-    */
-
-    cityContext.fillStyle =
-        "#111";
-
-    cityContext.fillRect(
-        cityWidth*.055,
-        cityHeight*.78,
-        cityWidth*.08,
-        cityHeight*.21
-    );
-
-    cityContext.strokeStyle =
-        "rgba(255,255,255,.09)";
-
-    cityContext.strokeRect(
-        cityWidth*.055,
-        cityHeight*.78,
-        cityWidth*.08,
-        cityHeight*.21
-    );
-
-
-    /*
-       alley window
-    */
-
-    cityContext.fillStyle =
-        "rgba(255,255,255,.07)";
-
-    cityContext.fillRect(
-        cityWidth*.85,
-        cityHeight*.78,
-        cityWidth*.07,
-        cityHeight*.07
-    );
-
-
-    /*
-       three visible people
-    */
-
-    people.forEach(
-        person=>
-            drawPerson(
-                person,
-                now
-            )
-    );
-
-}
-
-
-/* ---------------- CITY LOOP ---------------- */
-
-function cityLoop(){
-
-    drawCity();
 
     requestAnimationFrame(
-        cityLoop
+        drawAmbientLights
     );
 
 }
-
-resizeCity();
-cityLoop();
-
-window.addEventListener(
-    "resize",
-    resizeCity
-);
 
 
 /* =========================================================
-   RAIN
+   RAIN ENGINE
    ========================================================= */
 
-const rainCanvas =
-    document.getElementById(
-        "rainCanvas"
-    );
-
-const rainContext =
-    rainCanvas.getContext(
-        "2d"
-    );
-
-let drops=[];
+let drops = [];
 
 function resizeRain(){
 
-    const ratio =
+    const canvas =
+        document.getElementById(
+            "rainCanvas"
+        );
+
+    const dpr =
         Math.min(
-            window.devicePixelRatio||1,
+            window.devicePixelRatio || 1,
             1.5
         );
 
-    rainCanvas.width =
-        innerWidth*ratio;
+    canvas.width =
+        window.innerWidth * dpr;
 
-    rainCanvas.height =
-        innerHeight*ratio;
+    canvas.height =
+        window.innerHeight * dpr;
 
-    rainCanvas.style.width =
-        innerWidth+"px";
+    canvas.style.width =
+        window.innerWidth + "px";
 
-    rainCanvas.style.height =
-        innerHeight+"px";
+    canvas.style.height =
+        window.innerHeight + "px";
+
+    rainContext =
+        canvas.getContext("2d");
 
     rainContext.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
+        dpr,0,0,dpr,0,0
     );
 
-    drops=[];
+    drops = [];
 
     const amount =
-        innerWidth<700
-            ? 150
-            : 320;
+        window.innerWidth < 700
+            ? 145
+            : 300;
 
-    for(
-        let i=0;
-        i<amount;
-        i++
-    ){
+    for(let i=0;i<amount;i++){
 
         drops.push({
 
             x:
-                Math.random()*innerWidth,
+                Math.random() *
+                window.innerWidth,
 
             y:
-                Math.random()*innerHeight,
+                Math.random() *
+                window.innerHeight,
 
             length:
-                8+
-                Math.random()*19,
+                8 +
+                Math.random() * 18,
 
             speed:
-                10+
-                Math.random()*14,
+                9 +
+                Math.random() * 15,
 
             opacity:
-                .04+
-                Math.random()*.22
+                .035 +
+                Math.random() * .23
 
         });
 
@@ -4639,13 +3959,18 @@ function resizeRain(){
 
 }
 
-function rainLoop(){
+function animateRain(){
+
+    const intensity =
+        getRainIntensity(
+            getCycleSeconds()
+        );
 
     rainContext.clearRect(
         0,
         0,
-        innerWidth,
-        innerHeight
+        window.innerWidth,
+        window.innerHeight
     );
 
     rainContext.lineCap =
@@ -4654,23 +3979,26 @@ function rainLoop(){
     drops.forEach(
         drop=>{
 
-            drop.y+=
-                drop.speed;
+            drop.y +=
+                drop.speed *
+                intensity;
 
-            drop.x+=
-                drop.speed*.07;
+            drop.x +=
+                drop.speed *
+                .07 *
+                intensity;
 
             if(
-                drop.y>
-                innerHeight+30
+                drop.y >
+                window.innerHeight + 30
             ){
 
-                drop.y=
+                drop.y =
                     -drop.length;
 
-                drop.x=
-                    Math.random()*
-                    innerWidth;
+                drop.x =
+                    Math.random() *
+                    window.innerWidth;
 
             }
 
@@ -4682,18 +4010,24 @@ function rainLoop(){
             );
 
             rainContext.lineTo(
-                drop.x-
-                drop.length*.07,
-                drop.y-
-                drop.length
+                drop.x -
+                    drop.length*.07,
+                drop.y -
+                    drop.length
             );
 
-            rainContext.strokeStyle=
-                `rgba(255,255,255,${drop.opacity})`;
+            rainContext.strokeStyle =
+                `rgba(
+                    255,
+                    255,
+                    255,
+                    ${drop.opacity *
+                        intensity}
+                )`;
 
-            rainContext.lineWidth=
-                .25+
-                Math.random()*.7;
+            rainContext.lineWidth =
+                .25 +
+                Math.random()*.65;
 
             rainContext.stroke();
 
@@ -4701,29 +4035,1565 @@ function rainLoop(){
     );
 
     requestAnimationFrame(
-        rainLoop
+        animateRain
     );
 
 }
 
-resizeRain();
-rainLoop();
 
-window.addEventListener(
-    "resize",
-    resizeRain
-);
+/* ---------------------------------------------------------
+   RAIN CYCLE
+   --------------------------------------------------------- */
+
+function getRainIntensity(
+    seconds
+){
+
+    /*
+       A living night:
+       heavier early,
+       calm around midnight,
+       heavier again toward dawn.
+    */
+
+    if(seconds < 22){
+
+        return 1.0;
+
+    }
+
+    if(seconds < 48){
+
+        return .70;
+
+    }
+
+    if(seconds < 76){
+
+        return .88;
+
+    }
+
+    if(seconds < 100){
+
+        return 1.15;
+
+    }
+
+    return .82;
+
+}
+
+
+/* =========================================================
+   AUDIO EVENT ENGINE
+   ========================================================= */
+
+let audioContext =
+    null;
+
+let masterGain =
+    null;
+
+let audioEnabled =
+    false;
+
+let eventTimer =
+    null;
+
+let lastCycle =
+    -1;
+
+let firedEvents =
+    new Set();
+
+
+/*
+   Timeline:
+
+   00 — quiet rain
+   12 — distant argument
+   26 — car passes
+   39 — footsteps
+   51 — police siren
+   67 — scream -> 3 gunshots
+   80 — thunder
+   91 — ambulance
+   103 — electrical buzz
+
+   Remaining windows are intentionally silent.
+*/
+
+const EVENT_TIMELINE = [
+
+    {
+        offset:12,
+        type:"argument"
+    },
+
+    {
+        offset:26,
+        type:"car"
+    },
+
+    {
+        offset:39,
+        type:"footsteps"
+    },
+
+    {
+        offset:51,
+        type:"siren"
+    },
+
+    {
+        offset:67,
+        type:"scream"
+    },
+
+    {
+        offset:80,
+        type:"thunder"
+    },
+
+    {
+        offset:91,
+        type:"ambulance"
+    },
+
+    {
+        offset:103,
+        type:"electric"
+    }
+
+];
+
+
+function initializeAudio(){
+
+    if(audioContext){
+        return;
+    }
+
+    const AudioClass =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+    if(!AudioClass){
+        return;
+    }
+
+    audioContext =
+        new AudioClass();
+
+    masterGain =
+        audioContext.createGain();
+
+    masterGain.gain.value =
+        0;
+
+    masterGain.connect(
+        audioContext.destination
+    );
+
+    startRainTexture();
+
+    startLowCityBed();
+
+}
+
+
+/* ---------------------------------------------------------
+   MASTER AUDIO UTILITIES
+   --------------------------------------------------------- */
+
+function createPanNode(
+    amount
+){
+
+    if(
+        !audioContext
+    ){
+        return null;
+    }
+
+    if(
+        audioContext.createStereoPanner
+    ){
+
+        const pan =
+            audioContext.createStereoPanner();
+
+        pan.pan.value =
+            amount;
+
+        return pan;
+
+    }
+
+    return null;
+
+}
+
+
+function setEnvelope(
+    gain,
+    attack,
+    release,
+    peak
+){
+
+    const now =
+        audioContext.currentTime;
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        peak,
+        now + attack
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now +
+        attack +
+        release
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   RAIN TEXTURE
+   --------------------------------------------------------- */
+
+function startRainTexture(){
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            audioContext.sampleRate * 2,
+            audioContext.sampleRate
+        );
+
+    const data =
+        buffer.getChannelData(0);
+
+    for(
+        let i=0;
+        i<data.length;
+        i++
+    ){
+
+        data[i] =
+            Math.random()*2 - 1;
+
+    }
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer =
+        buffer;
+
+    source.loop =
+        true;
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type =
+        "highpass";
+
+    filter.frequency.value =
+        1650;
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.value =
+        .13;
+
+    source
+        .connect(filter)
+        .connect(gain)
+        .connect(masterGain);
+
+    source.start();
+
+    window._rainSource =
+        source;
+
+    window._rainGain =
+        gain;
+
+}
+
+
+/* ---------------------------------------------------------
+   LOW DISTANT BED
+   --------------------------------------------------------- */
+
+function startLowCityBed(){
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type =
+        "sine";
+
+    oscillator.frequency.value =
+        43;
+
+    gain.gain.value =
+        .0001;
+
+    oscillator
+        .connect(gain)
+        .connect(masterGain);
+
+    oscillator.start();
+
+    window._lowBedGain =
+        gain;
+
+}
+
+
+/* ---------------------------------------------------------
+   DISTANT SCREAM
+   --------------------------------------------------------- */
+
+function playScream(){
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const oscillator2 =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    const pan =
+        createPanNode(
+            -.45
+        );
+
+    oscillator.type =
+        "sawtooth";
+
+    oscillator2.type =
+        "triangle";
+
+    oscillator.frequency.setValueAtTime(
+        720,
+        audioContext.currentTime
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        1100,
+        audioContext.currentTime+1.3
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        510,
+        audioContext.currentTime+5.4
+    );
+
+    oscillator2.frequency.setValueAtTime(
+        358,
+        audioContext.currentTime
+    );
+
+    oscillator2.frequency.exponentialRampToValueAtTime(
+        620,
+        audioContext.currentTime+1.2
+    );
+
+    gain.gain.setValueAtTime(
+        .0001,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .024,
+        audioContext.currentTime+.08
+    );
+
+    gain.gain.setValueAtTime(
+        .018,
+        audioContext.currentTime+1.5
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        audioContext.currentTime+5.8
+    );
+
+    if(pan){
+
+        oscillator
+            .connect(gain)
+            .connect(pan)
+            .connect(masterGain);
+
+        oscillator2
+            .connect(gain);
+
+    }else{
+
+        oscillator
+            .connect(gain)
+            .connect(masterGain);
+
+        oscillator2
+            .connect(gain);
+
+    }
+
+    oscillator.start();
+
+    oscillator2.start();
+
+    oscillator.stop(
+        audioContext.currentTime+6
+    );
+
+    oscillator2.stop(
+        audioContext.currentTime+6
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   GUNSHOT
+   --------------------------------------------------------- */
+
+function playGunshot(
+    panAmount
+){
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const now =
+        audioContext.currentTime;
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            Math.floor(
+                audioContext.sampleRate*.22
+            ),
+            audioContext.sampleRate
+        );
+
+    const data =
+        buffer.getChannelData(0);
+
+    for(
+        let i=0;
+        i<data.length;
+        i++
+    ){
+
+        data[i] =
+            (
+                Math.random()*2 -
+                1
+            ) *
+            Math.pow(
+                1-i/data.length,
+                2.3
+            );
+
+    }
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer =
+        buffer;
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type =
+        "lowpass";
+
+    filter.frequency.value =
+        2800;
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.setValueAtTime(
+        .065,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now+.23
+    );
+
+    const boom =
+        audioContext.createOscillator();
+
+    const boomGain =
+        audioContext.createGain();
+
+    boom.type =
+        "sine";
+
+    boom.frequency.setValueAtTime(
+        110,
+        now
+    );
+
+    boom.frequency.exponentialRampToValueAtTime(
+        45,
+        now+.22
+    );
+
+    boomGain.gain.setValueAtTime(
+        .03,
+        now
+    );
+
+    boomGain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now+.25
+    );
+
+    const pan =
+        createPanNode(
+            panAmount
+        );
+
+    source
+        .connect(filter)
+        .connect(gain);
+
+    boom
+        .connect(boomGain);
+
+    if(pan){
+
+        gain
+            .connect(pan)
+            .connect(masterGain);
+
+        boomGain
+            .connect(pan);
+
+    }else{
+
+        gain
+            .connect(masterGain);
+
+        boomGain
+            .connect(masterGain);
+
+    }
+
+    source.start(now);
+
+    boom.start(now);
+
+    boom.stop(now+.25);
+
+}
+
+
+/* ---------------------------------------------------------
+   SCREAM + THREE GUNSHOTS
+   --------------------------------------------------------- */
+
+function playScreamSequence(){
+
+    triggerVisualEvent(
+        "scream"
+    );
+
+    playScream();
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "gunshot"
+            );
+
+            playGunshot(
+                -.2
+            );
+
+        },
+        2050
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "gunshot"
+            );
+
+            playGunshot(
+                .18
+            );
+
+        },
+        3250
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "gunshot"
+            );
+
+            playGunshot(
+                .02
+            );
+
+        },
+        4450
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        7000
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   POLICE SIREN
+   --------------------------------------------------------- */
+
+function playPoliceSiren(){
+
+    triggerVisualEvent(
+        "siren"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    const pan =
+        createPanNode(
+            .4
+        );
+
+    oscillator.type =
+        "sine";
+
+    const start =
+        audioContext.currentTime;
+
+    const duration =
+        7;
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const t =
+            start+
+            i*.95;
+
+        oscillator.frequency.setValueAtTime(
+            520,
+            t
+        );
+
+        oscillator.frequency.linearRampToValueAtTime(
+            920,
+            t+.47
+        );
+
+        oscillator.frequency.linearRampToValueAtTime(
+            520,
+            t+.95
+        );
+
+    }
+
+    setEnvelope(
+        gain,
+        .12,
+        duration-
+            .12,
+        .018
+    );
+
+    if(pan){
+
+        oscillator
+            .connect(gain)
+            .connect(pan)
+            .connect(masterGain);
+
+    }else{
+
+        oscillator
+            .connect(gain)
+            .connect(masterGain);
+
+    }
+
+    oscillator.start();
+
+    oscillator.stop(
+        start+duration
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        duration*1000
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   AMBULANCE
+   --------------------------------------------------------- */
+
+function playAmbulance(){
+
+    triggerVisualEvent(
+        "ambulance"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    const pan =
+        createPanNode(
+            -.65
+        );
+
+    oscillator.type =
+        "triangle";
+
+    const start =
+        audioContext.currentTime;
+
+    for(
+        let i=0;
+        i<5;
+        i++
+    ){
+
+        const t =
+            start+
+            i*1.0;
+
+        oscillator.frequency.setValueAtTime(
+            690,
+            t
+        );
+
+        oscillator.frequency.linearRampToValueAtTime(
+            1080,
+            t+.5
+        );
+
+        oscillator.frequency.linearRampToValueAtTime(
+            690,
+            t+1
+        );
+
+    }
+
+    setEnvelope(
+        gain,
+        .08,
+        4.9,
+        .015
+    );
+
+    if(pan){
+
+        oscillator
+            .connect(gain)
+            .connect(pan)
+            .connect(masterGain);
+
+    }else{
+
+        oscillator
+            .connect(gain)
+            .connect(masterGain);
+
+    }
+
+    oscillator.start();
+
+    oscillator.stop(
+        start+5
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        5200
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   THUNDER
+   --------------------------------------------------------- */
+
+function playThunder(){
+
+    triggerVisualEvent(
+        "thunder"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            audioContext.sampleRate*4,
+            audioContext.sampleRate
+        );
+
+    const data =
+        buffer.getChannelData(0);
+
+    for(
+        let i=0;
+        i<data.length;
+        i++
+    ){
+
+        data[i] =
+            (
+                Math.random()*2 -
+                1
+            ) *
+            (
+                1-i/data.length
+            ) ** .45;
+
+    }
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer =
+        buffer;
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type =
+        "lowpass";
+
+    filter.frequency.value =
+        420;
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.value =
+        .026;
+
+    source
+        .connect(filter)
+        .connect(gain)
+        .connect(masterGain);
+
+    source.start();
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        4300
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   CAR PASS
+   --------------------------------------------------------- */
+
+function playCarPass(){
+
+    triggerVisualEvent(
+        "car"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            audioContext.sampleRate*3,
+            audioContext.sampleRate
+        );
+
+    const data =
+        buffer.getChannelData(0);
+
+    for(
+        let i=0;
+        i<data.length;
+        i++
+    ){
+
+        data[i] =
+            (
+                Math.random()*2 -
+                1
+            ) *
+            (
+                i/data.length
+            );
+
+    }
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer =
+        buffer;
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type =
+        "bandpass";
+
+    filter.frequency.value =
+        720;
+
+    filter.Q.value =
+        .8;
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.value =
+        .0001;
+
+    const start =
+        audioContext.currentTime;
+
+    gain.gain.linearRampToValueAtTime(
+        .0001,
+        start
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .022,
+        start+1.0
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        start+2.7
+    );
+
+    const pan =
+        createPanNode(
+            -.7
+        );
+
+    if(pan){
+
+        source
+            .connect(filter)
+            .connect(gain)
+            .connect(pan)
+            .connect(masterGain);
+
+    }else{
+
+        source
+            .connect(filter)
+            .connect(gain)
+            .connect(masterGain);
+
+    }
+
+    source.start();
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        2800
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   FOOTSTEPS
+   --------------------------------------------------------- */
+
+function playFootsteps(){
+
+    triggerVisualEvent(
+        "footsteps"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    for(
+        let i=0;
+        i<8;
+        i++
+    ){
+
+        setTimeout(
+            ()=>{
+
+                const buffer =
+                    audioContext.createBuffer(
+                        1,
+                        Math.floor(
+                            audioContext.sampleRate*.08
+                        ),
+                        audioContext.sampleRate
+                    );
+
+                const data =
+                    buffer.getChannelData(0);
+
+                for(
+                    let j=0;
+                    j<data.length;
+                    j++
+                ){
+
+                    data[j] =
+                        (
+                            Math.random()*2 -
+                            1
+                        ) *
+                        Math.pow(
+                            1-j/data.length,
+                            2
+                        );
+
+                }
+
+                const source =
+                    audioContext.createBufferSource();
+
+                source.buffer =
+                    buffer;
+
+                const filter =
+                    audioContext.createBiquadFilter();
+
+                filter.type =
+                    "lowpass";
+
+                filter.frequency.value =
+                    650;
+
+                const gain =
+                    audioContext.createGain();
+
+                gain.gain.value =
+                    .012;
+
+                const pan =
+                    createPanNode(
+                        -0.45 +
+                        i*.11
+                    );
+
+                source
+                    .connect(filter)
+                    .connect(gain);
+
+                if(pan){
+
+                    gain
+                        .connect(pan)
+                        .connect(masterGain);
+
+                }else{
+
+                    gain
+                        .connect(masterGain);
+
+                }
+
+                source.start();
+
+            },
+            i*410
+        );
+
+    }
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        3700
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   ARGUMENT
+   --------------------------------------------------------- */
+
+function playArgument(){
+
+    triggerVisualEvent(
+        "argument"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const voices = [
+        {
+            start:420,
+            end:680,
+            pan:-.5
+        },
+        {
+            start:700,
+            end:510,
+            pan:-.2
+        },
+        {
+            start:480,
+            end:620,
+            pan:-.15
+        },
+        {
+            start:660,
+            end:450,
+            pan:-.35
+        }
+    ];
+
+    voices.forEach(
+        voice=>{
+
+            const osc =
+                audioContext.createOscillator();
+
+            const gain =
+                audioContext.createGain();
+
+            const pan =
+                createPanNode(
+                    voice.pan
+                );
+
+            osc.type =
+                "triangle";
+
+            const now =
+                audioContext.currentTime;
+
+            osc.frequency.setValueAtTime(
+                voice.start,
+                now
+            );
+
+            osc.frequency.linearRampToValueAtTime(
+                voice.end,
+                now+.55
+            );
+
+            gain.gain.setValueAtTime(
+                .0001,
+                now
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                .011,
+                now+.08
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                .0001,
+                now+.62
+            );
+
+            if(pan){
+
+                osc
+                    .connect(gain)
+                    .connect(pan)
+                    .connect(masterGain);
+
+            }else{
+
+                osc
+                    .connect(gain)
+                    .connect(masterGain);
+
+            }
+
+            osc.start();
+
+            osc.stop(
+                now+.7
+            );
+
+        }
+    );
+
+    setTimeout(
+        ()=>{
+            playArgument();
+        },
+        850
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   ELECTRICAL BUZZ
+   --------------------------------------------------------- */
+
+function playElectricalBuzz(){
+
+    triggerVisualEvent(
+        "electric"
+    );
+
+    if(
+        !audioContext ||
+        !audioEnabled
+    ){
+        return;
+    }
+
+    const osc =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    osc.type =
+        "sawtooth";
+
+    osc.frequency.value =
+        58;
+
+    filter.type =
+        "lowpass";
+
+    filter.frequency.value =
+        950;
+
+    const start =
+        audioContext.currentTime;
+
+    gain.gain.setValueAtTime(
+        .0001,
+        start
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .012,
+        start+.12
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        start+2.7
+    );
+
+    osc
+        .connect(filter)
+        .connect(gain)
+        .connect(masterGain);
+
+    osc.start();
+
+    osc.stop(
+        start+2.8
+    );
+
+    setTimeout(
+        ()=>{
+            triggerVisualEvent(
+                "idle"
+            );
+        },
+        3000
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   EVENT DISPATCH
+   --------------------------------------------------------- */
+
+function dispatchAmbientEvent(
+    type
+){
+
+    switch(type){
+
+        case "argument":
+            playArgument();
+            break;
+
+        case "car":
+            playCarPass();
+            break;
+
+        case "footsteps":
+            playFootsteps();
+            break;
+
+        case "siren":
+            playPoliceSiren();
+            break;
+
+        case "scream":
+            playScreamSequence();
+            break;
+
+        case "thunder":
+            playThunder();
+            break;
+
+        case "ambulance":
+            playAmbulance();
+            break;
+
+        case "electric":
+            playElectricalBuzz();
+            break;
+
+    }
+
+}
+
+
+function eventScheduler(){
+
+    const seconds =
+        getCycleSeconds();
+
+    const cycleIndex =
+        Math.floor(
+            (
+                performance.now() -
+                cycleStart
+            ) /
+            CYCLE_LENGTH_MS
+        );
+
+    if(
+        cycleIndex !== lastCycle
+    ){
+
+        firedEvents =
+            new Set();
+
+        lastCycle =
+            cycleIndex;
+
+        triggerVisualEvent(
+            "idle"
+        );
+
+    }
+
+
+    EVENT_TIMELINE.forEach(
+        event=>{
+
+            if(
+                seconds >= event.offset &&
+                seconds < event.offset + .18 &&
+                !firedEvents.has(
+                    event.type
+                )
+            ){
+
+                firedEvents.add(
+                    event.type
+                );
+
+                dispatchAmbientEvent(
+                    event.type
+                );
+
+            }
+
+        }
+    );
+
+    setTimeout(
+        eventScheduler,
+        100
+    );
+
+}
+
+eventScheduler();
+
+
+/* =========================================================
+   AUDIO BUTTON
+   ========================================================= */
+
+document
+    .getElementById(
+        "soundButton"
+    )
+    .addEventListener(
+        "click",
+        async()=>{
+
+            initializeAudio();
+
+            if(
+                !audioContext
+            ){
+                return;
+            }
+
+            if(
+                audioContext.state ===
+                "suspended"
+            ){
+
+                await audioContext.resume();
+
+            }
+
+            audioEnabled =
+                !audioEnabled;
+
+            masterGain.gain.cancelScheduledValues(
+                audioContext.currentTime
+            );
+
+            masterGain.gain.linearRampToValueAtTime(
+                audioEnabled
+                    ? .035
+                    : 0,
+                audioContext.currentTime+.7
+            );
+
+            document
+                .getElementById(
+                    "soundButton"
+                )
+                .classList.toggle(
+                    "active",
+                    audioEnabled
+                );
+
+        }
+    );
 
 
 /* =========================================================
    GALLERY PARTICLES
    ========================================================= */
 
-for(
-    let i=0;
-    i<34;
-    i++
-){
+for(let i=0;i<34;i++){
 
     const particle =
         document.createElement(
@@ -4766,6 +5636,16 @@ for(
 
 }
 
+
+/* =========================================================
+   START
+   ========================================================= */
+
+resizeSceneCanvas();
+drawAmbientLights();
+
+resizeRain();
+animateRain();
 
 /* =========================================================
    GALLERY
@@ -5265,219 +6145,6 @@ lightbox.addEventListener(
     },
     {passive:true}
 );
-
-
-/* =========================================================
-   AUDIO
-   ========================================================= */
-
-let audioContext=null;
-let masterGain=null;
-let audioEnabled=false;
-
-function initializeAudio(){
-
-    if(
-        audioContext
-    ){
-
-        return;
-
-    }
-
-    const AudioClass =
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-    if(
-        !AudioClass
-    ){
-
-        return;
-
-    }
-
-    audioContext =
-        new AudioClass();
-
-    masterGain =
-        audioContext.createGain();
-
-    masterGain.gain.value=
-        0;
-
-    masterGain.connect(
-        audioContext.destination
-    );
-
-
-    /*
-       RAIN TEXTURE
-    */
-
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate*2,
-            audioContext.sampleRate
-        );
-
-    const data =
-        buffer.getChannelData(0);
-
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-
-        data[i]=
-            Math.random()*2-1;
-
-    }
-
-    const source =
-        audioContext.createBufferSource();
-
-    source.buffer=
-        buffer;
-
-    source.loop=
-        true;
-
-    const filter =
-        audioContext.createBiquadFilter();
-
-    filter.type=
-        "highpass";
-
-    filter.frequency.value=
-        1600;
-
-    const gain =
-        audioContext.createGain();
-
-    gain.gain.value=
-        .14;
-
-    source
-        .connect(filter)
-        .connect(gain)
-        .connect(masterGain);
-
-    source.start();
-
-
-    /*
-       LOW DISTANT CITY HUM
-    */
-
-    setInterval(
-        ()=>{
-
-            if(
-                !audioContext||
-                !audioEnabled
-            ){
-
-                return;
-
-            }
-
-            const osc =
-                audioContext.createOscillator();
-
-            const gainNode =
-                audioContext.createGain();
-
-            osc.type=
-                "sine";
-
-            osc.frequency.value=
-                38+
-                Math.random()*10;
-
-            gainNode.gain.setValueAtTime(
-                .0001,
-                audioContext.currentTime
-            );
-
-            gainNode.gain.exponentialRampToValueAtTime(
-                .007,
-                audioContext.currentTime+.8
-            );
-
-            gainNode.gain.exponentialRampToValueAtTime(
-                .0001,
-                audioContext.currentTime+4
-            );
-
-            osc
-                .connect(gainNode)
-                .connect(masterGain);
-
-            osc.start();
-
-            osc.stop(
-                audioContext.currentTime+4
-            );
-
-        },
-        6500
-    );
-
-}
-
-
-async function toggleAudio(){
-
-    initializeAudio();
-
-    if(
-        !audioContext
-    ){
-
-        return;
-
-    }
-
-    if(
-        audioContext.state==="suspended"
-    ){
-
-        await audioContext.resume();
-
-    }
-
-    audioEnabled=
-        !audioEnabled;
-
-    masterGain.gain.cancelScheduledValues(
-        audioContext.currentTime
-    );
-
-    masterGain.gain.linearRampToValueAtTime(
-        audioEnabled
-            ? .035
-            : 0,
-        audioContext.currentTime+.6
-    );
-
-    document
-        .getElementById("soundButton")
-        .classList.toggle(
-            "active",
-            audioEnabled
-        );
-
-}
-
-document
-    .getElementById("soundButton")
-    .addEventListener(
-        "click",
-        toggleAudio
-    );
 
 
 /* =========================================================
