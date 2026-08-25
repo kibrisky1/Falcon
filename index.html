@@ -1,2674 +1,3 @@
-<!DOCTYPE html>
-<html lang="it" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#050505">
-
-<title>Falcon | David</title>
-
-<meta name="description" content="Portfolio di David — Python Developer, GFX Artist, Discord Specialist e Creative Developer.">
-
-<link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
-<link rel="icon" href="dark.png">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
->
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
->
-
-<style>
-/* =========================================================
-   FALCON — PERMANENT DARK / NEW YORK NIGHT
-   ========================================================= */
-
-:root{
-    --bg:#030303;
-    --bg2:#070707;
-    --panel:rgba(12,12,12,.75);
-    --white:#f5f5f5;
-    --white2:#d2d2d2;
-    --grey:#909090;
-    --grey2:#5b5b5b;
-    --line:rgba(255,255,255,.09);
-    --line2:rgba(255,255,255,.18);
-
-    --max:1180px;
-    --radius:24px;
-
-    --display:"Space Grotesk",sans-serif;
-    --body:"Inter",sans-serif;
-    --mono:"DM Mono",monospace;
-
-    --ease:cubic-bezier(.16,1,.3,1);
-    --elastic:cubic-bezier(.34,1.56,.64,1);
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    overflow-x:hidden;
-    scroll-behavior:smooth;
-}
-
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-    background:var(--bg);
-    color:var(--white);
-    font-family:var(--body);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-}
-
-body.locked{
-    overflow:hidden;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-button{
-    font:inherit;
-    color:inherit;
-}
-
-::selection{
-    background:#fff;
-    color:#000;
-}
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-track{
-    background:#030303;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#282828;
-    border-radius:999px;
-}
-
-/* =========================================================
-   ENVIRONMENT
-   ========================================================= */
-
-#scene{
-    position:fixed;
-    inset:0;
-    z-index:-20;
-    overflow:hidden;
-    background:
-        linear-gradient(
-            to bottom,
-            #050505 0%,
-            #0a0a0a 38%,
-            #070707 66%,
-            #020202 100%
-        );
-}
-
-#cityCanvas,
-#rainCanvas{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-}
-
-#cityCanvas{
-    z-index:1;
-}
-
-#rainCanvas{
-    z-index:4;
-    opacity:.42;
-}
-
-.sceneFog{
-    position:absolute;
-    z-index:5;
-    left:-20%;
-    right:-20%;
-    bottom:4%;
-    height:30%;
-    background:
-        linear-gradient(
-            to top,
-            rgba(255,255,255,.035),
-            transparent
-        );
-    filter:blur(30px);
-    animation:fogDrift 18s ease-in-out infinite alternate;
-}
-
-@keyframes fogDrift{
-    from{transform:translateX(-3%)}
-    to{transform:translateX(4%)}
-}
-
-.sceneVignette{
-    position:absolute;
-    inset:0;
-    z-index:8;
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 30%,
-            rgba(0,0,0,.85) 100%
-        );
-}
-
-/* =========================================================
-   SUBTLE TIME CYCLE INDICATOR
-   ========================================================= */
-
-.sceneTime{
-    position:absolute;
-    right:24px;
-    bottom:24px;
-    z-index:7;
-    color:rgba(255,255,255,.30);
-    font:9px var(--mono);
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    pointer-events:none;
-    mix-blend-mode:screen;
-}
-
-@media(max-width:560px){
-    .sceneTime{
-        right:14px;
-        bottom:14px;
-        font-size:8px;
-    }
-}
-
-/* =========================================================
-   CURSOR
-   ========================================================= */
-
-.cursorCore,
-.cursorHalo{
-    position:fixed;
-    left:0;
-    top:0;
-    transform:translate(-50%,-50%);
-    pointer-events:none;
-    z-index:9000;
-}
-
-#pointerLight{
-    position:fixed;
-    left:0;
-    top:0;
-    width:420px;
-    height:420px;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    pointer-events:none;
-    z-index:-1;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.035),
-            transparent 68%
-        );
-}
-
-@media(hover:hover) and (pointer:fine){
-
-    body.customCursor *{
-        cursor:none!important;
-    }
-
-    .cursorCore{
-        width:5px;
-        height:5px;
-        border-radius:50%;
-        background:#fff;
-    }
-
-    .cursorHalo{
-        width:34px;
-        height:34px;
-        border-radius:50%;
-        border:1px solid rgba(255,255,255,.36);
-        transition:
-            width .4s var(--elastic),
-            height .4s var(--elastic),
-            border-color .3s,
-            background .3s;
-    }
-
-    body.cursorHover .cursorHalo{
-        width:64px;
-        height:64px;
-        border-color:#fff;
-        background:rgba(255,255,255,.035);
-    }
-}
-
-@media(hover:none),(pointer:coarse){
-
-    .cursorCore,
-    .cursorHalo,
-    #pointerLight{
-        display:none!important;
-    }
-}
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-#progress{
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:2px;
-    z-index:8000;
-    transform-origin:left;
-    transform:scaleX(0);
-    background:#fff;
-}
-
-/* =========================================================
-   NAV
-   ========================================================= */
-
-header{
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    z-index:5000;
-    padding:20px 0;
-    transition:
-        padding .45s var(--ease),
-        background .45s,
-        border .45s;
-}
-
-header.scrolled{
-    padding:11px 0;
-    background:rgba(4,4,4,.75);
-    border-bottom:1px solid var(--line);
-    backdrop-filter:blur(20px);
-}
-
-.container{
-    width:min(
-        var(--max),
-        calc(100% - 44px)
-    );
-    margin:auto;
-}
-
-.nav{
-    height:45px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font:700 14px var(--display);
-    letter-spacing:.05em;
-}
-
-.brand img{
-    width:35px;
-    height:35px;
-    object-fit:contain;
-    filter:grayscale(1) brightness(1.15);
-    border-radius:9px;
-    transition:.4s var(--elastic);
-}
-
-.brand:hover img{
-    transform:scale(1.06);
-    filter:grayscale(1) brightness(1.4);
-}
-
-.navLinks{
-    display:flex;
-    gap:4px;
-}
-
-.navLinks a{
-    color:var(--grey);
-    padding:8px 12px;
-    border-radius:9px;
-    font-size:11px;
-    font-weight:600;
-    transition:.25s;
-}
-
-.navLinks a:hover{
-    color:#fff;
-    background:rgba(255,255,255,.05);
-}
-
-.navActions{
-    display:flex;
-    gap:7px;
-}
-
-.navButton{
-    min-height:38px;
-    padding:0 11px;
-    display:flex;
-    align-items:center;
-    gap:7px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    background:rgba(255,255,255,.025);
-    cursor:pointer;
-    font-size:10px;
-    font-weight:700;
-    transition:.35s var(--elastic);
-}
-
-.navButton:hover{
-    transform:translateY(-2px);
-    border-color:var(--line2);
-    background:rgba(255,255,255,.06);
-}
-
-@media(max-width:760px){
-    .navLinks{
-        display:none;
-    }
-
-    .container{
-        width:min(
-            var(--max),
-            calc(100% - 28px)
-        );
-    }
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero{
-    min-height:100svh;
-    display:flex;
-    align-items:center;
-    padding:120px 0 80px;
-    position:relative;
-}
-
-.heroContent{
-    position:relative;
-    z-index:20;
-    max-width:760px;
-}
-
-.eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    color:var(--grey);
-    font:10px var(--mono);
-    letter-spacing:.13em;
-    animation:heroUp 1s var(--ease) both;
-}
-
-.eyebrowDot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#fff;
-    animation:dotPulse 2.1s infinite;
-}
-
-@keyframes dotPulse{
-    70%{
-        box-shadow:
-            0 0 0 8px
-            rgba(255,255,255,0);
-    }
-}
-
-@keyframes heroUp{
-    from{
-        opacity:0;
-        transform:translateY(25px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.heroTitle{
-    margin-top:25px;
-    font:
-        700
-        clamp(4rem,10vw,8.4rem)/.84
-        var(--display);
-    letter-spacing:-.075em;
-    animation:
-        titleReveal
-        1.3s
-        var(--ease)
-        .08s
-        both;
-}
-
-.heroTitle .outline{
-    color:transparent;
-    -webkit-text-stroke:
-        1px rgba(255,255,255,.24);
-}
-
-@keyframes titleReveal{
-    0%{
-        opacity:0;
-        transform:
-            translateY(70px)
-            scale(.9);
-        filter:blur(18px);
-        clip-path:inset(100% 0 0 0);
-    }
-
-    60%{
-        opacity:1;
-        clip-path:inset(0);
-    }
-
-    100%{
-        opacity:1;
-        transform:none;
-        filter:none;
-    }
-}
-
-.heroText{
-    max-width:580px;
-    margin-top:28px;
-    color:var(--grey);
-    font-size:15px;
-    animation:
-        textReveal
-        1s
-        var(--ease)
-        .38s
-        both;
-}
-
-@keyframes textReveal{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-        clip-path:inset(0 0 100% 0);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-        clip-path:inset(0);
-    }
-}
-
-.heroButtons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:28px;
-    animation:
-        buttonsReveal
-        1s
-        var(--ease)
-        .56s
-        both;
-}
-
-@keyframes buttonsReveal{
-    from{
-        opacity:0;
-        transform:
-            translateY(25px)
-            scale(.94);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.button{
-    min-height:48px;
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:0 18px;
-    border:1px solid var(--line);
-    border-radius:13px;
-    background:rgba(255,255,255,.035);
-    font-size:11px;
-    font-weight:700;
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
-    transition:.4s var(--elastic);
-}
-
-.button:hover{
-    transform:translateY(-4px);
-    border-color:var(--line2);
-}
-
-.buttonPrimary{
-    background:#fff;
-    color:#000;
-    border-color:#fff;
-}
-
-.buttonSecondary:hover{
-    background:rgba(255,255,255,.07);
-}
-
-/* =========================================================
-   HERO LOGO
-   ========================================================= */
-
-.logoDisplay{
-    position:absolute;
-    width:min(56vw,680px);
-    height:min(56vw,680px);
-    right:-170px;
-    top:50%;
-    transform:translateY(-50%);
-    z-index:5;
-    pointer-events:none;
-    transition:transform .3s ease-out;
-}
-
-.logoAura{
-    position:absolute;
-    inset:8%;
-    border-radius:50%;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.11),
-            transparent 68%
-        );
-    filter:blur(30px);
-    animation:logoAura 5s ease-in-out infinite alternate;
-}
-
-@keyframes logoAura{
-    from{
-        transform:scale(.92);
-        opacity:.5;
-    }
-    to{
-        transform:scale(1.08);
-        opacity:1;
-    }
-}
-
-.logoOrbit{
-    position:absolute;
-    inset:13%;
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:50%;
-    animation:orbit 25s linear infinite;
-}
-
-.logoOrbit::after{
-    content:"";
-    position:absolute;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    top:14px;
-    left:50%;
-    background:#fff;
-    box-shadow:0 0 16px #fff;
-}
-
-.logoOrbit.second{
-    inset:23%;
-    border-style:dashed;
-    animation:orbitReverse 19s linear infinite;
-}
-
-@keyframes orbit{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes orbitReverse{
-    to{
-        transform:rotate(-360deg);
-    }
-}
-
-.logoImage{
-    position:absolute;
-    width:42%;
-    left:29%;
-    top:29%;
-    object-fit:contain;
-    filter:
-        grayscale(1)
-        brightness(1.08)
-        drop-shadow(
-            0 0 45px rgba(255,255,255,.12)
-        );
-    animation:
-        logoEnter
-        1.5s
-        var(--ease)
-        .15s
-        both,
-        logoFloat
-        5.5s
-        ease-in-out
-        1.7s
-        infinite;
-}
-
-@keyframes logoEnter{
-    0%{
-        opacity:0;
-        transform:
-            scale(.25)
-            rotate(-9deg);
-        filter:
-            blur(22px)
-            brightness(1.8);
-    }
-
-    50%{
-        opacity:1;
-        transform:
-            scale(1.06)
-            rotate(1deg);
-        filter:
-            blur(0)
-            brightness(1.35);
-    }
-
-    100%{
-        opacity:1;
-        transform:
-            scale(1)
-            rotate(0);
-        filter:
-            grayscale(1)
-            brightness(1.08)
-            drop-shadow(
-                0 0 45px
-                rgba(255,255,255,.12)
-            );
-    }
-}
-
-@keyframes logoFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-13px);
-    }
-}
-
-.logoScan{
-    position:absolute;
-    width:54%;
-    left:23%;
-    top:18%;
-    height:1px;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #fff,
-            transparent
-        );
-    box-shadow:0 0 14px rgba(255,255,255,.35);
-    opacity:0;
-    animation:
-        logoScan
-        4.5s
-        ease-in-out
-        infinite;
-}
-
-@keyframes logoScan{
-    0%,100%{
-        transform:translateY(0);
-        opacity:0;
-    }
-
-    15%{
-        opacity:.75;
-    }
-
-    55%{
-        transform:translateY(280px);
-        opacity:.12;
-    }
-
-    75%{
-        opacity:0;
-    }
-}
-
-@media(max-width:900px){
-
-    .logoDisplay{
-        width:540px;
-        height:540px;
-        right:-250px;
-        opacity:.35;
-    }
-}
-
-@media(max-width:640px){
-
-    .hero{
-        padding:120px 0 90px;
-    }
-
-    .heroTitle{
-        font-size:
-            clamp(
-                3.5rem,
-                18vw,
-                5.5rem
-            );
-    }
-
-    .logoDisplay{
-        width:420px;
-        height:420px;
-        right:-240px;
-        top:40%;
-        opacity:.14;
-    }
-}
-
-/* =========================================================
-   SECTION
-   ========================================================= */
-
-section{
-    position:relative;
-    padding:110px 0;
-}
-
-.sectionHeader{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:30px;
-    margin-bottom:42px;
-}
-
-.sectionKicker{
-    color:var(--white2);
-    font:
-        10px var(--mono);
-    letter-spacing:.17em;
-    margin-bottom:10px;
-}
-
-.sectionTitle{
-    font:
-        700
-        clamp(2.4rem,6vw,4.8rem)/.93
-        var(--display);
-    letter-spacing:-.06em;
-}
-
-.sectionDescription{
-    max-width:470px;
-    color:var(--grey);
-    font-size:13px;
-}
-
-/* =========================================================
-   REVEAL
-   ========================================================= */
-
-.reveal{
-    opacity:0;
-    transform:
-        translateY(60px)
-        scale(.96)
-        rotateX(7deg);
-    filter:blur(9px);
-    clip-path:inset(15% 0 0 0);
-    transition:
-        opacity .9s var(--ease),
-        transform 1.05s var(--ease),
-        filter .9s var(--ease),
-        clip-path 1.05s var(--ease);
-}
-
-.reveal.visible{
-    opacity:1;
-    transform:none;
-    filter:none;
-    clip-path:inset(0);
-}
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.stat{
-    min-height:145px;
-    padding:22px;
-    border:1px solid var(--line);
-    border-radius:18px;
-    background:rgba(255,255,255,.025);
-    backdrop-filter:blur(16px);
-    position:relative;
-    overflow:hidden;
-    transition:.45s var(--elastic);
-}
-
-.stat::after{
-    content:"";
-    position:absolute;
-    width:170px;
-    height:170px;
-    border-radius:50%;
-    right:-100px;
-    top:-100px;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.09),
-            transparent 68%
-        );
-    transition:.7s var(--ease);
-}
-
-.stat:hover{
-    transform:translateY(-8px);
-    border-color:var(--line2);
-    background:rgba(255,255,255,.045);
-}
-
-.stat:hover::after{
-    transform:scale(1.8);
-}
-
-.statNumber{
-    font:
-        700 37px
-        var(--display);
-}
-
-.statText{
-    margin-top:7px;
-    color:var(--grey);
-    font:
-        9px var(--mono);
-}
-
-/* =========================================================
-   SKILLS
-   ========================================================= */
-
-.skillsLayout{
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
-    gap:16px;
-}
-
-.panel{
-    padding:27px;
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    background:var(--panel);
-    backdrop-filter:blur(18px);
-}
-
-.skill{
-    padding:18px 0;
-    border-bottom:1px solid var(--line);
-}
-
-.skill:last-child{
-    border-bottom:0;
-}
-
-.skillHead{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:9px;
-}
-
-.skillName{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.skillName i{
-    width:18px;
-}
-
-.skillValue{
-    color:var(--grey2);
-    font:9px var(--mono);
-}
-
-.skillTrack{
-    height:4px;
-    border-radius:99px;
-    background:rgba(255,255,255,.055);
-    overflow:hidden;
-}
-
-.skillFill{
-    width:var(--amount);
-    height:100%;
-    transform:scaleX(0);
-    transform-origin:left;
-    background:
-        linear-gradient(
-            90deg,
-            #555,
-            #fff
-        );
-    transition:
-        transform 1.4s var(--ease);
-}
-
-.panel.visible .skillFill{
-    transform:scaleX(1);
-}
-
-.quotePanel{
-    min-height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-.quote{
-    max-width:420px;
-    font:
-        600 27px/1.12
-        var(--display);
-    letter-spacing:-.045em;
-}
-
-.terminal{
-    margin-top:30px;
-    padding:14px;
-    border:1px solid var(--line);
-    border-radius:13px;
-    color:var(--grey);
-    background:rgba(0,0,0,.23);
-    font:
-        10px/1.9
-        var(--mono);
-}
-
-@media(max-width:800px){
-    .skillsLayout{
-        grid-template-columns:1fr;
-    }
-}
-
-/* =========================================================
-   PROJECTS
-   ========================================================= */
-
-.projects{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
-}
-
-.project{
-    min-height:290px;
-    position:relative;
-    overflow:hidden;
-    padding:27px;
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    background:rgba(255,255,255,.025);
-    backdrop-filter:blur(18px);
-    transform-style:preserve-3d;
-    transition:
-        transform .2s ease-out,
-        border-color .3s,
-        box-shadow .45s;
-}
-
-.project::before{
-    content:"";
-    position:absolute;
-    width:430px;
-    height:430px;
-    left:var(--px,50%);
-    top:var(--py,50%);
-    transform:translate(-50%,-50%);
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.065),
-            transparent 70%
-        );
-    pointer-events:none;
-}
-
-.project:hover{
-    border-color:rgba(255,255,255,.24);
-    box-shadow:
-        0 30px 80px
-        rgba(0,0,0,.28);
-}
-
-.projectId{
-    color:var(--grey2);
-    font:
-        9px var(--mono);
-}
-
-.projectIcon{
-    width:52px;
-    height:52px;
-    margin-top:52px;
-    display:grid;
-    place-items:center;
-    border:1px solid var(--line2);
-    border-radius:15px;
-    transform:translateZ(25px);
-}
-
-.project h3{
-    margin-top:20px;
-    font:
-        700 26px
-        var(--display);
-}
-
-.project p{
-    margin-top:8px;
-    max-width:410px;
-    color:var(--grey);
-    font-size:12px;
-}
-
-.projectArrow{
-    position:absolute;
-    width:37px;
-    height:37px;
-    right:23px;
-    bottom:23px;
-    border:1px solid var(--line);
-    border-radius:50%;
-    display:grid;
-    place-items:center;
-    transition:.45s var(--elastic);
-}
-
-.project:hover .projectArrow{
-    transform:rotate(-45deg);
-    background:#fff;
-    color:#000;
-}
-
-@media(max-width:700px){
-    .projects{
-        grid-template-columns:1fr;
-    }
-}
-
-/* =========================================================
-   GALLERY
-   ========================================================= */
-
-.galleryWrap{
-    position:relative;
-}
-
-.galleryParticles{
-    position:absolute;
-    inset:-20px;
-    z-index:-1;
-    overflow:hidden;
-    pointer-events:none;
-}
-
-.galleryParticle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#fff;
-    opacity:.2;
-    animation:
-        galleryParticle
-        var(--duration)
-        ease-in-out
-        infinite;
-    animation-delay:
-        var(--delay);
-}
-
-@keyframes galleryParticle{
-
-    0%,100%{
-        transform:
-            translateY(18px)
-            scale(.6);
-        opacity:0;
-    }
-
-    30%{
-        opacity:.25;
-    }
-
-    100%{
-        transform:
-            translate(
-                var(--dx),
-                -80px
-            )
-            scale(1.3);
-        opacity:0;
-    }
-}
-
-.galleryBar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:12px 14px;
-    margin-bottom:18px;
-    border:1px solid var(--line);
-    border-radius:13px;
-    background:rgba(255,255,255,.02);
-    color:var(--grey);
-    font:9px var(--mono);
-}
-
-.galleryGrid{
-    display:grid;
-    grid-template-columns:
-        repeat(3,minmax(0,1fr));
-    gap:15px;
-}
-
-.galleryItem{
-    position:relative;
-    overflow:hidden;
-    border:1px solid var(--line);
-    border-radius:18px;
-    background:#111;
-    cursor:pointer;
-    opacity:0;
-    transform:
-        translateY(42px)
-        scale(.93);
-    filter:blur(10px);
-    animation:
-        galleryIn
-        .95s var(--ease)
-        forwards;
-    animation-delay:
-        var(--delay);
-    transition:
-        transform .5s var(--elastic),
-        border-color .35s,
-        box-shadow .45s;
-}
-
-@keyframes galleryIn{
-    0%{
-        opacity:0;
-        transform:
-            translateY(42px)
-            scale(.93);
-        filter:blur(10px);
-    }
-
-    55%{
-        opacity:1;
-        transform:
-            translateY(-5px)
-            scale(1.012);
-        filter:blur(0);
-    }
-
-    100%{
-        opacity:1;
-        transform:none;
-        filter:none;
-    }
-}
-
-.galleryItem:hover{
-    transform:
-        translateY(-8px)
-        scale(1.008);
-    border-color:
-        rgba(255,255,255,.28);
-    box-shadow:
-        0 28px 80px
-        rgba(0,0,0,.4);
-}
-
-.galleryItem img{
-    width:100%;
-    display:block;
-    aspect-ratio:4/3;
-    object-fit:cover;
-    transition:
-        transform .85s var(--ease),
-        filter .55s;
-}
-
-.galleryItem:hover img{
-    transform:scale(1.05);
-    filter:
-        grayscale(1)
-        brightness(.72)
-        contrast(1.08);
-}
-
-.galleryShine{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    background:
-        linear-gradient(
-            115deg,
-            transparent 28%,
-            rgba(255,255,255,.12) 47%,
-            transparent 58%
-        );
-    transform:translateX(-130%);
-    transition:transform 1s var(--ease);
-    pointer-events:none;
-}
-
-.galleryItem:hover .galleryShine{
-    transform:translateX(130%);
-}
-
-.galleryOverlay{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:3;
-    padding:44px 16px 15px;
-    background:
-        linear-gradient(
-            transparent,
-            rgba(0,0,0,.92)
-        );
-    opacity:0;
-    transform:translateY(10px);
-    transition:
-        opacity .3s,
-        transform .35s var(--ease);
-}
-
-.galleryItem:hover .galleryOverlay{
-    opacity:1;
-    transform:none;
-}
-
-.galleryTitle{
-    font:
-        600 12px
-        var(--display);
-}
-
-.galleryMeta{
-    margin-top:3px;
-    color:#aaa;
-    font:
-        9px var(--mono);
-}
-
-.galleryEmpty{
-    display:none;
-    text-align:center;
-    color:var(--grey);
-    padding:55px 20px;
-    border:
-        1px dashed var(--line);
-    border-radius:18px;
-}
-
-@media(max-width:900px){
-    .galleryGrid{
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
-    }
-}
-
-@media(max-width:560px){
-    .galleryGrid{
-        grid-template-columns:1fr;
-    }
-}
-
-/* =========================================================
-   LIGHTBOX
-   ========================================================= */
-
-.lightbox{
-    position:fixed;
-    inset:0;
-    z-index:9000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-    background:
-        rgba(0,0,0,.94);
-    backdrop-filter:blur(25px);
-    opacity:0;
-    visibility:hidden;
-    transition:.4s;
-}
-
-.lightbox.open{
-    opacity:1;
-    visibility:visible;
-}
-
-.lightboxImage{
-    max-width:
-        min(1200px,92vw);
-    max-height:
-        82vh;
-    object-fit:contain;
-    border-radius:12px;
-    box-shadow:
-        0 45px 140px
-        rgba(0,0,0,.75);
-    transform:
-        scale(.86)
-        translateY(25px);
-    filter:blur(9px);
-    transition:
-        transform .7s var(--elastic),
-        filter .6s var(--ease);
-}
-
-.lightbox.open .lightboxImage{
-    transform:none;
-    filter:none;
-}
-
-.lightboxButton{
-    position:absolute;
-    width:45px;
-    height:45px;
-    display:grid;
-    place-items:center;
-    border:
-        1px solid rgba(255,255,255,.15);
-    border-radius:50%;
-    background:
-        rgba(255,255,255,.06);
-    cursor:pointer;
-    transition:.35s var(--elastic);
-}
-
-.lightboxButton:hover{
-    background:#fff;
-    color:#000;
-}
-
-#lightboxClose{
-    right:22px;
-    top:22px;
-}
-
-#lightboxPrev{
-    left:22px;
-    top:50%;
-}
-
-#lightboxNext{
-    right:22px;
-    top:50%;
-}
-
-.lightboxInfo{
-    position:absolute;
-    left:50%;
-    bottom:22px;
-    transform:translateX(-50%);
-    color:#aaa;
-    font:9px var(--mono);
-    white-space:nowrap;
-}
-
-/* =========================================================
-   CONTACT
-   ========================================================= */
-
-.contact{
-    padding-bottom:145px;
-}
-
-.contactCard{
-    position:relative;
-    overflow:hidden;
-    padding:58px;
-    border:1px solid var(--line);
-    border-radius:30px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.012)
-        );
-    backdrop-filter:blur(20px);
-}
-
-.contactCard::before{
-    content:"";
-    position:absolute;
-    left:-45%;
-    top:0;
-    width:25%;
-    height:100%;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.08),
-            transparent
-        );
-    transform:skewX(-18deg);
-    animation:
-        contactSweep
-        8s ease-in-out infinite;
-}
-
-@keyframes contactSweep{
-    0%,35%{
-        left:-45%;
-    }
-    72%,100%{
-        left:120%;
-    }
-}
-
-.contactTitle{
-    max-width:800px;
-    font:
-        700
-        clamp(3rem,8vw,7rem)/.88
-        var(--display);
-    letter-spacing:-.065em;
-}
-
-.contactText{
-    max-width:570px;
-    margin:25px 0;
-    color:var(--grey);
-    font-size:13px;
-}
-
-.discordButton{
-    display:inline-flex;
-    align-items:center;
-    gap:11px;
-    padding:13px 14px;
-    border:1px solid var(--line2);
-    border-radius:13px;
-    background:
-        rgba(255,255,255,.04);
-    cursor:pointer;
-    transition:.4s var(--elastic);
-}
-
-.discordButton:hover{
-    transform:translateY(-4px);
-    background:rgba(255,255,255,.075);
-    border-color:rgba(255,255,255,.3);
-}
-
-.discordName{
-    font:
-        600 11px
-        var(--mono);
-}
-
-/* =========================================================
-   SOUND
-   ========================================================= */
-
-.soundButton{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:3500;
-    width:45px;
-    height:45px;
-    border:1px solid var(--line2);
-    border-radius:50%;
-    background:rgba(5,5,5,.75);
-    backdrop-filter:blur(15px);
-    display:grid;
-    place-items:center;
-    cursor:pointer;
-    transition:.35s var(--elastic);
-}
-
-.soundButton:hover{
-    transform:translateY(-4px);
-    background:rgba(255,255,255,.08);
-}
-
-.soundBars{
-    height:13px;
-    display:flex;
-    align-items:flex-end;
-    gap:2px;
-}
-
-.soundBars i{
-    display:block;
-    width:2px;
-    height:5px;
-    background:#fff;
-}
-
-.soundButton.active .soundBars i:nth-child(1){
-    animation:audioBar .45s ease-in-out infinite alternate;
-}
-
-.soundButton.active .soundBars i:nth-child(2){
-    animation:audioBar .3s ease-in-out infinite alternate;
-}
-
-.soundButton.active .soundBars i:nth-child(3){
-    animation:audioBar .5s ease-in-out infinite alternate;
-}
-
-@keyframes audioBar{
-    to{
-        height:13px;
-    }
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer{
-    padding:
-        30px 0 44px;
-    border-top:
-        1px solid var(--line);
-    color:
-        var(--grey2);
-    font:
-        9px var(--mono);
-}
-
-.footer{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-}
-
-@media(max-width:600px){
-
-    .contactCard{
-        padding:
-            38px 25px;
-    }
-
-    .footer{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-}
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:30px;
-    transform:
-        translate(-50%,20px);
-    opacity:0;
-    pointer-events:none;
-    z-index:10000;
-    padding:11px 15px;
-    border:
-        1px solid rgba(255,255,255,.13);
-    border-radius:11px;
-    background:
-        rgba(8,8,8,.94);
-    backdrop-filter:blur(15px);
-    font:
-        10px var(--mono);
-    transition:
-        opacity .35s,
-        transform .35s var(--elastic);
-}
-
-.toast.show{
-    opacity:1;
-    transform:
-        translate(-50%,0);
-}
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-        animation-duration:.001ms!important;
-        animation-iteration-count:1!important;
-        transition-duration:.001ms!important;
-        scroll-behavior:auto!important;
-    }
-
-    #rainCanvas,
-    #cityCanvas{
-        display:none;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<!-- =========================================================
-     SCENE
-     ========================================================= -->
-
-<div id="scene">
-
-    <canvas id="cityCanvas"></canvas>
-
-    <canvas id="rainCanvas"></canvas>
-
-    <div class="sceneFog"></div>
-
-    <div class="sceneTime" id="sceneTime">22:00 · RAIN</div>
-
-    <div class="sceneVignette"></div>
-
-</div>
-
-
-<div id="pointerLight"></div>
-
-
-<!-- =========================================================
-     HEADER
-     ========================================================= -->
-
-<header id="header">
-
-    <div class="container nav">
-
-        <a
-            href="#home"
-            class="brand"
-        >
-
-            <img
-                id="navLogo"
-                src="dark.png"
-                alt="Falcon"
-            >
-
-            <span>
-                FALCON
-            </span>
-
-        </a>
-
-
-        <nav class="navLinks">
-
-            <a href="#about" data-i18n="nav.about">
-                Profilo
-            </a>
-
-            <a href="#skills" data-i18n="nav.skills">
-                Competenze
-            </a>
-
-            <a href="#projects" data-i18n="nav.projects">
-                Progetti
-            </a>
-
-            <a href="#gallery" data-i18n="nav.gallery">
-                Gallery
-            </a>
-
-            <a href="#contact" data-i18n="nav.contact">
-                Contatti
-            </a>
-
-        </nav>
-
-
-        <div class="navActions">
-
-            <button
-                id="languageButton"
-                class="navButton"
-                type="button"
-            >
-
-                <i class="fa-solid fa-language"></i>
-
-                <span id="languageLabel">
-                    IT
-                </span>
-
-            </button>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-<!-- =========================================================
-     SOUND
-     ========================================================= -->
-
-<button
-    class="soundButton"
-    id="soundButton"
-    type="button"
-    aria-label="Attiva audio"
->
-    <span class="soundBars">
-        <i></i>
-        <i></i>
-        <i></i>
-    </span>
-</button>
-
-
-<!-- =========================================================
-     CURSOR
-     ========================================================= -->
-
-<div
-    id="cursorCore"
-    class="cursorCore"
-></div>
-
-<div
-    id="cursorHalo"
-    class="cursorHalo"
-></div>
-
-
-<div id="progress"></div>
-
-
-<!-- =========================================================
-     MAIN
-     ========================================================= -->
-
-<main id="home">
-
-
-<!-- =========================================================
-     HERO
-     ========================================================= -->
-
-<section class="hero">
-
-    <div class="container">
-
-        <div class="heroContent">
-
-            <div class="eyebrow">
-
-                <span class="eyebrowDot"></span>
-
-                <span
-                    data-i18n="hero.status"
-                >
-                    SISTEMA ONLINE · DISPONIBILE PER PROGETTI
-                </span>
-
-            </div>
-
-
-            <h1 class="heroTitle">
-
-                <span>
-                    BUILD.
-                </span>
-
-                <br>
-
-                <span>
-                    CREATE.
-                </span>
-
-                <br>
-
-                <span class="outline">
-                    EVOLVE.
-                </span>
-
-            </h1>
-
-
-            <p
-                class="heroText"
-                data-i18n="hero.description"
-            >
-                Sviluppatore Python, GFX Artist e creatore
-                di sistemi digitali.
-            </p>
-
-
-            <div class="heroButtons">
-
-                <a
-                    href="#projects"
-                    class="button buttonPrimary magnetic"
-                >
-
-                    <i class="fa-solid fa-arrow-down"></i>
-
-                    <span
-                        data-i18n="hero.projects"
-                    >
-                        Esplora i progetti
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="#contact"
-                    class="button buttonSecondary magnetic"
-                >
-
-                    <i class="fa-regular fa-paper-plane"></i>
-
-                    <span
-                        data-i18n="hero.contact"
-                    >
-                        Contattami
-                    </span>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="logoDisplay"
-        id="logoDisplay"
-    >
-
-        <div class="logoAura"></div>
-
-        <div class="logoOrbit"></div>
-
-        <div class="logoOrbit second"></div>
-
-        <img
-            id="heroLogo"
-            class="logoImage"
-            src="dark.png"
-            alt="Falcon"
-        >
-
-        <div class="logoScan"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     ABOUT
-     ========================================================= -->
-
-<section id="about">
-
-    <div class="container">
-
-        <div class="sectionHeader reveal">
-
-            <div>
-
-                <div class="sectionKicker">
-                    01 // PROFILE
-                </div>
-
-                <h2
-                    class="sectionTitle"
-                    data-i18n="about.title"
-                >
-                    Costruito per<br>
-                    creare.
-                </h2>
-
-            </div>
-
-        </div>
-
-
-        <div class="stats">
-
-            <div class="stat reveal">
-
-                <div class="statNumber">
-                    100+
-                </div>
-
-                <div
-                    class="statText"
-                    data-i18n="stats.projects"
-                >
-                    IDEE TRASFORMATE IN PROGETTI
-                </div>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-                <div class="statNumber">
-                    24/7
-                </div>
-
-                <div
-                    class="statText"
-                    data-i18n="stats.creative"
-                >
-                    CREATIVE MODE
-                </div>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-                <div class="statNumber">
-                    ∞
-                </div>
-
-                <div
-                    class="statText"
-                    data-i18n="stats.learning"
-                >
-                    APPRENDIMENTO CONTINUO
-                </div>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-                <div class="statNumber">
-                    01
-                </div>
-
-                <div
-                    class="statText"
-                    data-i18n="stats.mindset"
-                >
-                    MINDSET: BUILD BETTER
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     SKILLS
-     ========================================================= -->
-
-<section id="skills">
-
-    <div class="container">
-
-        <div class="sectionHeader reveal">
-
-            <div>
-
-                <div class="sectionKicker">
-                    02 // SKILLS
-                </div>
-
-                <h2
-                    class="sectionTitle"
-                    data-i18n="skills.title"
-                >
-                    Strumenti<br>
-                    e sistemi.
-                </h2>
-
-            </div>
-
-            <p
-                class="sectionDescription"
-                data-i18n="skills.description"
-            >
-                Un mix tra programmazione, design,
-                automazione e sviluppo di esperienze interattive.
-            </p>
-
-        </div>
-
-
-        <div class="skillsLayout">
-
-            <div class="panel reveal">
-
-                <div class="skill">
-
-                    <div class="skillHead">
-
-                        <div class="skillName">
-                            <i class="fa-brands fa-python"></i>
-                            Python
-                        </div>
-
-                        <div class="skillValue">
-                            91%
-                        </div>
-
-                    </div>
-
-                    <div class="skillTrack">
-                        <div
-                            class="skillFill"
-                            style="--amount:91%"
-                        ></div>
-                    </div>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <div class="skillHead">
-
-                        <div class="skillName">
-                            <i class="fa-solid fa-code"></i>
-                            Web
-                        </div>
-
-                        <div class="skillValue">
-                            87%
-                        </div>
-
-                    </div>
-
-                    <div class="skillTrack">
-                        <div
-                            class="skillFill"
-                            style="--amount:87%"
-                        ></div>
-                    </div>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <div class="skillHead">
-
-                        <div class="skillName">
-                            <i class="fa-solid fa-cube"></i>
-                            Roblox / Lua
-                        </div>
-
-                        <div class="skillValue">
-                            89%
-                        </div>
-
-                    </div>
-
-                    <div class="skillTrack">
-                        <div
-                            class="skillFill"
-                            style="--amount:89%"
-                        ></div>
-                    </div>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <div class="skillHead">
-
-                        <div class="skillName">
-                            <i class="fa-solid fa-palette"></i>
-                            GFX
-                        </div>
-
-                        <div class="skillValue">
-                            86%
-                        </div>
-
-                    </div>
-
-                    <div class="skillTrack">
-                        <div
-                            class="skillFill"
-                            style="--amount:86%"
-                        ></div>
-                    </div>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <div class="skillHead">
-
-                        <div class="skillName">
-                            <i class="fa-brands fa-discord"></i>
-                            Discord
-                        </div>
-
-                        <div class="skillValue">
-                            94%
-                        </div>
-
-                    </div>
-
-                    <div class="skillTrack">
-                        <div
-                            class="skillFill"
-                            style="--amount:94%"
-                        ></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="panel quotePanel reveal">
-
-                <div>
-
-                    <div class="sectionKicker">
-                        PRINCIPLE
-                    </div>
-
-                    <div
-                        class="quote"
-                        data-i18n="skills.quote"
-                    >
-                        “Non mi interessa soltanto
-                        far funzionare qualcosa.
-                        Voglio capire come renderla migliore.”
-                    </div>
-
-                </div>
-
-                <div class="terminal">
-
-                    <div>
-                        environment = rain
-                    </div>
-
-                    <div>
-                        creativity = active
-                    </div>
-
-                    <div>
-                        curiosity = infinite
-                    </div>
-
-                    <div>
-                        status = ready
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     PROJECTS
-     ========================================================= -->
-
-<section id="projects">
-
-    <div class="container">
-
-        <div class="sectionHeader reveal">
-
-            <div>
-
-                <div class="sectionKicker">
-                    03 // PROJECTS
-                </div>
-
-                <h2
-                    class="sectionTitle"
-                    data-i18n="projects.title"
-                >
-                    Cose che<br>
-                    ho costruito.
-                </h2>
-
-            </div>
-
-            <p
-                class="sectionDescription"
-                data-i18n="projects.description"
-            >
-                Progetti personali, sistemi sperimentali
-                e idee trasformate in qualcosa di utilizzabile.
-            </p>
-
-        </div>
-
-
-        <div class="projects">
-
-            <article class="project tilt reveal">
-
-                <div class="projectId">
-                    PROJECT // 001
-                </div>
-
-                <div class="projectIcon">
-                    <i class="fa-brands fa-discord"></i>
-                </div>
-
-                <h3>KibMod</h3>
-
-                <p data-i18n="project.kibmod">
-                    Sistema Discord progettato per
-                    moderazione, utility, automazione
-                    e gestione della community.
-                </p>
-
-                <div class="projectArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-
-            </article>
-
-
-            <article class="project tilt reveal">
-
-                <div class="projectId">
-                    PROJECT // 002
-                </div>
-
-                <div class="projectIcon">
-                    <i class="fa-solid fa-gamepad"></i>
-                </div>
-
-                <h3>Roblox Systems</h3>
-
-                <p data-i18n="project.roblox">
-                    Sistemi di gameplay, GUI,
-                    animazioni e meccaniche costruite
-                    con Roblox Lua.
-                </p>
-
-                <div class="projectArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-
-            </article>
-
-
-            <article class="project tilt reveal">
-
-                <div class="projectId">
-                    PROJECT // 003
-                </div>
-
-                <div class="projectIcon">
-                    <i class="fa-brands fa-python"></i>
-                </div>
-
-                <h3>Python Tools</h3>
-
-                <p data-i18n="project.python">
-                    Tool, automazioni, esperimenti AI e
-                    applicazioni desktop costruite in Python.
-                </p>
-
-                <div class="projectArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-
-            </article>
-
-
-            <article class="project tilt reveal">
-
-                <div class="projectId">
-                    PROJECT // 004
-                </div>
-
-                <div class="projectIcon">
-                    <i class="fa-solid fa-image"></i>
-                </div>
-
-                <h3>Visual Lab</h3>
-
-                <p data-i18n="project.visual">
-                    Esperimenti grafici, GFX,
-                    interfacce e visual design sperimentale.
-                </p>
-
-                <div class="projectArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     GALLERY
-     ========================================================= -->
-
-<section id="gallery">
-
-    <div class="container">
-
-        <div class="sectionHeader reveal">
-
-            <div>
-
-                <div class="sectionKicker">
-                    04 // GALLERY
-                </div>
-
-                <h2
-                    class="sectionTitle"
-                    data-i18n="gallery.title"
-                >
-                    Visual<br>
-                    archive.
-                </h2>
-
-            </div>
-
-            <p
-                class="sectionDescription"
-                data-i18n="gallery.description"
-            >
-                Una selezione di lavori visuali.
-                I file GFX e Bloodwar vengono trovati
-                automaticamente nella repository.
-            </p>
-
-        </div>
-
-
-        <div class="galleryWrap">
-
-            <div
-                id="galleryParticles"
-                class="galleryParticles"
-            ></div>
-
-
-            <div class="galleryBar reveal">
-
-                <span id="galleryStatus">
-                    SCANNING...
-                </span>
-
-                <span>
-                    GFX / BLOODWAR
-                </span>
-
-            </div>
-
-
-            <div
-                id="galleryGrid"
-                class="galleryGrid"
-            ></div>
-
-
-            <div
-                id="galleryEmpty"
-                class="galleryEmpty"
-                data-i18n="gallery.empty"
-            >
-                Nessuna immagine trovata.
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     CONTACT
-     ========================================================= -->
-
-<section id="contact">
-
-    <div class="container">
-
-        <div class="contactCard reveal">
-
-            <div class="sectionKicker">
-                05 // CONTACT
-            </div>
-
-            <h2
-                class="contactTitle"
-                data-i18n="contact.title"
-            >
-                Hai un'idea?
-                Facciamola
-                esistere.
-            </h2>
-
-            <p
-                class="contactText"
-                data-i18n="contact.description"
-            >
-                Per collaborazioni, progetti,
-                commissioni GFX o semplicemente
-                per parlare di tecnologia.
-            </p>
-
-            <button
-                id="discordCopy"
-                class="discordButton magnetic"
-                type="button"
-            >
-
-                <i class="fa-brands fa-discord"></i>
-
-                <span class="discordName">
-                    for_david_k
-                </span>
-
-                <i class="fa-regular fa-copy"></i>
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
-
-<footer>
-
-    <div class="container footer">
-
-        <div>
-            FALCON / DAVID
-        </div>
-
-        <div>
-            NIGHT / RAIN / CITY ·
-            <span id="year"></span>
-        </div>
-
-    </div>
-
-</footer>
-
-
-<!-- =========================================================
-     LIGHTBOX
-     ========================================================= -->
-
-<div
-    id="lightbox"
-    class="lightbox"
-    aria-hidden="true"
->
-
-    <button
-        id="lightboxClose"
-        class="lightboxButton"
-        type="button"
-    >
-        <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <button
-        id="lightboxPrev"
-        class="lightboxButton"
-        type="button"
-    >
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
-
-    <img
-        id="lightboxImage"
-        class="lightboxImage"
-        alt=""
-    >
-
-    <button
-        id="lightboxNext"
-        class="lightboxButton"
-        type="button"
-    >
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
-
-    <div
-        id="lightboxInfo"
-        class="lightboxInfo"
-    ></div>
-
-</div>
-
-
-<div
-    id="toast"
-    class="toast"
->
-    Username Discord copiato
-</div>
-
-
-<script>
 "use strict";
 
 /* =========================================================
@@ -2676,618 +5,428 @@ footer{
    ========================================================= */
 
 const CONFIG = {
-    owner:"kibrisky1",
-    repo:"Falcon",
-    branch:"main",
-    discord:"for_david_k",
+    owner: "kibrisky1",
+    repo: "Falcon",
+    branch: "main",
+    discord: "for_david_k",
 
-    explicitBloodwar:[
-        "bloodwar.png"
-    ]
+    explicitBloodwar: ["bloodwar.png"]
 };
-
 
 /* =========================================================
    ELEMENTS
    ========================================================= */
 
-const body =
-    document.body;
+const body = document.body;
 
-const html =
-    document.documentElement;
+const html = document.documentElement;
 
-const header =
-    document.getElementById("header");
+const header = document.getElementById("header");
 
-const progress =
-    document.getElementById("progress");
+const progress = document.getElementById("progress");
 
-const heroLogo =
-    document.getElementById("heroLogo");
+const heroLogo = document.getElementById("heroLogo");
 
-const navLogo =
-    document.getElementById("navLogo");
+const navLogo = document.getElementById("navLogo");
 
-const logoDisplay =
-    document.getElementById("logoDisplay");
+const logoDisplay = document.getElementById("logoDisplay");
 
-const pointerLight =
-    document.getElementById("pointerLight");
+const pointerLight = document.getElementById("pointerLight");
 
-const cursorCore =
-    document.getElementById("cursorCore");
+const cursorCore = document.getElementById("cursorCore");
 
-const cursorHalo =
-    document.getElementById("cursorHalo");
+const cursorHalo = document.getElementById("cursorHalo");
 
-const galleryGrid =
-    document.getElementById("galleryGrid");
+const galleryGrid = document.getElementById("galleryGrid");
 
-const galleryStatus =
-    document.getElementById("galleryStatus");
+const galleryStatus = document.getElementById("galleryStatus");
 
-const galleryEmpty =
-    document.getElementById("galleryEmpty");
+const galleryEmpty = document.getElementById("galleryEmpty");
 
-const galleryParticles =
-    document.getElementById("galleryParticles");
+const galleryParticles = document.getElementById("galleryParticles");
 
-const lightbox =
-    document.getElementById("lightbox");
+const lightbox = document.getElementById("lightbox");
 
-const lightboxImage =
-    document.getElementById("lightboxImage");
+const lightboxImage = document.getElementById("lightboxImage");
 
-const lightboxInfo =
-    document.getElementById("lightboxInfo");
+const lightboxInfo = document.getElementById("lightboxInfo");
 
-const toast =
-    document.getElementById("toast");
+const toast = document.getElementById("toast");
 
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
+document.getElementById("year").textContent = new Date().getFullYear();
 
 /* =========================================================
    DARK ONLY
    ========================================================= */
 
-html.dataset.theme =
-    "dark";
+html.dataset.theme = "dark";
 
-heroLogo.src =
-    "dark.png";
+heroLogo.src = "dark.png";
 
-navLogo.src =
-    "dark.png";
-
+navLogo.src = "dark.png";
 
 /* =========================================================
    LANGUAGE
    ========================================================= */
 
 const translations = {
+    it: {
+        "nav.about": "Profilo",
+        "nav.skills": "Competenze",
+        "nav.projects": "Progetti",
+        "nav.gallery": "Gallery",
+        "nav.contact": "Contatti",
 
-    it:{
-        "nav.about":"Profilo",
-        "nav.skills":"Competenze",
-        "nav.projects":"Progetti",
-        "nav.gallery":"Gallery",
-        "nav.contact":"Contatti",
+        "hero.status": "SISTEMA ONLINE · DISPONIBILE PER PROGETTI",
+        "hero.description":
+            "Sviluppatore Python, GFX Artist e creatore di sistemi digitali. Trasformo idee grezze in esperienze interattive, strumenti e progetti.",
+        "hero.projects": "Esplora i progetti",
+        "hero.contact": "Contattami",
 
-        "hero.status":"SISTEMA ONLINE · DISPONIBILE PER PROGETTI",
-        "hero.description":"Sviluppatore Python, GFX Artist e creatore di sistemi digitali. Trasformo idee grezze in esperienze interattive, strumenti e progetti.",
-        "hero.projects":"Esplora i progetti",
-        "hero.contact":"Contattami",
+        "about.title": "Costruito per<br>creare.",
 
-        "about.title":"Costruito per<br>creare.",
+        "stats.projects": "IDEE TRASFORMATE IN PROGETTI",
+        "stats.creative": "CREATIVE MODE",
+        "stats.learning": "APPRENDIMENTO CONTINUO",
+        "stats.mindset": "MINDSET: BUILD BETTER",
 
-        "stats.projects":"IDEE TRASFORMATE IN PROGETTI",
-        "stats.creative":"CREATIVE MODE",
-        "stats.learning":"APPRENDIMENTO CONTINUO",
-        "stats.mindset":"MINDSET: BUILD BETTER",
+        "skills.title": "Strumenti<br>e sistemi.",
+        "skills.description":
+            "Un mix tra programmazione, design, automazione e sviluppo di esperienze interattive.",
+        "skills.quote":
+            "“Non mi interessa soltanto far funzionare qualcosa. Voglio capire come renderla migliore.”",
 
-        "skills.title":"Strumenti<br>e sistemi.",
-        "skills.description":"Un mix tra programmazione, design, automazione e sviluppo di esperienze interattive.",
-        "skills.quote":"“Non mi interessa soltanto far funzionare qualcosa. Voglio capire come renderla migliore.”",
+        "projects.title": "Cose che<br>ho costruito.",
+        "projects.description":
+            "Progetti personali, sistemi sperimentali e idee trasformate in qualcosa di utilizzabile.",
 
-        "projects.title":"Cose che<br>ho costruito.",
-        "projects.description":"Progetti personali, sistemi sperimentali e idee trasformate in qualcosa di utilizzabile.",
+        "project.kibmod":
+            "Sistema Discord progettato per moderazione, utility, automazione e gestione della community.",
+        "project.roblox":
+            "Sistemi di gameplay, GUI, animazioni e meccaniche costruite con Roblox Lua.",
+        "project.python":
+            "Tool, automazioni, esperimenti AI e applicazioni desktop costruite in Python.",
+        "project.visual": "Esperimenti grafici, GFX, interfacce e visual design sperimentale.",
 
-        "project.kibmod":"Sistema Discord progettato per moderazione, utility, automazione e gestione della community.",
-        "project.roblox":"Sistemi di gameplay, GUI, animazioni e meccaniche costruite con Roblox Lua.",
-        "project.python":"Tool, automazioni, esperimenti AI e applicazioni desktop costruite in Python.",
-        "project.visual":"Esperimenti grafici, GFX, interfacce e visual design sperimentale.",
+        "gallery.title": "Visual<br>archive.",
+        "gallery.description":
+            "Una selezione di lavori visuali. I file GFX e Bloodwar vengono trovati automaticamente nella repository.",
+        "gallery.empty": "Nessuna immagine trovata.",
 
-        "gallery.title":"Visual<br>archive.",
-        "gallery.description":"Una selezione di lavori visuali. I file GFX e Bloodwar vengono trovati automaticamente nella repository.",
-        "gallery.empty":"Nessuna immagine trovata.",
-
-        "contact.title":"Hai un'idea? Facciamola esistere.",
-        "contact.description":"Per collaborazioni, progetti, commissioni GFX o semplicemente per parlare di tecnologia."
+        "contact.title": "Hai un'idea? Facciamola esistere.",
+        "contact.description":
+            "Per collaborazioni, progetti, commissioni GFX o semplicemente per parlare di tecnologia."
     },
 
-    en:{
-        "nav.about":"Profile",
-        "nav.skills":"Skills",
-        "nav.projects":"Projects",
-        "nav.gallery":"Gallery",
-        "nav.contact":"Contact",
+    en: {
+        "nav.about": "Profile",
+        "nav.skills": "Skills",
+        "nav.projects": "Projects",
+        "nav.gallery": "Gallery",
+        "nav.contact": "Contact",
 
-        "hero.status":"SYSTEM ONLINE · AVAILABLE FOR PROJECTS",
-        "hero.description":"Python developer, GFX artist and digital systems creator. Turning raw ideas into interactive experiences, tools and projects.",
-        "hero.projects":"Explore projects",
-        "hero.contact":"Contact me",
+        "hero.status": "SYSTEM ONLINE · AVAILABLE FOR PROJECTS",
+        "hero.description":
+            "Python developer, GFX artist and digital systems creator. Turning raw ideas into interactive experiences, tools and projects.",
+        "hero.projects": "Explore projects",
+        "hero.contact": "Contact me",
 
-        "about.title":"Built to<br>create.",
+        "about.title": "Built to<br>create.",
 
-        "stats.projects":"IDEAS TURNED INTO PROJECTS",
-        "stats.creative":"CREATIVE MODE",
-        "stats.learning":"CONTINUOUS LEARNING",
-        "stats.mindset":"MINDSET: BUILD BETTER",
+        "stats.projects": "IDEAS TURNED INTO PROJECTS",
+        "stats.creative": "CREATIVE MODE",
+        "stats.learning": "CONTINUOUS LEARNING",
+        "stats.mindset": "MINDSET: BUILD BETTER",
 
-        "skills.title":"Tools<br>& systems.",
-        "skills.description":"A mix of programming, design, automation and interactive experience development.",
-        "skills.quote":"“I don't just want something to work. I want to understand how to make it better.”",
+        "skills.title": "Tools<br>& systems.",
+        "skills.description":
+            "A mix of programming, design, automation and interactive experience development.",
+        "skills.quote":
+            "“I don't just want something to work. I want to understand how to make it better.”",
 
-        "projects.title":"Things I've<br>built.",
-        "projects.description":"Personal projects, experimental systems and ideas turned into usable experiences.",
+        "projects.title": "Things I've<br>built.",
+        "projects.description":
+            "Personal projects, experimental systems and ideas turned into usable experiences.",
 
-        "project.kibmod":"Discord system designed for moderation, utilities, automation and community management.",
-        "project.roblox":"Gameplay systems, GUIs, animations and mechanics built with Roblox Lua.",
-        "project.python":"Tools, automation, AI experiments and desktop applications built with Python.",
-        "project.visual":"Graphic experiments, GFX, interfaces and experimental visual design.",
+        "project.kibmod":
+            "Discord system designed for moderation, utilities, automation and community management.",
+        "project.roblox": "Gameplay systems, GUIs, animations and mechanics built with Roblox Lua.",
+        "project.python":
+            "Tools, automation, AI experiments and desktop applications built with Python.",
+        "project.visual": "Graphic experiments, GFX, interfaces and experimental visual design.",
 
-        "gallery.title":"Visual<br>archive.",
-        "gallery.description":"A selection of visual work. GFX and Bloodwar files are automatically detected from the repository.",
-        "gallery.empty":"No images found.",
+        "gallery.title": "Visual<br>archive.",
+        "gallery.description":
+            "A selection of visual work. GFX and Bloodwar files are automatically detected from the repository.",
+        "gallery.empty": "No images found.",
 
-        "contact.title":"Have an idea? Let's make it exist.",
-        "contact.description":"For collaborations, projects, GFX commissions or simply talking about technology."
+        "contact.title": "Have an idea? Let's make it exist.",
+        "contact.description":
+            "For collaborations, projects, GFX commissions or simply talking about technology."
     }
 };
 
-let language =
-    localStorage.getItem(
-        "falcon-language"
-    ) || "it";
+// localStorage can throw (private browsing, locked-down embeds, storage
+// disabled by the browser/user) — guard both directions so a storage
+// failure can't take down the rest of the page, since this whole file
+// runs as one top-level script.
+function readStoredLanguage() {
+    try {
+        return localStorage.getItem("falcon-language");
+    } catch (error) {
+        return null;
+    }
+}
 
-function applyLanguage(){
+function writeStoredLanguage(value) {
+    try {
+        localStorage.setItem("falcon-language", value);
+    } catch (error) {
+        /* Storage unavailable — language toggle still works for this
+           session, it just won't be remembered next visit. */
+    }
+}
 
-    html.lang =
-        language;
+let language = readStoredLanguage() || "it";
 
-    document
-        .querySelectorAll(
-            "[data-i18n]"
-        )
-        .forEach(
-            element=>{
+function applyLanguage() {
+    html.lang = language;
 
-                const key =
-                    element.dataset.i18n;
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
 
-                if(
-                    translations[language] &&
-                    translations[language][key]
-                ){
+        if (translations[language] && translations[language][key]) {
+            element.innerHTML = translations[language][key];
+        }
+    });
 
-                    element.innerHTML =
-                        translations[language][key];
+    document.getElementById("languageLabel").textContent = language.toUpperCase();
 
-                }
+    updateSoundButtonLabel();
 
-            }
-        );
-
-    document.getElementById(
-        "languageLabel"
-    ).textContent =
-        language.toUpperCase();
-
-    localStorage.setItem(
-        "falcon-language",
-        language
-    );
-
+    writeStoredLanguage(language);
 }
 
 applyLanguage();
 
-document
-    .getElementById(
-        "languageButton"
-    )
-    .addEventListener(
-        "click",
-        ()=>{
+document.getElementById("languageButton").addEventListener("click", () => {
+    language = language === "it" ? "en" : "it";
 
-            language =
-                language === "it"
-                ? "en"
-                : "it";
-
-            applyLanguage();
-
-        }
-    );
-
+    applyLanguage();
+});
 
 /* =========================================================
    CURSOR — DESKTOP ONLY
    ========================================================= */
 
-const finePointer =
-    window.matchMedia(
-        "(hover:hover) and (pointer:fine)"
-    ).matches;
+const finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
 
-if(finePointer){
+if (finePointer) {
+    body.classList.add("customCursor");
 
-    body.classList.add(
-        "customCursor"
-    );
+    let mouseX = innerWidth / 2;
 
-    let mouseX =
-        innerWidth/2;
+    let mouseY = innerHeight / 2;
 
-    let mouseY =
-        innerHeight/2;
+    let haloX = mouseX;
 
-    let haloX =
-        mouseX;
+    let haloY = mouseY;
 
-    let haloY =
-        mouseY;
+    window.addEventListener("pointermove", event => {
+        mouseX = event.clientX;
 
-    window.addEventListener(
-        "pointermove",
-        event=>{
+        mouseY = event.clientY;
 
-            mouseX =
-                event.clientX;
+        cursorCore.style.left = mouseX + "px";
 
-            mouseY =
-                event.clientY;
+        cursorCore.style.top = mouseY + "px";
 
-            cursorCore.style.left =
-                mouseX+"px";
+        pointerLight.style.left = mouseX + "px";
 
-            cursorCore.style.top =
-                mouseY+"px";
+        pointerLight.style.top = mouseY + "px";
+    });
 
-            pointerLight.style.left =
-                mouseX+"px";
+    function cursorLoop() {
+        haloX += (mouseX - haloX) * 0.14;
 
-            pointerLight.style.top =
-                mouseY+"px";
+        haloY += (mouseY - haloY) * 0.14;
 
-        }
-    );
+        cursorHalo.style.left = haloX + "px";
 
-    function cursorLoop(){
+        cursorHalo.style.top = haloY + "px";
 
-        haloX +=
-            (mouseX-haloX)*.14;
-
-        haloY +=
-            (mouseY-haloY)*.14;
-
-        cursorHalo.style.left =
-            haloX+"px";
-
-        cursorHalo.style.top =
-            haloY+"px";
-
-        requestAnimationFrame(
-            cursorLoop
-        );
-
+        requestAnimationFrame(cursorLoop);
     }
 
     cursorLoop();
 
-    document
-        .querySelectorAll(
-            "a,button,.project,.stat,.galleryItem"
-        )
-        .forEach(
-            element=>{
+    // Delegated (not bound per-element) so it also covers elements that
+    // don't exist yet, like gallery cards, which are injected later once
+    // the GitHub API response comes back.
+    const cursorHoverTargets = "a,button,.project,.stat,.galleryItem";
 
-                element.addEventListener(
-                    "mouseenter",
-                    ()=>{
-                        body.classList.add(
-                            "cursorHover"
-                        );
-                    }
-                );
-
-                element.addEventListener(
-                    "mouseleave",
-                    ()=>{
-                        body.classList.remove(
-                            "cursorHover"
-                        );
-                    }
-                );
-
+    document.addEventListener(
+        "pointerover",
+        event => {
+            if (event.target.closest(cursorHoverTargets)) {
+                body.classList.add("cursorHover");
             }
-        );
+        },
+        { passive: true }
+    );
 
+    document.addEventListener(
+        "pointerout",
+        event => {
+            const leavingTarget = event.target.closest(cursorHoverTargets);
+
+            if (leavingTarget && !leavingTarget.contains(event.relatedTarget)) {
+                body.classList.remove("cursorHover");
+            }
+        },
+        { passive: true }
+    );
 }
-
 
 /* =========================================================
    SCROLL
    ========================================================= */
 
-function handleScroll(){
+function handleScroll() {
+    const scroll = window.scrollY;
 
-    const scroll =
-        window.scrollY;
+    const maximum = document.documentElement.scrollHeight - window.innerHeight;
 
-    const maximum =
-        document.documentElement
-            .scrollHeight -
-        window.innerHeight;
+    const value = maximum > 0 ? scroll / maximum : 0;
 
-    const value =
-        maximum > 0
-            ? scroll/maximum
-            : 0;
+    progress.style.transform = `scaleX(${value})`;
 
-    progress.style.transform =
-        `scaleX(${value})`;
-
-    header.classList.toggle(
-        "scrolled",
-        scroll>20
-    );
-
+    header.classList.toggle("scrolled", scroll > 20);
 }
 
-window.addEventListener(
-    "scroll",
-    handleScroll,
-    {passive:true}
-);
+window.addEventListener("scroll", handleScroll, { passive: true });
 
 handleScroll();
-
 
 /* =========================================================
    HERO PARALLAX
    ========================================================= */
 
-if(finePointer){
+if (finePointer) {
+    window.addEventListener("pointermove", event => {
+        if (innerWidth < 850) {
+            return;
+        }
 
-    window.addEventListener(
-        "pointermove",
-        event=>{
+        const x = event.clientX / innerWidth - 0.5;
 
-            if(innerWidth<850){
-                return;
-            }
+        const y = event.clientY / innerHeight - 0.5;
 
-            const x =
-                event.clientX/
-                innerWidth-
-                .5;
-
-            const y =
-                event.clientY/
-                innerHeight-
-                .5;
-
-            logoDisplay.style.transform =
-                `
+        logoDisplay.style.transform = `
                 translateY(-50%)
                 translate3d(
-                    ${x*18}px,
-                    ${y*15}px,
+                    ${x * 18}px,
+                    ${y * 15}px,
                     0
                 )
-                rotateY(${x*3}deg)
-                rotateX(${-y*3}deg)
+                rotateY(${x * 3}deg)
+                rotateX(${-y * 3}deg)
                 `;
-
-        }
-    );
-
+    });
 }
-
 
 /* =========================================================
    REVEALS
    ========================================================= */
 
-const revealObserver =
-    new IntersectionObserver(
-        entries=>{
+const revealObserver = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                return;
+            }
 
-            entries.forEach(
-                entry=>{
+            entry.target.classList.add("visible");
 
-                    if(
-                        !entry.isIntersecting
-                    ){
-                        return;
-                    }
+            revealObserver.unobserve(entry.target);
+        });
+    },
+    {
+        threshold: 0.08
+    }
+);
 
-                    entry.target.classList.add(
-                        "visible"
-                    );
-
-                    revealObserver.unobserve(
-                        entry.target
-                    );
-
-                }
-            );
-
-        },
-        {
-            threshold:.08
-        }
-    );
-
-document
-    .querySelectorAll(
-        ".reveal"
-    )
-    .forEach(
-        element=>
-            revealObserver.observe(
-                element
-            )
-    );
-
+document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
 
 /* =========================================================
    TILT
    ========================================================= */
 
-if(finePointer){
+if (finePointer) {
+    document.querySelectorAll(".tilt").forEach(card => {
+        card.addEventListener("pointermove", event => {
+            if (innerWidth < 800) {
+                return;
+            }
 
-    document
-        .querySelectorAll(
-            ".tilt"
-        )
-        .forEach(
-            card=>{
+            const rect = card.getBoundingClientRect();
 
-                card.addEventListener(
-                    "pointermove",
-                    event=>{
+            const x = (event.clientX - rect.left) / rect.width;
 
-                        if(
-                            innerWidth<800
-                        ){
-                            return;
-                        }
+            const y = (event.clientY - rect.top) / rect.height;
 
-                        const rect =
-                            card.getBoundingClientRect();
+            const rx = -(y - 0.5) * 6;
 
-                        const x =
-                            (
-                                event.clientX-
-                                rect.left
-                            )/
-                            rect.width;
+            const ry = (x - 0.5) * 6;
 
-                        const y =
-                            (
-                                event.clientY-
-                                rect.top
-                            )/
-                            rect.height;
-
-                        const rx =
-                            -(y-.5)*6;
-
-                        const ry =
-                            (x-.5)*6;
-
-                        card.style.transform =
-                            `
+            card.style.transform = `
                             perspective(1000px)
                             rotateX(${rx}deg)
                             rotateY(${ry}deg)
                             translateY(-5px)
                             `;
 
-                        card.style.setProperty(
-                            "--px",
-                            `${x*100}%`
-                        );
+            card.style.setProperty("--px", `${x * 100}%`);
 
-                        card.style.setProperty(
-                            "--py",
-                            `${y*100}%`
-                        );
+            card.style.setProperty("--py", `${y * 100}%`);
+        });
 
-                    }
-                );
-
-                card.addEventListener(
-                    "pointerleave",
-                    ()=>{
-                        card.style.transform =
-                            "";
-                    }
-                );
-
-            }
-        );
-
+        card.addEventListener("pointerleave", () => {
+            card.style.transform = "";
+        });
+    });
 }
-
 
 /* =========================================================
    MAGNETIC
    ========================================================= */
 
-if(finePointer){
+if (finePointer) {
+    document.querySelectorAll(".magnetic").forEach(button => {
+        button.addEventListener("pointermove", event => {
+            if (innerWidth < 800) {
+                return;
+            }
 
-    document
-        .querySelectorAll(
-            ".magnetic"
-        )
-        .forEach(
-            button=>{
+            const rect = button.getBoundingClientRect();
 
-                button.addEventListener(
-                    "pointermove",
-                    event=>{
+            const x = event.clientX - (rect.left + rect.width / 2);
 
-                        if(innerWidth<800){
-                            return;
-                        }
+            const y = event.clientY - (rect.top + rect.height / 2);
 
-                        const rect =
-                            button.getBoundingClientRect();
-
-                        const x =
-                            event.clientX-
-                            (
-                                rect.left+
-                                rect.width/2
-                            );
-
-                        const y =
-                            event.clientY-
-                            (
-                                rect.top+
-                                rect.height/2
-                            );
-
-                        button.style.transform =
-                            `
+            button.style.transform = `
                             translate(
-                                ${x*.11}px,
-                                ${y*.11}px
+                                ${x * 0.11}px,
+                                ${y * 0.11}px
                             )
                             `;
+        });
 
-                    }
-                );
-
-                button.addEventListener(
-                    "pointerleave",
-                    ()=>{
-                        button.style.transform="";
-                    }
-                );
-
-            }
-        );
-
+        button.addEventListener("pointerleave", () => {
+            button.style.transform = "";
+        });
+    });
 }
-
 
 /* =========================================================
    AMBIENT NIGHT ENGINE
@@ -3297,14 +436,11 @@ if(finePointer){
    like a game HUD.
    ========================================================= */
 
-const sceneCanvas =
-    document.getElementById("cityCanvas");
+const sceneCanvas = document.getElementById("cityCanvas");
 
-const sceneContext =
-    sceneCanvas.getContext("2d");
+const sceneContext = sceneCanvas.getContext("2d");
 
-const sceneTimeEl =
-    document.getElementById("sceneTime");
+const sceneTimeEl = document.getElementById("sceneTime");
 
 let sceneWidth = 0;
 let sceneHeight = 0;
@@ -3316,573 +452,312 @@ let sceneHeight = 0;
 const lightSources = [];
 const lightStreaks = [];
 
-function createLightField(){
-
+function createLightField() {
     lightSources.length = 0;
     lightStreaks.length = 0;
 
-    const count =
-        sceneWidth < 700 ? 20 : 34;
+    const count = sceneWidth < 700 ? 20 : 34;
 
-    for(let i=0;i<count;i++){
-
+    for (let i = 0; i < count; i++) {
         lightSources.push({
+            x: Math.random() * sceneWidth,
 
-            x:
-                Math.random() * sceneWidth,
+            y: sceneHeight * (0.15 + Math.random() * 0.65),
 
-            y:
-                sceneHeight *
-                (.15 + Math.random() * .65),
+            radius: 18 + Math.random() * 65,
 
-            radius:
-                18 + Math.random() * 65,
+            base: 0.035 + Math.random() * 0.11,
 
-            base:
-                .035 + Math.random() * .11,
+            phase: Math.random() * Math.PI * 2,
 
-            phase:
-                Math.random() * Math.PI * 2,
+            speed: 0.4 + Math.random() * 1.8,
 
-            speed:
-                .4 + Math.random() * 1.8,
+            drift: (Math.random() - 0.5) * 0.12,
 
-            drift:
-                (Math.random() - .5) * .12,
-
-            depth:
-                .35 + Math.random() * .65
-
+            depth: 0.35 + Math.random() * 0.65
         });
-
     }
 
-    for(let i=0;i<7;i++){
-
+    for (let i = 0; i < 7; i++) {
         lightStreaks.push({
+            x: Math.random() * sceneWidth,
 
-            x:
-                Math.random() * sceneWidth,
+            y: sceneHeight * (0.62 + Math.random() * 0.27),
 
-            y:
-                sceneHeight *
-                (.62 + Math.random() * .27),
+            length: 40 + Math.random() * 130,
 
-            length:
-                40 + Math.random() * 130,
+            speed: 0.08 + Math.random() * 0.35,
 
-            speed:
-                .08 + Math.random() * .35,
-
-            alpha:
-                .025 + Math.random() * .045
-
+            alpha: 0.025 + Math.random() * 0.045
         });
-
     }
 }
 
-function resizeSceneCanvas(){
+function resizeSceneCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
-    const dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            1.5
-        );
+    sceneWidth = window.innerWidth;
 
-    sceneWidth =
-        window.innerWidth;
+    sceneHeight = window.innerHeight;
 
-    sceneHeight =
-        window.innerHeight;
+    sceneCanvas.width = sceneWidth * dpr;
 
-    sceneCanvas.width =
-        sceneWidth * dpr;
+    sceneCanvas.height = sceneHeight * dpr;
 
-    sceneCanvas.height =
-        sceneHeight * dpr;
+    sceneCanvas.style.width = sceneWidth + "px";
 
-    sceneCanvas.style.width =
-        sceneWidth + "px";
+    sceneCanvas.style.height = sceneHeight + "px";
 
-    sceneCanvas.style.height =
-        sceneHeight + "px";
-
-    sceneContext.setTransform(
-        dpr,0,0,dpr,0,0
-    );
+    sceneContext.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     createLightField();
 }
-
 
 /* ---------------------------------------------------------
    EVENT VISUALS
    --------------------------------------------------------- */
 
 let visualEvent = {
-    type:"idle",
-    started:0,
-    intensity:0
+    type: "idle",
+    started: 0,
+    intensity: 0
 };
 
 const visualFlash = {
-    value:0
+    value: 0
 };
 
-function triggerVisualEvent(type){
+function triggerVisualEvent(type) {
+    visualEvent.type = type;
 
-    visualEvent.type =
-        type;
+    visualEvent.started = performance.now();
 
-    visualEvent.started =
-        performance.now();
-
-    if(type === "gunshot"){
-        visualFlash.value =
-            1;
+    if (type === "gunshot") {
+        visualFlash.value = 1;
     }
 
-    if(type === "siren"){
-        visualEvent.intensity =
-            1;
+    if (type === "siren") {
+        visualEvent.intensity = 1;
     }
 
-    if(type === "ambulance"){
-        visualEvent.intensity =
-            1;
+    if (type === "ambulance") {
+        visualEvent.intensity = 1;
     }
-
 }
 
-function eventFlash(decay){
-
-    visualFlash.value =
-        Math.max(
-            0,
-            visualFlash.value -
-            decay
-        );
+function eventFlash(decay) {
+    visualFlash.value = Math.max(0, visualFlash.value - decay);
 }
-
 
 /* ---------------------------------------------------------
    TIME CYCLE
    120 seconds = 22:00 -> 04:00
    --------------------------------------------------------- */
 
-const CYCLE_LENGTH_MS =
-    120000;
+const CYCLE_LENGTH_MS = 120000;
 
-const cycleStart =
-    performance.now();
+const cycleStart = performance.now();
 
-function getCycleSeconds(){
-
-    return (
-        (performance.now() -
-            cycleStart) /
-        1000
-    ) % 120;
-
+function getCycleSeconds() {
+    return ((performance.now() - cycleStart) / 1000) % 120;
 }
 
-function updateSceneClock(){
+function updateSceneClock() {
+    const cycleSeconds = getCycleSeconds();
 
-    const cycleSeconds =
-        getCycleSeconds();
+    const totalMinutes = (22 * 60 + Math.floor((cycleSeconds / 120) * 360)) % 1440;
 
-    const totalMinutes =
-        (
-            22 * 60 +
-            Math.floor(
-                cycleSeconds /
-                120 *
-                360
-            )
-        ) % 1440;
+    const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
 
-    const hours =
-        String(
-            Math.floor(
-                totalMinutes / 60
-            )
-        ).padStart(2,"0");
+    const minutes = String(totalMinutes % 60).padStart(2, "0");
 
-    const minutes =
-        String(
-            totalMinutes % 60
-        ).padStart(2,"0");
-
-    sceneTimeEl.textContent =
-        `${hours}:${minutes} · RAIN`;
-
+    sceneTimeEl.textContent = `${hours}:${minutes} · RAIN`;
 }
 
-setInterval(
-    updateSceneClock,
-    1000
-);
-
+setInterval(updateSceneClock, 1000);
 
 /* ---------------------------------------------------------
    DRAW ABSTRACT NIGHT
    --------------------------------------------------------- */
 
-function drawAmbientLights(){
+function drawAmbientLights() {
+    sceneContext.clearRect(0, 0, sceneWidth, sceneHeight);
 
-    sceneContext.clearRect(
-        0,
-        0,
-        sceneWidth,
-        sceneHeight
-    );
+    const now = performance.now() / 1000;
 
-    const now =
-        performance.now() / 1000;
-
-    const cycle =
-        getCycleSeconds();
+    const cycle = getCycleSeconds();
 
     /*
        Night remains dark, but dawn introduces
        a very subtle lift toward the end.
     */
 
-    let timeBrightness =
-        .62;
+    let timeBrightness = 0.62;
 
-    if(cycle > 90){
-
-        timeBrightness =
-            .62 +
-            (
-                (cycle - 90) /
-                30
-            ) * .18;
-
+    if (cycle > 90) {
+        timeBrightness = 0.62 + ((cycle - 90) / 30) * 0.18;
     }
 
-    if(cycle < 20){
-
-        timeBrightness =
-            .68 -
-            (cycle / 20) * .06;
-
+    if (cycle < 20) {
+        timeBrightness = 0.68 - (cycle / 20) * 0.06;
     }
 
     /* ambient haze */
 
-    const haze =
-        sceneContext.createRadialGradient(
-            sceneWidth * .50,
-            sceneHeight * .48,
-            0,
-            sceneWidth * .50,
-            sceneHeight * .48,
-            sceneHeight * .75
-        );
-
-    haze.addColorStop(
+    const haze = sceneContext.createRadialGradient(
+        sceneWidth * 0.5,
+        sceneHeight * 0.48,
         0,
-        `rgba(255,255,255,${.025 * timeBrightness})`
+        sceneWidth * 0.5,
+        sceneHeight * 0.48,
+        sceneHeight * 0.75
     );
 
-    haze.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
+    haze.addColorStop(0, `rgba(255,255,255,${0.025 * timeBrightness})`);
 
-    sceneContext.fillStyle =
-        haze;
+    haze.addColorStop(1, "rgba(0,0,0,0)");
 
-    sceneContext.fillRect(
-        0,
-        0,
-        sceneWidth,
-        sceneHeight
-    );
+    sceneContext.fillStyle = haze;
 
+    sceneContext.fillRect(0, 0, sceneWidth, sceneHeight);
 
     /*
        BOKEH LIGHTS
     */
 
-    lightSources.forEach(
-        light=>{
+    lightSources.forEach(light => {
+        light.x += light.drift;
 
-            light.x +=
-                light.drift;
+        if (light.x < -100) {
+            light.x = sceneWidth + 100;
+        }
 
-            if(
-                light.x < -100
-            ){
-                light.x =
-                    sceneWidth + 100;
-            }
+        if (light.x > sceneWidth + 100) {
+            light.x = -100;
+        }
 
-            if(
-                light.x > sceneWidth + 100
-            ){
-                light.x =
-                    -100;
-            }
+        const breathing = (Math.sin(now * light.speed + light.phase) + 1) / 2;
 
-            const breathing =
-                (
-                    Math.sin(
-                        now *
-                        light.speed +
-                        light.phase
-                    ) + 1
-                ) / 2;
+        let alpha = light.base * (0.65 + breathing * 0.35) * timeBrightness;
 
-            let alpha =
-                (
-                    light.base *
-                    (.65 + breathing * .35) *
-                    timeBrightness
-                );
-
-            /*
+        /*
                Police / ambulance visual sweep.
             */
 
-            if(
-                visualEvent.type === "siren" ||
-                visualEvent.type === "ambulance"
-            ){
+        if (visualEvent.type === "siren" || visualEvent.type === "ambulance") {
+            const elapsed = performance.now() - visualEvent.started;
 
-                const elapsed =
-                    performance.now() -
-                    visualEvent.started;
+            const pulse = (Math.sin(elapsed / 150) + 1) / 2;
 
-                const pulse =
-                    (
-                        Math.sin(
-                            elapsed / 150
-                        ) + 1
-                    ) / 2;
-
-                alpha +=
-                    pulse *
-                    .045;
-
-            }
-
-            const radius =
-                light.radius *
-                (
-                    .82 +
-                    breathing * .18
-                );
-
-            const gradient =
-                sceneContext.createRadialGradient(
-                    light.x,
-                    light.y,
-                    0,
-                    light.x,
-                    light.y,
-                    radius
-                );
-
-            gradient.addColorStop(
-                0,
-                `rgba(255,255,255,${alpha})`
-            );
-
-            gradient.addColorStop(
-                .28,
-                `rgba(255,255,255,${alpha*.52})`
-            );
-
-            gradient.addColorStop(
-                1,
-                "rgba(255,255,255,0)"
-            );
-
-            sceneContext.fillStyle =
-                gradient;
-
-            sceneContext.beginPath();
-
-            sceneContext.arc(
-                light.x,
-                light.y,
-                radius,
-                0,
-                Math.PI * 2
-            );
-
-            sceneContext.fill();
-
+            alpha += pulse * 0.045;
         }
-    );
 
+        const radius = light.radius * (0.82 + breathing * 0.18);
+
+        const gradient = sceneContext.createRadialGradient(
+            light.x,
+            light.y,
+            0,
+            light.x,
+            light.y,
+            radius
+        );
+
+        gradient.addColorStop(0, `rgba(255,255,255,${alpha})`);
+
+        gradient.addColorStop(0.28, `rgba(255,255,255,${alpha * 0.52})`);
+
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+        sceneContext.fillStyle = gradient;
+
+        sceneContext.beginPath();
+
+        sceneContext.arc(light.x, light.y, radius, 0, Math.PI * 2);
+
+        sceneContext.fill();
+    });
 
     /*
        Distant moving headlight streaks.
     */
 
-    lightStreaks.forEach(
-        streak=>{
+    lightStreaks.forEach(streak => {
+        streak.x += streak.speed;
 
-            streak.x +=
-                streak.speed;
-
-            if(
-                streak.x >
-                sceneWidth + streak.length
-            ){
-                streak.x =
-                    -streak.length;
-            }
-
-            const gradient =
-                sceneContext.createLinearGradient(
-                    streak.x,
-                    streak.y,
-                    streak.x +
-                        streak.length,
-                    streak.y
-                );
-
-            gradient.addColorStop(
-                0,
-                "rgba(255,255,255,0)"
-            );
-
-            gradient.addColorStop(
-                .5,
-                `rgba(255,255,255,${streak.alpha})`
-            );
-
-            gradient.addColorStop(
-                1,
-                "rgba(255,255,255,0)"
-            );
-
-            sceneContext.fillStyle =
-                gradient;
-
-            sceneContext.fillRect(
-                streak.x,
-                streak.y,
-                streak.length,
-                2
-            );
-
+        if (streak.x > sceneWidth + streak.length) {
+            streak.x = -streak.length;
         }
-    );
 
+        const gradient = sceneContext.createLinearGradient(
+            streak.x,
+            streak.y,
+            streak.x + streak.length,
+            streak.y
+        );
+
+        gradient.addColorStop(0, "rgba(255,255,255,0)");
+
+        gradient.addColorStop(0.5, `rgba(255,255,255,${streak.alpha})`);
+
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+        sceneContext.fillStyle = gradient;
+
+        sceneContext.fillRect(streak.x, streak.y, streak.length, 2);
+    });
 
     /*
        EVENT-SPECIFIC BLOOMS
     */
 
-    if(
-        visualEvent.type === "scream"
-    ){
+    if (visualEvent.type === "scream") {
+        const elapsed = performance.now() - visualEvent.started;
 
-        const elapsed =
-            performance.now() -
-            visualEvent.started;
+        if (elapsed < 6500) {
+            const pulse = 0.5 + Math.sin(elapsed / 190) * 0.5;
 
-        if(elapsed < 6500){
+            sceneContext.fillStyle = `rgba(255,255,255,${0.012 * pulse})`;
 
-            const pulse =
-                .5 +
-                Math.sin(
-                    elapsed / 190
-                ) * .5;
-
-            sceneContext.fillStyle =
-                `rgba(255,255,255,${.012 * pulse})`;
-
-            sceneContext.fillRect(
-                0,
-                0,
-                sceneWidth,
-                sceneHeight
-            );
-
+            sceneContext.fillRect(0, 0, sceneWidth, sceneHeight);
         }
-
     }
-
 
     /*
        Gunshots become brief white reflections.
     */
 
-    if(
-        visualFlash.value > 0
-    ){
-
-        sceneContext.fillStyle =
-            `rgba(
+    if (visualFlash.value > 0) {
+        sceneContext.fillStyle = `rgba(
                 255,
                 255,
                 255,
-                ${visualFlash.value * .075}
+                ${visualFlash.value * 0.075}
             )`;
 
-        sceneContext.fillRect(
-            0,
-            0,
-            sceneWidth,
-            sceneHeight
-        );
+        sceneContext.fillRect(0, 0, sceneWidth, sceneHeight);
 
-        eventFlash(.06);
-
+        eventFlash(0.06);
     }
-
 
     /*
        Subtle reflection on wet ground.
     */
 
-    const groundY =
-        sceneHeight * .77;
+    const groundY = sceneHeight * 0.77;
 
-    const reflectionGradient =
-        sceneContext.createLinearGradient(
-            0,
-            groundY,
-            0,
-            sceneHeight
-        );
+    const reflectionGradient = sceneContext.createLinearGradient(0, groundY, 0, sceneHeight);
 
-    reflectionGradient.addColorStop(
-        0,
-        "rgba(255,255,255,.018)"
-    );
+    reflectionGradient.addColorStop(0, "rgba(255,255,255,.018)");
 
-    reflectionGradient.addColorStop(
-        1,
-        "rgba(255,255,255,0)"
-    );
+    reflectionGradient.addColorStop(1, "rgba(255,255,255,0)");
 
-    sceneContext.fillStyle =
-        reflectionGradient;
+    sceneContext.fillStyle = reflectionGradient;
 
-    sceneContext.fillRect(
-        0,
-        groundY,
-        sceneWidth,
-        sceneHeight -
-        groundY
-    );
+    sceneContext.fillRect(0, groundY, sceneWidth, sceneHeight - groundY);
 
-
-    requestAnimationFrame(
-        drawAmbientLights
-    );
-
+    requestAnimationFrame(drawAmbientLights);
 }
-
 
 /* =========================================================
    RAIN ENGINE
@@ -3890,165 +765,86 @@ function drawAmbientLights(){
 
 let drops = [];
 
-function resizeRain(){
+function resizeRain() {
+    const canvas = document.getElementById("rainCanvas");
 
-    const canvas =
-        document.getElementById(
-            "rainCanvas"
-        );
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
-    const dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            1.5
-        );
+    canvas.width = window.innerWidth * dpr;
 
-    canvas.width =
-        window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
 
-    canvas.height =
-        window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + "px";
 
-    canvas.style.width =
-        window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
 
-    canvas.style.height =
-        window.innerHeight + "px";
+    rainContext = canvas.getContext("2d");
 
-    rainContext =
-        canvas.getContext("2d");
-
-    rainContext.setTransform(
-        dpr,0,0,dpr,0,0
-    );
+    rainContext.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     drops = [];
 
-    const amount =
-        window.innerWidth < 700
-            ? 145
-            : 300;
+    const amount = window.innerWidth < 700 ? 145 : 300;
 
-    for(let i=0;i<amount;i++){
-
+    for (let i = 0; i < amount; i++) {
         drops.push({
+            x: Math.random() * window.innerWidth,
 
-            x:
-                Math.random() *
-                window.innerWidth,
+            y: Math.random() * window.innerHeight,
 
-            y:
-                Math.random() *
-                window.innerHeight,
+            length: 8 + Math.random() * 18,
 
-            length:
-                8 +
-                Math.random() * 18,
+            speed: 9 + Math.random() * 15,
 
-            speed:
-                9 +
-                Math.random() * 15,
-
-            opacity:
-                .035 +
-                Math.random() * .23
-
+            opacity: 0.035 + Math.random() * 0.23
         });
-
     }
-
 }
 
-function animateRain(){
+function animateRain() {
+    const intensity = getRainIntensity(getCycleSeconds());
 
-    const intensity =
-        getRainIntensity(
-            getCycleSeconds()
-        );
+    rainContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    rainContext.clearRect(
-        0,
-        0,
-        window.innerWidth,
-        window.innerHeight
-    );
+    rainContext.lineCap = "round";
 
-    rainContext.lineCap =
-        "round";
+    drops.forEach(drop => {
+        drop.y += drop.speed * intensity;
 
-    drops.forEach(
-        drop=>{
+        drop.x += drop.speed * 0.07 * intensity;
 
-            drop.y +=
-                drop.speed *
-                intensity;
+        if (drop.y > window.innerHeight + 30) {
+            drop.y = -drop.length;
 
-            drop.x +=
-                drop.speed *
-                .07 *
-                intensity;
+            drop.x = Math.random() * window.innerWidth;
+        }
 
-            if(
-                drop.y >
-                window.innerHeight + 30
-            ){
+        rainContext.beginPath();
 
-                drop.y =
-                    -drop.length;
+        rainContext.moveTo(drop.x, drop.y);
 
-                drop.x =
-                    Math.random() *
-                    window.innerWidth;
+        rainContext.lineTo(drop.x - drop.length * 0.07, drop.y - drop.length);
 
-            }
-
-            rainContext.beginPath();
-
-            rainContext.moveTo(
-                drop.x,
-                drop.y
-            );
-
-            rainContext.lineTo(
-                drop.x -
-                    drop.length*.07,
-                drop.y -
-                    drop.length
-            );
-
-            rainContext.strokeStyle =
-                `rgba(
+        rainContext.strokeStyle = `rgba(
                     255,
                     255,
                     255,
-                    ${drop.opacity *
-                        intensity}
+                    ${drop.opacity * intensity}
                 )`;
 
-            rainContext.lineWidth =
-                .25 +
-                Math.random()*.65;
+        rainContext.lineWidth = 0.25 + Math.random() * 0.65;
 
-            rainContext.stroke();
+        rainContext.stroke();
+    });
 
-        }
-    );
-
-    requestAnimationFrame(
-        animateRain
-    );
-
+    requestAnimationFrame(animateRain);
 }
-
 
 /* ---------------------------------------------------------
    RAIN CYCLE
    --------------------------------------------------------- */
 
-function getRainIntensity(
-    seconds
-){
-
+function getRainIntensity(seconds) {
     /*
        A living night:
        heavier early,
@@ -4056,57 +852,42 @@ function getRainIntensity(
        heavier again toward dawn.
     */
 
-    if(seconds < 22){
-
+    if (seconds < 22) {
         return 1.0;
-
     }
 
-    if(seconds < 48){
-
-        return .70;
-
+    if (seconds < 48) {
+        return 0.7;
     }
 
-    if(seconds < 76){
-
-        return .88;
-
+    if (seconds < 76) {
+        return 0.88;
     }
 
-    if(seconds < 100){
-
+    if (seconds < 100) {
         return 1.15;
-
     }
 
-    return .82;
-
+    return 0.82;
 }
-
 
 /* =========================================================
    AUDIO EVENT ENGINE
    ========================================================= */
 
-let audioContext =
-    null;
+let audioContext = null;
 
-let masterGain =
-    null;
+let masterGain = null;
 
-let audioEnabled =
-    false;
+let audioEnabled = false;
 
-let eventTimer =
-    null;
+let eventTimer = null;
 
-let lastCycle =
-    -1;
+let lastCycle = -1;
 
-let firedEvents =
-    new Set();
+let firedEvents = new Set();
 
+let firedEventSlots = new Set();
 
 /*
    Timeline:
@@ -4125,1312 +906,689 @@ let firedEvents =
 */
 
 const EVENT_TIMELINE = [
-
-    {
-        offset:12,
-        type:"argument"
-    },
-
-    {
-        offset:26,
-        type:"car"
-    },
-
-    {
-        offset:39,
-        type:"footsteps"
-    },
-
-    {
-        offset:51,
-        type:"siren"
-    },
-
-    {
-        offset:67,
-        type:"scream"
-    },
-
-    {
-        offset:80,
-        type:"thunder"
-    },
-
-    {
-        offset:91,
-        type:"ambulance"
-    },
-
-    {
-        offset:103,
-        type:"electric"
-    }
-
+    { offset: 5, type: "argument" },
+    { offset: 15, type: "car" },
+    { offset: 25, type: "footsteps" },
+    { offset: 35, type: "siren" },
+    { offset: 45, type: "scream" },
+    { offset: 55, type: "thunder" },
+    { offset: 65, type: "ambulance" },
+    { offset: 75, type: "electric" },
+    { offset: 85, type: "argument" },
+    { offset: 95, type: "scream" },
+    { offset: 105, type: "siren" },
+    { offset: 115, type: "footsteps" }
 ];
 
-
-function initializeAudio(){
-
-    if(audioContext){
+function initializeAudio() {
+    if (audioContext) {
         return;
     }
 
-    const AudioClass =
-        window.AudioContext ||
-        window.webkitAudioContext;
+    const AudioClass = window.AudioContext || window.webkitAudioContext;
 
-    if(!AudioClass){
+    if (!AudioClass) {
         return;
     }
 
-    audioContext =
-        new AudioClass();
+    audioContext = new AudioClass();
 
-    masterGain =
-        audioContext.createGain();
+    masterGain = audioContext.createGain();
 
-    masterGain.gain.value =
-        0;
+    masterGain.gain.value = 0;
 
-    masterGain.connect(
-        audioContext.destination
-    );
+    masterGain.connect(audioContext.destination);
 
     startRainTexture();
 
     startLowCityBed();
-
 }
-
 
 /* ---------------------------------------------------------
    MASTER AUDIO UTILITIES
    --------------------------------------------------------- */
 
-function createPanNode(
-    amount
-){
-
-    if(
-        !audioContext
-    ){
+function createPanNode(amount) {
+    if (!audioContext) {
         return null;
     }
 
-    if(
-        audioContext.createStereoPanner
-    ){
+    if (audioContext.createStereoPanner) {
+        const pan = audioContext.createStereoPanner();
 
-        const pan =
-            audioContext.createStereoPanner();
-
-        pan.pan.value =
-            amount;
+        pan.pan.value = amount;
 
         return pan;
-
     }
 
     return null;
-
 }
 
+function setEnvelope(gain, attack, release, peak) {
+    const now = audioContext.currentTime;
 
-function setEnvelope(
-    gain,
-    attack,
-    release,
-    peak
-){
+    gain.gain.setValueAtTime(0.0001, now);
 
-    const now =
-        audioContext.currentTime;
+    gain.gain.exponentialRampToValueAtTime(peak, now + attack);
 
-    gain.gain.setValueAtTime(
-        .0001,
-        now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        peak,
-        now + attack
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now +
-        attack +
-        release
-    );
-
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + attack + release);
 }
-
 
 /* ---------------------------------------------------------
    RAIN TEXTURE
    --------------------------------------------------------- */
 
-function startRainTexture(){
+function startRainTexture() {
+    const buffer = audioContext.createBuffer(
+        1,
+        audioContext.sampleRate * 2,
+        audioContext.sampleRate
+    );
 
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate * 2,
-            audioContext.sampleRate
-        );
+    const data = buffer.getChannelData(0);
 
-    const data =
-        buffer.getChannelData(0);
-
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-
-        data[i] =
-            Math.random()*2 - 1;
-
+    for (let i = 0; i < data.length; i++) {
+        data[i] = Math.random() * 2 - 1;
     }
 
-    const source =
-        audioContext.createBufferSource();
+    const source = audioContext.createBufferSource();
 
-    source.buffer =
-        buffer;
+    source.buffer = buffer;
 
-    source.loop =
-        true;
+    source.loop = true;
 
-    const filter =
-        audioContext.createBiquadFilter();
+    const filter = audioContext.createBiquadFilter();
 
-    filter.type =
-        "highpass";
+    filter.type = "highpass";
 
-    filter.frequency.value =
-        1650;
+    filter.frequency.value = 1650;
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    gain.gain.value =
-        .13;
+    gain.gain.value = 0.13;
 
-    source
-        .connect(filter)
-        .connect(gain)
-        .connect(masterGain);
+    source.connect(filter).connect(gain).connect(masterGain);
 
     source.start();
 
-    window._rainSource =
-        source;
+    window._rainSource = source;
 
-    window._rainGain =
-        gain;
-
+    window._rainGain = gain;
 }
-
 
 /* ---------------------------------------------------------
    LOW DISTANT BED
    --------------------------------------------------------- */
 
-function startLowCityBed(){
+function startLowCityBed() {
+    const oscillator = audioContext.createOscillator();
 
-    const oscillator =
-        audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-    const gain =
-        audioContext.createGain();
+    oscillator.type = "sine";
 
-    oscillator.type =
-        "sine";
+    oscillator.frequency.value = 43;
 
-    oscillator.frequency.value =
-        43;
+    gain.gain.value = 0.0001;
 
-    gain.gain.value =
-        .0001;
-
-    oscillator
-        .connect(gain)
-        .connect(masterGain);
+    oscillator.connect(gain).connect(masterGain);
 
     oscillator.start();
 
-    window._lowBedGain =
-        gain;
-
+    window._lowBedGain = gain;
 }
-
 
 /* ---------------------------------------------------------
    DISTANT SCREAM
    --------------------------------------------------------- */
 
-function playScream(){
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+function playScream() {
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const oscillator =
-        audioContext.createOscillator();
+    const oscillator = audioContext.createOscillator();
 
-    const oscillator2 =
-        audioContext.createOscillator();
+    const oscillator2 = audioContext.createOscillator();
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    const pan =
-        createPanNode(
-            -.45
-        );
+    const pan = createPanNode(-0.45);
 
-    oscillator.type =
-        "sawtooth";
+    oscillator.type = "sawtooth";
 
-    oscillator2.type =
-        "triangle";
+    oscillator2.type = "triangle";
 
-    oscillator.frequency.setValueAtTime(
-        720,
-        audioContext.currentTime
-    );
+    oscillator.frequency.setValueAtTime(720, audioContext.currentTime);
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        1100,
-        audioContext.currentTime+1.3
-    );
+    oscillator.frequency.exponentialRampToValueAtTime(1100, audioContext.currentTime + 1.3);
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        510,
-        audioContext.currentTime+5.4
-    );
+    oscillator.frequency.exponentialRampToValueAtTime(510, audioContext.currentTime + 5.4);
 
-    oscillator2.frequency.setValueAtTime(
-        358,
-        audioContext.currentTime
-    );
+    oscillator2.frequency.setValueAtTime(358, audioContext.currentTime);
 
-    oscillator2.frequency.exponentialRampToValueAtTime(
-        620,
-        audioContext.currentTime+1.2
-    );
+    oscillator2.frequency.exponentialRampToValueAtTime(620, audioContext.currentTime + 1.2);
 
-    gain.gain.setValueAtTime(
-        .0001,
-        audioContext.currentTime
-    );
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .024,
-        audioContext.currentTime+.08
-    );
+    gain.gain.exponentialRampToValueAtTime(0.024, audioContext.currentTime + 0.08);
 
-    gain.gain.setValueAtTime(
-        .018,
-        audioContext.currentTime+1.5
-    );
+    gain.gain.setValueAtTime(0.018, audioContext.currentTime + 1.5);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        audioContext.currentTime+5.8
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 5.8);
 
-    if(pan){
+    if (pan) {
+        oscillator.connect(gain).connect(pan).connect(masterGain);
 
-        oscillator
-            .connect(gain)
-            .connect(pan)
-            .connect(masterGain);
+        oscillator2.connect(gain);
+    } else {
+        oscillator.connect(gain).connect(masterGain);
 
-        oscillator2
-            .connect(gain);
-
-    }else{
-
-        oscillator
-            .connect(gain)
-            .connect(masterGain);
-
-        oscillator2
-            .connect(gain);
-
+        oscillator2.connect(gain);
     }
 
     oscillator.start();
 
     oscillator2.start();
 
-    oscillator.stop(
-        audioContext.currentTime+6
-    );
+    oscillator.stop(audioContext.currentTime + 6);
 
-    oscillator2.stop(
-        audioContext.currentTime+6
-    );
-
+    oscillator2.stop(audioContext.currentTime + 6);
 }
-
 
 /* ---------------------------------------------------------
    GUNSHOT
    --------------------------------------------------------- */
 
-function playGunshot(
-    panAmount
-){
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+function playGunshot(panAmount) {
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const now =
-        audioContext.currentTime;
+    const now = audioContext.currentTime;
 
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            Math.floor(
-                audioContext.sampleRate*.22
-            ),
-            audioContext.sampleRate
-        );
+    const buffer = audioContext.createBuffer(
+        1,
+        Math.floor(audioContext.sampleRate * 0.22),
+        audioContext.sampleRate
+    );
 
-    const data =
-        buffer.getChannelData(0);
+    const data = buffer.getChannelData(0);
 
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-
-        data[i] =
-            (
-                Math.random()*2 -
-                1
-            ) *
-            Math.pow(
-                1-i/data.length,
-                2.3
-            );
-
+    for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 2.3);
     }
 
-    const source =
-        audioContext.createBufferSource();
+    const source = audioContext.createBufferSource();
 
-    source.buffer =
-        buffer;
+    source.buffer = buffer;
 
-    const filter =
-        audioContext.createBiquadFilter();
+    const filter = audioContext.createBiquadFilter();
 
-    filter.type =
-        "lowpass";
+    filter.type = "lowpass";
 
-    filter.frequency.value =
-        2800;
+    filter.frequency.value = 2800;
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    gain.gain.setValueAtTime(
-        .065,
-        now
-    );
+    gain.gain.setValueAtTime(0.065, now);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now+.23
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.23);
 
-    const boom =
-        audioContext.createOscillator();
+    const boom = audioContext.createOscillator();
 
-    const boomGain =
-        audioContext.createGain();
+    const boomGain = audioContext.createGain();
 
-    boom.type =
-        "sine";
+    boom.type = "sine";
 
-    boom.frequency.setValueAtTime(
-        110,
-        now
-    );
+    boom.frequency.setValueAtTime(110, now);
 
-    boom.frequency.exponentialRampToValueAtTime(
-        45,
-        now+.22
-    );
+    boom.frequency.exponentialRampToValueAtTime(45, now + 0.22);
 
-    boomGain.gain.setValueAtTime(
-        .03,
-        now
-    );
+    boomGain.gain.setValueAtTime(0.03, now);
 
-    boomGain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now+.25
-    );
+    boomGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
 
-    const pan =
-        createPanNode(
-            panAmount
-        );
+    const pan = createPanNode(panAmount);
 
-    source
-        .connect(filter)
-        .connect(gain);
+    source.connect(filter).connect(gain);
 
-    boom
-        .connect(boomGain);
+    boom.connect(boomGain);
 
-    if(pan){
+    if (pan) {
+        gain.connect(pan).connect(masterGain);
 
-        gain
-            .connect(pan)
-            .connect(masterGain);
+        boomGain.connect(pan);
+    } else {
+        gain.connect(masterGain);
 
-        boomGain
-            .connect(pan);
-
-    }else{
-
-        gain
-            .connect(masterGain);
-
-        boomGain
-            .connect(masterGain);
-
+        boomGain.connect(masterGain);
     }
 
     source.start(now);
 
     boom.start(now);
 
-    boom.stop(now+.25);
-
+    boom.stop(now + 0.25);
 }
-
 
 /* ---------------------------------------------------------
    SCREAM + THREE GUNSHOTS
    --------------------------------------------------------- */
 
-function playScreamSequence(){
-
-    triggerVisualEvent(
-        "scream"
-    );
+function playScreamSequence() {
+    triggerVisualEvent("scream");
 
     playScream();
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "gunshot"
-            );
+    setTimeout(() => {
+        triggerVisualEvent("gunshot");
 
-            playGunshot(
-                -.2
-            );
+        playGunshot(-0.2);
+    }, 2050);
 
-        },
-        2050
-    );
+    setTimeout(() => {
+        triggerVisualEvent("gunshot");
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "gunshot"
-            );
+        playGunshot(0.18);
+    }, 3250);
 
-            playGunshot(
-                .18
-            );
+    setTimeout(() => {
+        triggerVisualEvent("gunshot");
 
-        },
-        3250
-    );
+        playGunshot(0.02);
+    }, 4450);
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "gunshot"
-            );
-
-            playGunshot(
-                .02
-            );
-
-        },
-        4450
-    );
-
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        7000
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 7000);
 }
-
 
 /* ---------------------------------------------------------
    POLICE SIREN
    --------------------------------------------------------- */
 
-function playPoliceSiren(){
+function playPoliceSiren() {
+    triggerVisualEvent("siren");
 
-    triggerVisualEvent(
-        "siren"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const oscillator =
-        audioContext.createOscillator();
+    const oscillator = audioContext.createOscillator();
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    const pan =
-        createPanNode(
-            .4
-        );
+    const pan = createPanNode(0.4);
 
-    oscillator.type =
-        "sine";
+    oscillator.type = "sine";
 
-    const start =
-        audioContext.currentTime;
+    const start = audioContext.currentTime;
 
-    const duration =
-        7;
+    const duration = 7;
 
-    for(
-        let i=0;
-        i<7;
-        i++
-    ){
+    for (let i = 0; i < 7; i++) {
+        const t = start + i * 0.95;
 
-        const t =
-            start+
-            i*.95;
+        oscillator.frequency.setValueAtTime(520, t);
 
-        oscillator.frequency.setValueAtTime(
-            520,
-            t
-        );
+        oscillator.frequency.linearRampToValueAtTime(920, t + 0.47);
 
-        oscillator.frequency.linearRampToValueAtTime(
-            920,
-            t+.47
-        );
-
-        oscillator.frequency.linearRampToValueAtTime(
-            520,
-            t+.95
-        );
-
+        oscillator.frequency.linearRampToValueAtTime(520, t + 0.95);
     }
 
-    setEnvelope(
-        gain,
-        .12,
-        duration-
-            .12,
-        .018
-    );
+    setEnvelope(gain, 0.12, duration - 0.12, 0.018);
 
-    if(pan){
-
-        oscillator
-            .connect(gain)
-            .connect(pan)
-            .connect(masterGain);
-
-    }else{
-
-        oscillator
-            .connect(gain)
-            .connect(masterGain);
-
+    if (pan) {
+        oscillator.connect(gain).connect(pan).connect(masterGain);
+    } else {
+        oscillator.connect(gain).connect(masterGain);
     }
 
     oscillator.start();
 
-    oscillator.stop(
-        start+duration
-    );
+    oscillator.stop(start + duration);
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        duration*1000
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, duration * 1000);
 }
-
 
 /* ---------------------------------------------------------
    AMBULANCE
    --------------------------------------------------------- */
 
-function playAmbulance(){
+function playAmbulance() {
+    triggerVisualEvent("ambulance");
 
-    triggerVisualEvent(
-        "ambulance"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const oscillator =
-        audioContext.createOscillator();
+    const oscillator = audioContext.createOscillator();
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    const pan =
-        createPanNode(
-            -.65
-        );
+    const pan = createPanNode(-0.65);
 
-    oscillator.type =
-        "triangle";
+    oscillator.type = "triangle";
 
-    const start =
-        audioContext.currentTime;
+    const start = audioContext.currentTime;
 
-    for(
-        let i=0;
-        i<5;
-        i++
-    ){
+    for (let i = 0; i < 5; i++) {
+        const t = start + i * 1.0;
 
-        const t =
-            start+
-            i*1.0;
+        oscillator.frequency.setValueAtTime(690, t);
 
-        oscillator.frequency.setValueAtTime(
-            690,
-            t
-        );
+        oscillator.frequency.linearRampToValueAtTime(1080, t + 0.5);
 
-        oscillator.frequency.linearRampToValueAtTime(
-            1080,
-            t+.5
-        );
-
-        oscillator.frequency.linearRampToValueAtTime(
-            690,
-            t+1
-        );
-
+        oscillator.frequency.linearRampToValueAtTime(690, t + 1);
     }
 
-    setEnvelope(
-        gain,
-        .08,
-        4.9,
-        .015
-    );
+    setEnvelope(gain, 0.08, 4.9, 0.015);
 
-    if(pan){
-
-        oscillator
-            .connect(gain)
-            .connect(pan)
-            .connect(masterGain);
-
-    }else{
-
-        oscillator
-            .connect(gain)
-            .connect(masterGain);
-
+    if (pan) {
+        oscillator.connect(gain).connect(pan).connect(masterGain);
+    } else {
+        oscillator.connect(gain).connect(masterGain);
     }
 
     oscillator.start();
 
-    oscillator.stop(
-        start+5
-    );
+    oscillator.stop(start + 5);
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        5200
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 5200);
 }
-
 
 /* ---------------------------------------------------------
    THUNDER
    --------------------------------------------------------- */
 
-function playThunder(){
+function playThunder() {
+    triggerVisualEvent("thunder");
 
-    triggerVisualEvent(
-        "thunder"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate*4,
-            audioContext.sampleRate
-        );
+    const buffer = audioContext.createBuffer(
+        1,
+        audioContext.sampleRate * 4,
+        audioContext.sampleRate
+    );
 
-    const data =
-        buffer.getChannelData(0);
+    const data = buffer.getChannelData(0);
 
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-
-        data[i] =
-            (
-                Math.random()*2 -
-                1
-            ) *
-            (
-                1-i/data.length
-            ) ** .45;
-
+    for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * (1 - i / data.length) ** 0.45;
     }
 
-    const source =
-        audioContext.createBufferSource();
+    const source = audioContext.createBufferSource();
 
-    source.buffer =
-        buffer;
+    source.buffer = buffer;
 
-    const filter =
-        audioContext.createBiquadFilter();
+    const filter = audioContext.createBiquadFilter();
 
-    filter.type =
-        "lowpass";
+    filter.type = "lowpass";
 
-    filter.frequency.value =
-        420;
+    filter.frequency.value = 420;
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    gain.gain.value =
-        .026;
+    gain.gain.value = 0.026;
 
-    source
-        .connect(filter)
-        .connect(gain)
-        .connect(masterGain);
+    source.connect(filter).connect(gain).connect(masterGain);
 
     source.start();
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        4300
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 4300);
 }
-
 
 /* ---------------------------------------------------------
    CAR PASS
    --------------------------------------------------------- */
 
-function playCarPass(){
+function playCarPass() {
+    triggerVisualEvent("car");
 
-    triggerVisualEvent(
-        "car"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate*3,
-            audioContext.sampleRate
-        );
+    const buffer = audioContext.createBuffer(
+        1,
+        audioContext.sampleRate * 3,
+        audioContext.sampleRate
+    );
 
-    const data =
-        buffer.getChannelData(0);
+    const data = buffer.getChannelData(0);
 
-    for(
-        let i=0;
-        i<data.length;
-        i++
-    ){
-
-        data[i] =
-            (
-                Math.random()*2 -
-                1
-            ) *
-            (
-                i/data.length
-            );
-
+    for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * (i / data.length);
     }
 
-    const source =
-        audioContext.createBufferSource();
+    const source = audioContext.createBufferSource();
 
-    source.buffer =
-        buffer;
+    source.buffer = buffer;
 
-    const filter =
-        audioContext.createBiquadFilter();
+    const filter = audioContext.createBiquadFilter();
 
-    filter.type =
-        "bandpass";
+    filter.type = "bandpass";
 
-    filter.frequency.value =
-        720;
+    filter.frequency.value = 720;
 
-    filter.Q.value =
-        .8;
+    filter.Q.value = 0.8;
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    gain.gain.value =
-        .0001;
+    gain.gain.value = 0.0001;
 
-    const start =
-        audioContext.currentTime;
+    const start = audioContext.currentTime;
 
-    gain.gain.linearRampToValueAtTime(
-        .0001,
-        start
-    );
+    gain.gain.linearRampToValueAtTime(0.0001, start);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .022,
-        start+1.0
-    );
+    gain.gain.exponentialRampToValueAtTime(0.022, start + 1.0);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        start+2.7
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 2.7);
 
-    const pan =
-        createPanNode(
-            -.7
-        );
+    const pan = createPanNode(-0.7);
 
-    if(pan){
-
-        source
-            .connect(filter)
-            .connect(gain)
-            .connect(pan)
-            .connect(masterGain);
-
-    }else{
-
-        source
-            .connect(filter)
-            .connect(gain)
-            .connect(masterGain);
-
+    if (pan) {
+        source.connect(filter).connect(gain).connect(pan).connect(masterGain);
+    } else {
+        source.connect(filter).connect(gain).connect(masterGain);
     }
 
     source.start();
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        2800
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 2800);
 }
-
 
 /* ---------------------------------------------------------
    FOOTSTEPS
    --------------------------------------------------------- */
 
-function playFootsteps(){
+function playFootsteps() {
+    triggerVisualEvent("footsteps");
 
-    triggerVisualEvent(
-        "footsteps"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    for(
-        let i=0;
-        i<8;
-        i++
-    ){
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            const buffer = audioContext.createBuffer(
+                1,
+                Math.floor(audioContext.sampleRate * 0.08),
+                audioContext.sampleRate
+            );
 
-        setTimeout(
-            ()=>{
+            const data = buffer.getChannelData(0);
 
-                const buffer =
-                    audioContext.createBuffer(
-                        1,
-                        Math.floor(
-                            audioContext.sampleRate*.08
-                        ),
-                        audioContext.sampleRate
-                    );
+            for (let j = 0; j < data.length; j++) {
+                data[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / data.length, 2);
+            }
 
-                const data =
-                    buffer.getChannelData(0);
+            const source = audioContext.createBufferSource();
 
-                for(
-                    let j=0;
-                    j<data.length;
-                    j++
-                ){
+            source.buffer = buffer;
 
-                    data[j] =
-                        (
-                            Math.random()*2 -
-                            1
-                        ) *
-                        Math.pow(
-                            1-j/data.length,
-                            2
-                        );
+            const filter = audioContext.createBiquadFilter();
 
-                }
+            filter.type = "lowpass";
 
-                const source =
-                    audioContext.createBufferSource();
+            filter.frequency.value = 650;
 
-                source.buffer =
-                    buffer;
+            const gain = audioContext.createGain();
 
-                const filter =
-                    audioContext.createBiquadFilter();
+            gain.gain.value = 0.012;
 
-                filter.type =
-                    "lowpass";
+            const pan = createPanNode(-0.45 + i * 0.11);
 
-                filter.frequency.value =
-                    650;
+            source.connect(filter).connect(gain);
 
-                const gain =
-                    audioContext.createGain();
+            if (pan) {
+                gain.connect(pan).connect(masterGain);
+            } else {
+                gain.connect(masterGain);
+            }
 
-                gain.gain.value =
-                    .012;
-
-                const pan =
-                    createPanNode(
-                        -0.45 +
-                        i*.11
-                    );
-
-                source
-                    .connect(filter)
-                    .connect(gain);
-
-                if(pan){
-
-                    gain
-                        .connect(pan)
-                        .connect(masterGain);
-
-                }else{
-
-                    gain
-                        .connect(masterGain);
-
-                }
-
-                source.start();
-
-            },
-            i*410
-        );
-
+            source.start();
+        }, i * 410);
     }
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        3700
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 3700);
 }
-
 
 /* ---------------------------------------------------------
    ARGUMENT
    --------------------------------------------------------- */
 
-function playArgument(){
+function playArgument() {
+    triggerVisualEvent("argument");
 
-    triggerVisualEvent(
-        "argument"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
     const voices = [
         {
-            start:420,
-            end:680,
-            pan:-.5
+            start: 420,
+            end: 680,
+            pan: -0.5
         },
         {
-            start:700,
-            end:510,
-            pan:-.2
+            start: 700,
+            end: 510,
+            pan: -0.2
         },
         {
-            start:480,
-            end:620,
-            pan:-.15
+            start: 480,
+            end: 620,
+            pan: -0.15
         },
         {
-            start:660,
-            end:450,
-            pan:-.35
+            start: 660,
+            end: 450,
+            pan: -0.35
         }
     ];
 
-    voices.forEach(
-        voice=>{
+    voices.forEach(voice => {
+        const osc = audioContext.createOscillator();
 
-            const osc =
-                audioContext.createOscillator();
+        const gain = audioContext.createGain();
 
-            const gain =
-                audioContext.createGain();
+        const pan = createPanNode(voice.pan);
 
-            const pan =
-                createPanNode(
-                    voice.pan
-                );
+        osc.type = "triangle";
 
-            osc.type =
-                "triangle";
+        const now = audioContext.currentTime;
 
-            const now =
-                audioContext.currentTime;
+        osc.frequency.setValueAtTime(voice.start, now);
 
-            osc.frequency.setValueAtTime(
-                voice.start,
-                now
-            );
+        osc.frequency.linearRampToValueAtTime(voice.end, now + 0.55);
 
-            osc.frequency.linearRampToValueAtTime(
-                voice.end,
-                now+.55
-            );
+        gain.gain.setValueAtTime(0.0001, now);
 
-            gain.gain.setValueAtTime(
-                .0001,
-                now
-            );
+        gain.gain.exponentialRampToValueAtTime(0.011, now + 0.08);
 
-            gain.gain.exponentialRampToValueAtTime(
-                .011,
-                now+.08
-            );
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.62);
 
-            gain.gain.exponentialRampToValueAtTime(
-                .0001,
-                now+.62
-            );
-
-            if(pan){
-
-                osc
-                    .connect(gain)
-                    .connect(pan)
-                    .connect(masterGain);
-
-            }else{
-
-                osc
-                    .connect(gain)
-                    .connect(masterGain);
-
-            }
-
-            osc.start();
-
-            osc.stop(
-                now+.7
-            );
-
+        if (pan) {
+            osc.connect(gain).connect(pan).connect(masterGain);
+        } else {
+            osc.connect(gain).connect(masterGain);
         }
-    );
 
-    setTimeout(
-        ()=>{
-            playArgument();
-        },
-        850
-    );
+        osc.start();
 
+        osc.stop(now + 0.7);
+    });
+
+    setTimeout(() => {
+        playArgument();
+    }, 850);
 }
-
 
 /* ---------------------------------------------------------
    ELECTRICAL BUZZ
    --------------------------------------------------------- */
 
-function playElectricalBuzz(){
+function playElectricalBuzz() {
+    triggerVisualEvent("electric");
 
-    triggerVisualEvent(
-        "electric"
-    );
-
-    if(
-        !audioContext ||
-        !audioEnabled
-    ){
+    if (!audioContext || !audioEnabled) {
         return;
     }
 
-    const osc =
-        audioContext.createOscillator();
+    const osc = audioContext.createOscillator();
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    const filter =
-        audioContext.createBiquadFilter();
+    const filter = audioContext.createBiquadFilter();
 
-    osc.type =
-        "sawtooth";
+    osc.type = "sawtooth";
 
-    osc.frequency.value =
-        58;
+    osc.frequency.value = 58;
 
-    filter.type =
-        "lowpass";
+    filter.type = "lowpass";
 
-    filter.frequency.value =
-        950;
+    filter.frequency.value = 950;
 
-    const start =
-        audioContext.currentTime;
+    const start = audioContext.currentTime;
 
-    gain.gain.setValueAtTime(
-        .0001,
-        start
-    );
+    gain.gain.setValueAtTime(0.0001, start);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .012,
-        start+.12
-    );
+    gain.gain.exponentialRampToValueAtTime(0.012, start + 0.12);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        start+2.7
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 2.7);
 
-    osc
-        .connect(filter)
-        .connect(gain)
-        .connect(masterGain);
+    osc.connect(filter).connect(gain).connect(masterGain);
 
     osc.start();
 
-    osc.stop(
-        start+2.8
-    );
+    osc.stop(start + 2.8);
 
-    setTimeout(
-        ()=>{
-            triggerVisualEvent(
-                "idle"
-            );
-        },
-        3000
-    );
-
+    setTimeout(() => {
+        triggerVisualEvent("idle");
+    }, 3000);
 }
-
 
 /* ---------------------------------------------------------
    EVENT DISPATCH
    --------------------------------------------------------- */
 
-function dispatchAmbientEvent(
-    type
-){
-
-    switch(type){
-
+function dispatchAmbientEvent(type) {
+    switch (type) {
         case "argument":
             playArgument();
             break;
@@ -5462,180 +1620,89 @@ function dispatchAmbientEvent(
         case "electric":
             playElectricalBuzz();
             break;
-
     }
-
 }
 
+function eventScheduler() {
+    const seconds = getCycleSeconds();
 
-function eventScheduler(){
+    const cycleIndex = Math.floor((performance.now() - cycleStart) / CYCLE_LENGTH_MS);
 
-    const seconds =
-        getCycleSeconds();
+    if (cycleIndex !== lastCycle) {
+        firedEvents = new Set();
 
-    const cycleIndex =
-        Math.floor(
-            (
-                performance.now() -
-                cycleStart
-            ) /
-            CYCLE_LENGTH_MS
-        );
+        firedEventSlots = new Set();
 
-    if(
-        cycleIndex !== lastCycle
-    ){
+        lastCycle = cycleIndex;
 
-        firedEvents =
-            new Set();
-
-        lastCycle =
-            cycleIndex;
-
-        triggerVisualEvent(
-            "idle"
-        );
-
+        triggerVisualEvent("idle");
     }
 
+    EVENT_TIMELINE.forEach((event, index) => {
+        const slotKey = `${cycleIndex}:${index}`;
 
-    EVENT_TIMELINE.forEach(
-        event=>{
-
-            if(
-                seconds >= event.offset &&
-                seconds < event.offset + .18 &&
-                !firedEvents.has(
-                    event.type
-                )
-            ){
-
-                firedEvents.add(
-                    event.type
-                );
-
-                dispatchAmbientEvent(
-                    event.type
-                );
-
-            }
-
+        if (
+            seconds >= event.offset &&
+            seconds < event.offset + 0.45 &&
+            !firedEventSlots.has(slotKey)
+        ) {
+            firedEventSlots.add(slotKey);
+            dispatchAmbientEvent(event.type);
         }
-    );
-
-    setTimeout(
-        eventScheduler,
-        100
-    );
-
+    });
+    setTimeout(eventScheduler, 100);
 }
 
 eventScheduler();
-
 
 /* =========================================================
    AUDIO BUTTON
    ========================================================= */
 
-document
-    .getElementById(
-        "soundButton"
-    )
-    .addEventListener(
-        "click",
-        async()=>{
+document.getElementById("soundButton").addEventListener("click", async () => {
+    initializeAudio();
 
-            initializeAudio();
+    if (!audioContext) {
+        return;
+    }
 
-            if(
-                !audioContext
-            ){
-                return;
-            }
+    if (audioContext.state === "suspended") {
+        await audioContext.resume();
+    }
 
-            if(
-                audioContext.state ===
-                "suspended"
-            ){
+    audioEnabled = !audioEnabled;
 
-                await audioContext.resume();
+    masterGain.gain.cancelScheduledValues(audioContext.currentTime);
 
-            }
-
-            audioEnabled =
-                !audioEnabled;
-
-            masterGain.gain.cancelScheduledValues(
-                audioContext.currentTime
-            );
-
-            masterGain.gain.linearRampToValueAtTime(
-                audioEnabled
-                    ? .035
-                    : 0,
-                audioContext.currentTime+.7
-            );
-
-            document
-                .getElementById(
-                    "soundButton"
-                )
-                .classList.toggle(
-                    "active",
-                    audioEnabled
-                );
-
-        }
+    masterGain.gain.linearRampToValueAtTime(
+        audioEnabled ? 0.035 : 0,
+        audioContext.currentTime + 0.7
     );
 
+    document.getElementById("soundButton").classList.toggle("active", audioEnabled);
+});
 
 /* =========================================================
    GALLERY PARTICLES
    ========================================================= */
 
-for(let i=0;i<34;i++){
+for (let i = 0; i < 34; i++) {
+    const particle = document.createElement("span");
 
-    const particle =
-        document.createElement(
-            "span"
-        );
+    particle.className = "galleryParticle";
 
-    particle.className =
-        "galleryParticle";
+    particle.style.left = Math.random() * 100 + "%";
 
-    particle.style.left =
-        Math.random()*100+"%";
+    particle.style.top = 60 + Math.random() * 40 + "%";
 
-    particle.style.top =
-        60+
-        Math.random()*40+
-        "%";
+    particle.style.setProperty("--duration", 3 + Math.random() * 6 + "s");
 
-    particle.style.setProperty(
-        "--duration",
-        3+
-        Math.random()*6+
-        "s"
-    );
+    particle.style.setProperty("--delay", Math.random() * 5 + "s");
 
-    particle.style.setProperty(
-        "--delay",
-        Math.random()*5+
-        "s"
-    );
+    particle.style.setProperty("--dx", (Math.random() - 0.5) * 100 + "px");
 
-    particle.style.setProperty(
-        "--dx",
-        (Math.random()-.5)*100+
-        "px"
-    );
-
-    galleryParticles.appendChild(
-        particle
-    );
-
+    galleryParticles.appendChild(particle);
 }
-
 
 /* =========================================================
    START
@@ -5651,247 +1718,120 @@ animateRain();
    GALLERY
    ========================================================= */
 
-let galleryItems=[];
-let currentGalleryIndex=0;
+let galleryItems = [];
+let currentGalleryIndex = 0;
 
-function validImage(filename){
-
-    return /\.(png|jpe?g|webp|gif|avif)$/i.test(
-        filename
-    );
-
+function validImage(filename) {
+    return /\.(png|jpe?g|webp|gif|avif)$/i.test(filename);
 }
 
-function isGalleryFile(filename){
+function isGalleryFile(filename) {
+    const lower = filename.toLowerCase();
 
-    const lower =
-        filename.toLowerCase();
-
-    return (
-        lower.includes("gfx") ||
-        lower.includes("bloodwar")
-    );
-
+    return lower.includes("gfx") || lower.includes("bloodwar");
 }
 
-function cleanName(filename){
-
+function cleanName(filename) {
     return filename
-        .replace(/\.[^.]+$/,"")
-        .replace(/[_-]+/g," ")
-        .replace(/\b[a-z]/g,
-            char =>
-                char.toUpperCase()
-        );
-
+        .replace(/\.[^.]+$/, "")
+        .replace(/[_-]+/g, " ")
+        .replace(/\b[a-z]/g, char => char.toUpperCase());
 }
 
-function escapeHTML(value){
-
+function escapeHTML(value) {
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-async function loadGallery(){
+async function loadGallery() {
+    galleryStatus.textContent = "SCANNING DIRECTORY...";
 
-    galleryStatus.textContent =
-        "SCANNING DIRECTORY...";
+    const rawBase = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/`;
 
-    const endpoint =
-        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/?ref=${CONFIG.branch}`;
+    const endpoints = [
+        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/?ref=${CONFIG.branch}`,
+        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/?ref=${encodeURIComponent(CONFIG.branch)}`
+    ];
 
-    try{
+    let results = [];
 
-        const response =
-            await fetch(
-                endpoint,
-                {
-                    cache:"no-store",
-                    headers:{
-                        Accept:
-                            "application/vnd.github+json"
-                    }
-                }
-            );
-
-        if(!response.ok){
-            throw new Error(
-                "GitHub API failed"
-            );
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, {
+                cache: "no-store",
+                headers: { Accept: "application/vnd.github+json" }
+            });
+            if (!response.ok) continue;
+            const files = await response.json();
+            if (!Array.isArray(files)) continue;
+            results = files
+                .filter(file => file && file.type === "file")
+                .filter(file => validImage(file.name))
+                .filter(file => isGalleryFile(file.name))
+                .map(file => ({
+                    name: file.name,
+                    url: file.download_url || rawBase + encodeURIComponent(file.name)
+                }));
+            if (results.length) break;
+        } catch (error) {
+            console.warn("Gallery API attempt failed:", error);
         }
-
-        const files =
-            await response.json();
-
-        const results =
-            files
-            .filter(
-                file =>
-                    file.type==="file"
-            )
-            .filter(
-                file =>
-                    validImage(file.name)
-            )
-            .filter(
-                file =>
-                    isGalleryFile(file.name)
-            )
-            .map(
-                file=>({
-                    name:file.name,
-                    url:file.download_url
-                })
-            );
-
-
-        CONFIG
-            .explicitBloodwar
-            .forEach(
-                fileName=>{
-
-                    const exists =
-                        results.some(
-                            item =>
-                                item.name
-                                    .toLowerCase()===
-                                fileName
-                                    .toLowerCase()
-                        );
-
-                    if(!exists){
-
-                        results.push({
-                            name:fileName,
-                            url:fileName
-                        });
-
-                    }
-
-                }
-            );
-
-
-        results.sort(
-            (a,b)=>{
-
-                const aBlood =
-                    a.name
-                        .toLowerCase()
-                        .includes("bloodwar");
-
-                const bBlood =
-                    b.name
-                        .toLowerCase()
-                        .includes("bloodwar");
-
-                if(
-                    aBlood!==bBlood
-                ){
-
-                    return aBlood
-                        ? -1
-                        : 1;
-
-                }
-
-                return a.name.localeCompare(
-                    b.name,
-                    undefined,
-                    {
-                        numeric:true,
-                        sensitivity:"base"
-                    }
-                );
-
-            }
-        );
-
-
-        galleryItems =
-            results;
-
-        renderGallery();
-
-    }catch(error){
-
-        console.warn(
-            "Gallery error:",
-            error
-        );
-
-        galleryItems =
-            CONFIG
-                .explicitBloodwar
-                .map(
-                    name=>({
-                        name,
-                        url:name
-                    })
-                );
-
-        renderGallery();
-
     }
 
+    CONFIG.explicitBloodwar.forEach(fileName => {
+        const exists = results.some(item => item.name.toLowerCase() === fileName.toLowerCase());
+        if (!exists) {
+            results.push({ name: fileName, url: rawBase + encodeURIComponent(fileName) });
+        }
+    });
+
+    const unique = new Map();
+    results.forEach(item => unique.set(item.name.toLowerCase(), item));
+    results = Array.from(unique.values());
+
+    results.sort((a, b) => {
+        const aBlood = a.name.toLowerCase().includes("bloodwar");
+        const bBlood = b.name.toLowerCase().includes("bloodwar");
+        if (aBlood !== bBlood) return aBlood ? -1 : 1;
+        return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
+    });
+
+    galleryItems = results;
+    renderGallery();
 }
+function renderGallery() {
+    galleryGrid.innerHTML = "";
 
-function renderGallery(){
+    if (!galleryItems.length) {
+        galleryEmpty.style.display = "block";
 
-    galleryGrid.innerHTML="";
-
-    if(
-        !galleryItems.length
-    ){
-
-        galleryEmpty.style.display =
-            "block";
-
-        galleryStatus.textContent =
-            "0 FILES FOUND";
+        galleryStatus.textContent = "0 FILES FOUND";
 
         return;
-
     }
 
-    galleryEmpty.style.display =
-        "none";
+    galleryEmpty.style.display = "none";
 
-    galleryStatus.textContent =
-        `${galleryItems.length} VISUAL FILE${galleryItems.length===1?"":"S"} FOUND`;
+    galleryStatus.textContent = `${galleryItems.length} VISUAL FILE${galleryItems.length === 1 ? "" : "S"} FOUND`;
 
+    galleryItems.forEach((item, index) => {
+        const card = document.createElement("article");
 
-    galleryItems.forEach(
-        (item,index)=>{
+        card.className = "galleryItem";
 
-            const card =
-                document.createElement(
-                    "article"
-                );
+        card.style.setProperty("--delay", Math.min(index * 70, 850) + "ms");
 
-            card.className =
-                "galleryItem";
-
-            card.style.setProperty(
-                "--delay",
-                Math.min(
-                    index*70,
-                    850
-                )+
-                "ms"
-            );
-
-            card.innerHTML = `
+        card.innerHTML = `
 
                 <img
                     src="${escapeHTML(item.url)}"
                     alt="${escapeHTML(cleanName(item.name))}"
-                    loading="${index<3?"eager":"lazy"}"
+                    loading="${index < 6 ? "eager" : "lazy"}"
+                    decoding="async"
                 >
 
                 <div class="galleryShine"></div>
@@ -5899,446 +1839,241 @@ function renderGallery(){
                 <div class="galleryOverlay">
 
                     <div class="galleryTitle">
-                        ${escapeHTML(
-                            cleanName(item.name)
-                        )}
+                        ${escapeHTML(cleanName(item.name))}
                     </div>
 
                     <div class="galleryMeta">
-                        ${
-                            item.name
-                                .toLowerCase()
-                                .includes("bloodwar")
-                                ? "BLOODWAR"
-                                : "GFX"
-                        }
+                        ${item.name.toLowerCase().includes("bloodwar") ? "BLOODWAR" : "GFX"}
                     </div>
 
                 </div>
             `;
 
-            card.addEventListener(
-                "click",
-                ()=>{
-                    openLightbox(index);
-                    playGallerySound();
-                }
-            );
+        const image = card.querySelector("img");
 
-            galleryGrid.appendChild(
-                card
-            );
+        image.addEventListener("error", () => {
+            const fallback = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/${encodeURIComponent(item.name)}`;
+            if (image.src !== fallback) {
+                image.src = fallback;
+            } else {
+                card.classList.add("galleryImageFailed");
+            }
+        });
 
-        }
-    );
+        image.addEventListener("load", () => card.classList.add("galleryImageLoaded"), {
+            once: true
+        });
 
+        card.addEventListener("click", () => {
+            openLightbox(index);
+            playGallerySound();
+        });
+
+        galleryGrid.appendChild(card);
+    });
 }
-
 
 /* =========================================================
    LIGHTBOX
    ========================================================= */
 
-function openLightbox(index){
-
-    if(
-        !galleryItems.length
-    ){
+function openLightbox(index) {
+    if (!galleryItems.length) {
         return;
     }
 
-    currentGalleryIndex =
-        (
-            index+
-            galleryItems.length
-        )%
-        galleryItems.length;
+    currentGalleryIndex = (index + galleryItems.length) % galleryItems.length;
 
-    const item =
-        galleryItems[
-            currentGalleryIndex
-        ];
+    const item = galleryItems[currentGalleryIndex];
 
-    lightboxImage.src =
-        item.url;
+    lightboxImage.src = item.url;
 
-    lightboxImage.alt =
-        cleanName(
-            item.name
-        );
+    lightboxImage.alt = cleanName(item.name);
 
-    lightboxInfo.textContent =
-        `${currentGalleryIndex+1} / ${galleryItems.length} · ${item.name}`;
+    lightboxInfo.textContent = `${currentGalleryIndex + 1} / ${galleryItems.length} · ${item.name}`;
 
-    lightbox.classList.add(
-        "open"
-    );
+    lightbox.classList.add("open");
 
-    lightbox.setAttribute(
-        "aria-hidden",
-        "false"
-    );
+    lightbox.setAttribute("aria-hidden", "false");
 
-    body.classList.add(
-        "locked"
-    );
-
+    body.classList.add("locked");
 }
 
-function closeLightbox(){
+function closeLightbox() {
+    lightbox.classList.remove("open");
 
-    lightbox.classList.remove(
-        "open"
-    );
+    lightbox.setAttribute("aria-hidden", "true");
 
-    lightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    body.classList.remove(
-        "locked"
-    );
-
+    body.classList.remove("locked");
 }
 
-function moveLightbox(direction){
-
-    openLightbox(
-        currentGalleryIndex+
-        direction
-    );
-
+function moveLightbox(direction) {
+    openLightbox(currentGalleryIndex + direction);
 }
 
-document
-    .getElementById("lightboxClose")
-    .addEventListener(
-        "click",
-        closeLightbox
-    );
+document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
 
-document
-    .getElementById("lightboxPrev")
-    .addEventListener(
-        "click",
-        ()=>{
-            moveLightbox(-1);
-        }
-    );
+document.getElementById("lightboxPrev").addEventListener("click", () => {
+    moveLightbox(-1);
+});
 
-document
-    .getElementById("lightboxNext")
-    .addEventListener(
-        "click",
-        ()=>{
-            moveLightbox(1);
-        }
-    );
+document.getElementById("lightboxNext").addEventListener("click", () => {
+    moveLightbox(1);
+});
 
-lightbox.addEventListener(
-    "click",
-    event=>{
-
-        if(
-            event.target===
-            lightbox
-        ){
-
-            closeLightbox();
-
-        }
-
+lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) {
+        closeLightbox();
     }
-);
+});
 
-document.addEventListener(
-    "keydown",
-    event=>{
-
-        if(
-            !lightbox.classList.contains(
-                "open"
-            )
-        ){
-            return;
-        }
-
-        if(
-            event.key==="Escape"
-        ){
-
-            closeLightbox();
-
-        }
-
-        if(
-            event.key==="ArrowLeft"
-        ){
-
-            moveLightbox(-1);
-
-        }
-
-        if(
-            event.key==="ArrowRight"
-        ){
-
-            moveLightbox(1);
-
-        }
-
+document.addEventListener("keydown", event => {
+    if (!lightbox.classList.contains("open")) {
+        return;
     }
-);
 
+    if (event.key === "Escape") {
+        closeLightbox();
+    }
+
+    if (event.key === "ArrowLeft") {
+        moveLightbox(-1);
+    }
+
+    if (event.key === "ArrowRight") {
+        moveLightbox(1);
+    }
+});
 
 /* =========================================================
    TOUCH SWIPE
    ========================================================= */
 
-let swipeStartX=0;
+let swipeStartX = 0;
 
 lightbox.addEventListener(
     "touchstart",
-    event=>{
-
-        swipeStartX =
-            event.changedTouches[0]
-                .screenX;
-
+    event => {
+        swipeStartX = event.changedTouches[0].screenX;
     },
-    {passive:true}
+    { passive: true }
 );
 
 lightbox.addEventListener(
     "touchend",
-    event=>{
+    event => {
+        const endX = event.changedTouches[0].screenX;
 
-        const endX =
-            event.changedTouches[0]
-                .screenX;
+        const difference = endX - swipeStartX;
 
-        const difference =
-            endX-
-            swipeStartX;
-
-        if(
-            Math.abs(difference)<45
-        ){
-
+        if (Math.abs(difference) < 45) {
             return;
-
         }
 
-        if(
-            difference>0
-        ){
-
+        if (difference > 0) {
             moveLightbox(-1);
-
-        }else{
-
+        } else {
             moveLightbox(1);
-
         }
-
     },
-    {passive:true}
+    { passive: true }
 );
-
 
 /* =========================================================
    GALLERY SOUND
    ========================================================= */
 
-function playGallerySound(){
-
-    if(
-        !audioContext||
-        !audioEnabled
-    ){
-
+function playGallerySound() {
+    if (!audioContext || !audioEnabled) {
         return;
-
     }
 
-    const now=
-        audioContext.currentTime;
+    const now = audioContext.currentTime;
 
-    const oscillator =
-        audioContext.createOscillator();
+    const oscillator = audioContext.createOscillator();
 
-    const gain =
-        audioContext.createGain();
+    const gain = audioContext.createGain();
 
-    oscillator.type=
-        "sine";
+    oscillator.type = "sine";
 
-    oscillator.frequency.setValueAtTime(
-        940,
-        now
-    );
+    oscillator.frequency.setValueAtTime(940, now);
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        1450,
-        now+.12
-    );
+    oscillator.frequency.exponentialRampToValueAtTime(1450, now + 0.12);
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        610,
-        now+.34
-    );
+    oscillator.frequency.exponentialRampToValueAtTime(610, now + 0.34);
 
-    gain.gain.setValueAtTime(
-        .0001,
-        now
-    );
+    gain.gain.setValueAtTime(0.0001, now);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .035,
-        now+.02
-    );
+    gain.gain.exponentialRampToValueAtTime(0.035, now + 0.02);
 
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now+.4
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
 
-    oscillator
-        .connect(gain)
-        .connect(masterGain);
+    oscillator.connect(gain).connect(masterGain);
 
     oscillator.start(now);
 
-    oscillator.stop(
-        now+.4
-    );
-
+    oscillator.stop(now + 0.4);
 }
-
 
 /* =========================================================
    DISCORD
    ========================================================= */
 
-document
-    .getElementById("discordCopy")
-    .addEventListener(
-        "click",
-        async()=>{
+document.getElementById("discordCopy").addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(CONFIG.discord);
+    } catch {
+        const textarea = document.createElement("textarea");
 
-            try{
+        textarea.value = CONFIG.discord;
 
-                await navigator.clipboard.writeText(
-                    CONFIG.discord
-                );
+        textarea.style.position = "fixed";
 
-            }catch{
+        textarea.style.opacity = "0";
 
-                const textarea =
-                    document.createElement(
-                        "textarea"
-                    );
+        document.body.appendChild(textarea);
 
-                textarea.value=
-                    CONFIG.discord;
+        textarea.select();
 
-                textarea.style.position=
-                    "fixed";
+        document.execCommand("copy");
 
-                textarea.style.opacity=
-                    "0";
+        textarea.remove();
+    }
 
-                document.body.appendChild(
-                    textarea
-                );
+    toast.textContent = language === "it" ? "Username Discord copiato" : "Discord username copied";
 
-                textarea.select();
+    toast.classList.add("show");
 
-                document.execCommand(
-                    "copy"
-                );
-
-                textarea.remove();
-
-            }
-
-            toast.textContent =
-                language==="it"
-                ? "Username Discord copiato"
-                : "Discord username copied";
-
-            toast.classList.add(
-                "show"
-            );
-
-            setTimeout(
-                ()=>{
-                    toast.classList.remove(
-                        "show"
-                    );
-                },
-                1700
-            );
-
-        }
-    );
-
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1700);
+});
 
 /* =========================================================
    NAV LINKS
    ========================================================= */
 
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(
-        link=>{
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", event => {
+        const selector = link.getAttribute("href");
 
-            link.addEventListener(
-                "click",
-                event=>{
+        const target = document.querySelector(selector);
 
-                    const selector =
-                        link.getAttribute(
-                            "href"
-                        );
-
-                    const target =
-                        document.querySelector(
-                            selector
-                        );
-
-                    if(
-                        !target
-                    ){
-
-                        return;
-
-                    }
-
-                    event.preventDefault();
-
-                    target.scrollIntoView({
-                        behavior:"smooth",
-                        block:"start"
-                    });
-
-                }
-            );
-
+        if (!target) {
+            return;
         }
-    );
 
+        event.preventDefault();
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+});
 
 /* =========================================================
    START GALLERY
    ========================================================= */
 
 loadGallery();
-
-</script>
-
-</body>
-</html>
