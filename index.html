@@ -1,849 +1,647 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-
-<title>Falcon | Closing Chapter</title>
-<meta name="description" content="A goodbye. Not forever — just the end of one chapter.">
-<meta name="theme-color" content="#06080b" id="themeColor">
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://kibrisky1.github.io/Falcon/">
-<meta property="og:title" content="Falcon | Closing Chapter">
-<meta property="og:description" content="A goodbye. Not forever — just the end of one chapter.">
-
-<link rel="canonical" href="https://kibrisky1.github.io/Falcon/">
-<link rel="icon" type="image/png" href="dark.png" id="favicon">
-
+<title>Falcon — David</title>
+<meta name="description" content="Chapter closing. Not forever.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
-
 /* ============================================================
-   FALCON — Closing Chapter
-   Clean. Cinematic. Final.
+   FALCON — David
+   Cinematic chapter closing. Not forever.
    ============================================================ */
 
 :root {
-    --bg: #06080b;
-    --bg-2: #0a0f14;
-    --surface: rgba(14,19,26,.68);
-    --surface-strong: rgba(18,24,32,.92);
-    --text: #f5f7fa;
-    --text-2: #c0c7d0;
-    --muted: #8995a3;
-    --dim: #59636f;
+    --bg: #060606;
+    --surface: rgba(255,255,255,.035);
+    --surface-hover: rgba(255,255,255,.06);
+    --txt: #f0f0f0;
+    --txt2: #999;
+    --txt3: #555;
     --border: rgba(255,255,255,.07);
-    --border-strong: rgba(255,255,255,.14);
-
-    --amber: #f2a93c;
-    --amber-rgb: 242,169,60;
-    --violet: #8f82ff;
-    --violet-rgb: 143,130,255;
-    --blue: #5ba3f5;
-    --blue-rgb: 91,163,245;
-    --green: #4ce494;
-
-    --display: "Space Grotesk", sans-serif;
-    --sans: "Inter", sans-serif;
+    --border-strong: rgba(255,255,255,.12);
+    --amber: #e8943c;
+    --violet: #8878ff;
+    --blue: #5a8fff;
+    --green: #4cd68e;
+    --discord: #5865f2;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
     --mono: "JetBrains Mono", monospace;
-
-    --radius-sm: 12px;
-    --radius-md: 20px;
-    --radius-lg: 28px;
-    --radius-xl: 36px;
-    --pill: 999px;
-    --ease: cubic-bezier(.16,1,.3,1);
-    --elastic: cubic-bezier(.34,1.56,.64,1);
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --bounce: cubic-bezier(.34, 1.56, .64, 1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
 body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    color: var(--text);
     background: var(--bg);
+    color: var(--txt);
     font-family: var(--sans);
     line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
-
-body.no-scroll { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
-button, input { font: inherit; }
-button { color: inherit; cursor: pointer; }
-::selection { background: rgba(var(--amber-rgb),.3); }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+::selection { background: rgba(232,148,60,.35); }
 
-/* ============================================================
-   BACKGROUND
-   ============================================================ */
-
-.grid-bg {
-    position: fixed; inset: 0; z-index: -20; pointer-events: none;
-    background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 95% 80% at 50% 0%, black 15%, transparent 88%);
-}
-
-#particles {
-    position: fixed; inset: 0; width: 100%; height: 100%;
-    z-index: -16; pointer-events: none; opacity: .4;
-}
-
-/* ============================================================
-   CURSOR
-   ============================================================ */
-
-@media (hover:hover) and (pointer:fine) {
-    * { cursor: none; }
-    .cursor-dot, .cursor-ring {
-        position: fixed; left: 0; top: 0;
-        transform: translate(-50%,-50%); border-radius: 50%;
-        pointer-events: none; z-index: 99999;
-    }
-    .cursor-dot { width: 6px; height: 6px; background: var(--text); box-shadow: 0 0 12px rgba(255,255,255,.2); }
-    .cursor-ring {
-        width: 38px; height: 38px;
-        border: 1px solid rgba(255,255,255,.35);
-        transition: width .4s var(--elastic), height .4s var(--elastic), border-color .3s, background .3s;
-    }
-    body.cursor-hover .cursor-ring {
-        width: 68px; height: 68px; border-color: var(--amber);
-        background: rgba(var(--amber-rgb),.07);
-    }
-}
-@media (hover:none),(pointer:coarse) {
-    .cursor-dot, .cursor-ring { display: none; }
-}
-
-/* ============================================================
-   HUD & PROGRESS
-   ============================================================ */
-
-.hud {
-    position: fixed; width: 26px; height: 26px; z-index: 9000; pointer-events: none; opacity: .35;
-    border: 1px solid var(--border-strong);
-}
-.hud.tl { top: 14px; left: 14px; border-top: 1px solid var(--border-strong); border-left: 1px solid var(--border-strong); }
-.hud.tr { top: 14px; right: 14px; border-top: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); }
-.hud.bl { bottom: 14px; left: 14px; border-bottom: 1px solid var(--border-strong); border-left: 1px solid var(--border-strong); }
-.hud.br { bottom: 14px; right: 14px; border-bottom: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); }
-
-#progress {
-    position: fixed; left: 0; top: 0; width: 100%; height: 2px; z-index: 9990;
-    transform-origin: left; transform: scaleX(0);
+/* --- Progress bar --- */
+#prog {
+    position: fixed; inset: 0; width: 100%; height: 2px;
+    z-index: 100; transform-origin: left; transform: scaleX(0);
     background: linear-gradient(90deg, var(--amber), var(--violet), var(--blue));
 }
 
-/* ============================================================
-   CONTAINER
-   ============================================================ */
+/* --- Background grid --- */
+.grid-bg {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: .04;
+    background-image:
+        linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
 
-.container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+/* --- Canvas particles --- */
+#P { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-/* ============================================================
-   HERO
-   ============================================================ */
+/* --- Layout --- */
+.w { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+section { position: relative; z-index: 1; padding: 100px 0; }
 
+/* --- Animations --- */
+.up {
+    opacity: 0; transform: translateY(28px);
+    animation: uI .8s var(--ease) forwards;
+}
+.up.d1 { animation-delay: .08s; }
+.up.d2 { animation-delay: .2s; }
+.up.d3 { animation-delay: .32s; }
+.up.d4 { animation-delay: .44s; }
+.up.d5 { animation-delay: .58s; }
+@keyframes uI { to { opacity: 1; transform: translateY(0); } }
+
+.vis {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity .7s var(--ease), transform .8s var(--bounce);
+}
+.vis.show { opacity: 1; transform: none; }
+
+/* --- HERO --- */
 .hero {
-    position: relative; min-height: 100vh;
-    display: flex; align-items: center;
-}
-
-.hero-layout {
-    display: grid; grid-template-columns: 1.1fr 0.9fr;
-    align-items: center; gap: 60px; width: min(1100px, calc(100% - 40px)); margin: 0 auto;
-}
-
-/* Entrance animations — no blur, just clean fade + slide */
-.bloom {
-    opacity: 0; transform: translateY(20px);
-    animation: bloomIn .9s var(--ease) forwards;
-}
-.bloom.delay-1 { animation-delay: .08s; }
-.bloom.delay-2 { animation-delay: .18s; }
-.bloom.delay-3 { animation-delay: .3s; }
-.bloom.delay-4 { animation-delay: .42s; }
-.bloom.delay-5 { animation-delay: .55s; }
-
-@keyframes bloomIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.status-pill {
-    position: relative; display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 14px; border: 1px solid var(--border); border-radius: var(--pill);
-    background: rgba(255,255,255,.02); color: var(--muted); font: 10px var(--mono); letter-spacing: .14em; margin-bottom: 22px;
-}
-.status-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--amber);
-    box-shadow: 0 0 0 0 rgba(var(--amber-rgb),.4);
-    animation: statusPulse 2s infinite;
-}
-@keyframes statusPulse { 70% { box-shadow: 0 0 0 8px rgba(var(--amber-rgb),0); } }
-
-.hero h1 {
-    font: 800 clamp(3.5rem,7.5vw,6.5rem) var(--display);
-    line-height: .9; letter-spacing: -.05em;
-}
-.hero h1 .outline {
-    color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.15);
-}
-.hero h1 .dot {
-    color: var(--amber);
-    display: inline-block;
-    animation: dotPulse 3s ease-in-out infinite;
-}
-@keyframes dotPulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: .4; }
-}
-
-.hero-subtitle {
-    margin-top: 24px; min-height: 24px; color: var(--muted); font: 14px var(--mono);
-}
-.type-cursor {
-    display: inline-block; width: 7px; height: 17px; margin-left: 4px;
-    background: var(--amber); vertical-align: middle; animation: blink 1s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-
-.hero-description {
-    max-width: 500px; margin-top: 20px; color: var(--text-2); font-size: 15px; line-height: 1.85;
-}
-
-/* Terminal */
-.terminal {
-    margin-top: 30px; padding: 20px 24px;
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: rgba(0,0,0,.35); font: 12px/1.9 var(--mono); min-height: 150px;
-}
-.terminal .prompt { color: var(--amber); }
-.terminal .cmd { color: var(--green); }
-.terminal .output { color: var(--muted); }
-.terminal .output .hl { color: var(--text); font-weight: 600; }
-.terminal .fade {
-    opacity: 0; animation: fadeLine .5s var(--ease) forwards;
-}
-@keyframes fadeLine { to { opacity: 1; } }
-
-/* Hero visual — logo */
-.hero-visual {
-    position: relative; width: 100%; aspect-ratio: 1/1;
-    max-width: 420px; margin-left: auto; display: grid; place-items: center;
-}
-
-.logo-ring {
-    position: absolute; width: 300px; height: 300px; border-radius: 50%;
-    border: 1px solid rgba(var(--amber-rgb),.12);
-    animation: spin 24s linear infinite;
-}
-.logo-ring.two {
-    width: 240px; height: 240px; border-style: dashed; opacity: .35;
-    animation: spinReverse 30s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes spinReverse { to { transform: rotate(-360deg); } }
-
-.hero-logo {
-    position: relative; z-index: 6;
-    width: 160px; height: 160px; object-fit: contain;
-    animation: logoFloat 5s ease-in-out infinite;
-}
-@keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-/* ============================================================
-   SECTIONS
-   ============================================================ */
-
-section { position: relative; padding: 90px 0; }
-
-/* Scroll reveal — clean fade, no blur */
-.reveal {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity .7s var(--ease), transform .8s var(--elastic);
-}
-.reveal.visible { opacity: 1; transform: none; }
-
-.section-head { margin-bottom: 44px; }
-.section-label { color: var(--amber); font: 10px var(--mono); letter-spacing: .18em; margin-bottom: 6px; }
-.section-title {
-    font: 700 clamp(2rem,4.5vw,3.4rem) var(--display);
-    line-height: .95; letter-spacing: -.04em;
-}
-.section-desc { max-width: 480px; color: var(--muted); font-size: 14px; margin-top: 8px; line-height: 1.7; }
-
-/* ============================================================
-   MESSAGE CARDS
-   ============================================================ */
-
-.messages-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-}
-
-.message-card {
-    padding: 26px;
-    border: 1px solid var(--border); border-radius: var(--radius-md);
-    background: var(--surface);
-    transition: border-color .3s, transform .35s var(--elastic);
-}
-.message-card:hover { border-color: rgba(var(--amber-rgb),.25); transform: translateY(-3px); }
-
-.message-author { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.message-avatar {
-    width: 34px; height: 34px; border-radius: 50%;
-    display: grid; place-items: center; font: 700 12px var(--display); color: #fff;
-    flex-shrink: 0;
-}
-.message-name { font: 600 13px var(--mono); color: var(--text); }
-.message-text { color: var(--text-2); font-size: 13px; line-height: 1.75; white-space: pre-wrap; }
-.message-date { margin-top: 10px; font: 10px var(--mono); color: var(--dim); }
-
-/* ============================================================
-   TIMELINE
-   ============================================================ */
-
-.timeline { position: relative; max-width: 750px; padding-left: 40px; }
-.timeline::before {
-    content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px;
-    background: linear-gradient(to bottom, var(--amber), var(--border), transparent);
-}
-
-.timeline-item {
-    position: relative; margin-bottom: 44px;
-}
-.timeline-item:last-child { margin-bottom: 0; }
-
-.timeline-dot {
-    position: absolute; left: -37px; top: 5px; width: 13px; height: 13px;
-    border-radius: 50%; border: 2px solid var(--amber); background: var(--bg);
-    transition: box-shadow .4s;
-}
-.timeline-item.visible .timeline-dot { box-shadow: 0 0 18px rgba(var(--amber-rgb),.4); }
-
-.timeline-phase { font: 10px var(--mono); color: var(--amber); margin-bottom: 5px; letter-spacing: .1em; }
-.timeline-item h3 { font: 700 20px var(--display); margin-bottom: 5px; }
-.timeline-item p { color: var(--muted); font-size: 13px; line-height: 1.7; }
-
-/* ============================================================
-   PORTAL CTA
-   ============================================================ */
-
-.portal-card {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 0 80px;
     position: relative;
-    padding: 60px 40px; text-align: center;
-    border: 1px solid var(--border); border-radius: var(--radius-xl);
-    background: var(--surface);
-    overflow: hidden;
 }
-/* Subtle glow from top */
-.portal-card::before {
-    content: ""; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
-    width: 400px; height: 280px;
-    background: radial-gradient(ellipse, rgba(var(--violet-rgb),.12), transparent 70%);
+
+/* Ambient glow behind hero */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(232,148,60,.08), transparent 65%);
     pointer-events: none;
 }
 
-.portal-card h2 {
-    font: 700 clamp(1.8rem,4vw,2.8rem) var(--display);
-    line-height: 1.05; letter-spacing: -.03em;
-    position: relative;
-}
-.portal-card h2 .accent { color: var(--violet); }
-.portal-card > p {
-    color: var(--text-2); font-size: 15px; max-width: 460px;
-    margin: 14px auto 0; line-height: 1.8; position: relative;
-}
-.portal-card .return-msg {
-    color: var(--amber); font: 600 13px var(--mono); letter-spacing: .05em;
-    margin-top: 18px; position: relative;
+.hero-inner {
+    text-align: center;
+    max-width: 860px;
 }
 
-/* Discord copier button */
-.discord-copier {
-    position: relative;
-    margin-top: 28px;
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 26px;
-    border: 1px solid var(--border); border-radius: var(--pill);
-    background: rgba(88,101,242,.08);
-    color: var(--text); font-size: 14px; font-weight: 600;
-    transition: transform .35s var(--elastic), border-color .3s, background .3s;
+/* Title */
+.hero h1 {
+    font: 900 clamp(3.8rem, 10vw, 7rem) var(--sans);
+    letter-spacing: -.05em;
+    line-height: .88;
 }
-.discord-copier:hover {
+.hero h1 .name {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,.15);
+}
+.hero h1 .accent {
+    color: var(--amber);
+    display: inline-block;
+    animation: breathe 3s ease-in-out infinite;
+}
+@keyframes breathe {
+    0%, 100% { opacity: 1; filter: brightness(1); }
+    50% { opacity: .4; filter: brightness(.6); }
+}
+
+/* Typewriter */
+.typ {
+    margin-top: 24px;
+    font: 400 15px/1.6 var(--mono);
+    color: var(--txt2);
+}
+.tc {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: var(--amber);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: bk .9s steps(1) infinite;
+}
+@keyframes bk { 50% { opacity: 0; } }
+
+/* Subtitle */
+.hdesc {
+    margin-top: 20px;
+    color: var(--txt2);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- SECTION HEAD --- */
+.sh {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.sh-l {
+    font: 500 10px var(--mono);
+    letter-spacing: .2em;
+    color: var(--amber);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.sh-t {
+    font: 700 clamp(1.6rem, 4vw, 2.6rem) var(--sans);
+    letter-spacing: -.03em;
+    line-height: 1.1;
+}
+.sh-d {
+    color: var(--txt2);
+    font-size: 14px;
+    max-width: 440px;
+    margin: 12px auto 0;
+    line-height: 1.7;
+}
+
+/* --- MESSAGE CARDS --- */
+.ms {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+}
+.mc {
+    padding: 20px 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color .3s, background .3s, transform .3s var(--bounce);
+}
+.mc:hover {
+    border-color: rgba(232,148,60,.25);
+    background: var(--surface-hover);
     transform: translateY(-2px);
-    border-color: rgba(88,101,242,.4);
-    background: rgba(88,101,242,.14);
 }
-.discord-copier:active { transform: scale(.97); }
-.discord-copier .fa-discord { font-size: 18px; color: #5865f2; }
-.discord-copier .copy-icon { margin-left: 2px; font-size: 13px; color: var(--muted); transition: color .2s; }
-.discord-copier .copied-text {
-    font-size: 11px; font-weight: 600; color: var(--green);
-    opacity: 0; margin-left: 2px; transition: opacity .2s;
+.mc-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
 }
-.discord-copier.copied .copy-icon { color: var(--green); }
-.discord-copier.copied .copied-text { opacity: 1; }
+.mc-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font: 700 14px var(--sans);
+    color: #fff;
+    flex-shrink: 0;
+}
+.mc-info { flex: 1; min-width: 0; }
+.mc-name {
+    font: 600 13px var(--mono);
+    color: var(--txt);
+}
+.mc-from {
+    font: 9px var(--mono);
+    color: var(--txt3);
+    letter-spacing: .08em;
+}
+.mc-body {
+    color: var(--txt2);
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* --- TIMELINE --- */
+.tl {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.tl-line {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amber), var(--border) 60%, transparent);
+}
+.tl-i {
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 40px;
+}
+.tl-i:last-child { margin-bottom: 0; }
+.tl-d {
+    position: absolute;
+    left: -1px;
+    top: 5px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid var(--amber);
+    background: var(--bg);
+    transition: box-shadow .4s;
+}
+.tl-i.show .tl-d { box-shadow: 0 0 14px rgba(232,148,60,.4); }
+.tl-ph {
+    font: 500 9px var(--mono);
+    letter-spacing: .12em;
+    color: var(--amber);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+.tl-i h3 {
+    font: 600 18px var(--sans);
+    margin-bottom: 4px;
+}
+.tl-i p {
+    color: var(--txt2);
+    font-size: 13px;
+    line-height: 1.7;
+}
 
+/* --- PORTAL --- */
+.portal {
+    position: relative;
+    padding: 64px 40px;
+    text-align: center;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+}
+.portal::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 240px;
+    background: radial-gradient(ellipse, rgba(136,120,255,.12), transparent 70%);
+    pointer-events: none;
+}
+.portal h2 {
+    font: 700 clamp(1.6rem, 4vw, 2.6rem) var(--sans);
+    letter-spacing: -.02em;
+    position: relative;
+}
+.portal h2 span { color: var(--violet); }
+.portal > p {
+    color: var(--txt2);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 14px auto 0;
+    line-height: 1.8;
+    position: relative;
+}
+.portal .ret {
+    color: var(--amber);
+    font: 600 12px var(--mono);
+    letter-spacing: .05em;
+    margin-top: 20px;
+    position: relative;
+}
+
+/* Discord copy button */
+.dbtn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 12px 26px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(136,120,255,.08);
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform .3s var(--bounce), border-color .3s, background .3s;
+}
+.dbtn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(136,120,255,.4);
+    background: rgba(136,120,255,.14);
+}
+.dbtn:active { transform: scale(.96); }
+.dbtn .fa-discord { font-size: 17px; color: var(--discord); }
+.dbtn .tag { font-weight: 700; }
+.dbtn .cp-icon {
+    font-size: 11px;
+    color: var(--txt3);
+    margin-left: 2px;
+    transition: color .2s;
+}
+.dbtn .cp-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    opacity: 0;
+    transition: opacity .2s;
+    margin-left: 2px;
+}
+.dbtn.ok {
+    border-color: rgba(76,214,142,.35);
+    background: rgba(76,214,142,.08);
+}
+.dbtn.ok .cp-icon { color: var(--green); }
+.dbtn.ok .cp-label { opacity: 1; }
+
+/* --- FOOTER --- */
 footer {
-    padding: 36px 0; border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 11px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
 }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; }
-.footer-brand { font: 700 15px var(--display); color: var(--text); letter-spacing: .04em; }
-.footer-meta { font: 10px var(--mono); color: var(--dim); }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 900px) {
-    .hero-layout { grid-template-columns: 1fr; text-align: center; }
-    .hero-visual { width: 100%; height: 320px; margin: 0 auto; }
-    .hero-description { margin-left: auto; margin-right: auto; }
-    .terminal { text-align: left; }
-    .messages-grid { grid-template-columns: 1fr; }
-    .timeline { margin-left: 0; }
-    .footer-inner { flex-direction: column; gap: 8px; }
+.ftr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+.fb { font: 700 13px var(--sans); letter-spacing: .06em; }
+.fm { font: 9px var(--mono); color: var(--txt3); letter-spacing: .08em; }
 
-@media (max-width: 600px) {
-    .hero { padding: 50px 0 40px; }
-    .hero h1 { font-size: clamp(3rem,18vw,4.5rem); }
-    .hero-description { font-size: 14px; }
-    .hero-visual { height: 260px; }
-    .hero-logo { width: 120px; height: 120px; }
-    .logo-ring { width: 200px; height: 200px; }
-    .logo-ring.two { width: 160px; height: 160px; }
-    section { padding: 50px 0; }
-    .portal-card { padding: 40px 20px; }
-    .terminal { font-size: 11px; padding: 14px 16px; }
+/* --- RESPONSIVE --- */
+@media (max-width: 700px) {
+    .hero { padding: 100px 0 60px; min-height: auto; }
+    section { padding: 70px 0; }
+    .portal { padding: 40px 20px; }
+    .ms { grid-template-columns: 1fr; }
+    .ftr { flex-direction: column; gap: 6px; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
-        animation-duration: .001ms !important; animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important; scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
     }
 }
-
 </style>
 </head>
-
 <body>
 
 <div class="grid-bg"></div>
-<canvas id="particles"></canvas>
+<canvas id="P"></canvas>
+<div id="prog"></div>
 
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
-
-<div class="hud tl"></div>
-<div class="hud tr"></div>
-<div class="hud bl"></div>
-<div class="hud br"></div>
-
-<div id="progress"></div>
-
-
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-layout">
-        <div class="hero-copy">
-            <div class="status-pill bloom">
-                <span class="status-dot"></span>
-                <span>CHAPTER CLOSING</span>
-            </div>
+    <div class="hero-inner">
+        <h1 class="up">
+            Falcon<br><span class="name">David</span><span class="accent">.</span>
+        </h1>
 
-            <h1 class="bloom delay-1">
-                <span>Falcon</span><br>
-                <span class="outline">David</span>
-                <span class="dot">.</span>
-            </h1>
-
-            <div class="hero-subtitle bloom delay-2">
-                <span id="typingText">closing the chapter</span>
-                <span class="type-cursor"></span>
-            </div>
-
-            <p class="hero-description bloom delay-3">
-                This was never about being the best. It was about building, breaking, and never leaving things unfinished.
-                Now it's time to turn the page.
-            </p>
-
-            <div class="terminal bloom delay-4">
-                <div><span class="prompt">falcon@journey</span>:<span class="cmd">~</span>$ goodbye --execute</div>
-                <div class="output fade" style="animation-delay:.9s">loading chapters ................ done</div>
-                <div class="output fade" style="animation-delay:1.1s">projects ..................... <span class="hl">loaded</span></div>
-                <div class="output fade" style="animation-delay:1.3s">lessons ...................... <span class="hl">loaded</span></div>
-                <div class="output fade" style="animation-delay:1.5s">mistakes ..................... <span class="hl">loaded</span></div>
-                <div class="output fade" style="animation-delay:1.7s">experience ................... <span class="hl">loaded</span></div>
-                <div class="output fade" style="animation-delay:2s"><span class="prompt">falcon@journey</span>:<span class="cmd">~</span>$ <span class="cmd">echo</span> "ready for high school"</div>
-                <div class="output fade" style="animation-delay:2.2s">ready for high school</div>
-            </div>
+        <div class="typ up d1">
+            <span id="t">closing the chapter</span><span class="tc"></span>
         </div>
 
-        <div class="hero-visual bloom delay-2">
-            <div class="logo-ring"></div>
-            <div class="logo-ring two"></div>
-            <img class="hero-logo" src="dark.png" alt="Falcon">
-        </div>
+        <p class="hdesc up d2">
+            This was never about being the best. It was about building, breaking, and never leaving things unfinished. Now it's time to turn the page.
+        </p>
     </div>
 </section>
 
-
-<!-- ============================================================
-     01 — THE MESSAGE
-     ============================================================ -->
-
-<section>
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="section-label">01 / THE MESSAGE</div>
-            <h2 class="section-title">Goodbye,<br>not forever.</h2>
-            <p class="section-desc">
-                I spent years building things from scratch, learning through mistakes,
-                and creating things I was proud of. Now I'm walking into high school
-                and I want to say thank you to everyone who watched me grow.
-            </p>
+<!-- MEMORIES -->
+<section id="secMsg">
+    <div class="w">
+        <div class="sh vis">
+            <div class="sh-l">01 — Memories</div>
+            <h2 class="sh-t">Goodbye,<br>not forever.</h2>
+            <p class="sh-d">I spent years building things from scratch. Now I'm walking into high school and I want to say thank you to everyone who watched me grow.</p>
         </div>
-
-        <div class="messages-grid" id="messagesGrid">
-            <div class="message-card reveal" style="transition-delay:0ms">
-                <div class="message-author">
-                    <div class="message-avatar" style="background:rgba(var(--amber-rgb),.25); color: var(--amber);">?</div>
-                    <div class="message-name">loading memories...</div>
-                </div>
-                <div class="message-text" style="color:var(--dim)">if you left a message, it'll appear here</div>
-            </div>
-        </div>
+        <div class="ms" id="mGrid"></div>
     </div>
 </section>
 
-
-<!-- ============================================================
-     02 — THE JOURNEY
-     ============================================================ -->
-
-<section>
-    <div class="container">
-        <div class="reveal" style="margin-bottom:50px;">
-            <div class="section-label" style="margin-bottom:6px;">02 / THE JOURNEY</div>
-            <h2 class="section-title">How I got here.</h2>
-            <p class="section-desc" style="margin-bottom:44px;">
-                Every stage added something. Some were exciting, some were frustrating,
-                and some were mostly me wondering why the code worked five minutes ago.
-            </p>
+<!-- JOURNEY -->
+<section id="secJrn">
+    <div class="w">
+        <div class="sh vis">
+            <div class="sh-l">02 — Journey</div>
+            <h2 class="sh-t">How I got here.</h2>
+            <p class="sh-d">Every stage added something. Some were exciting, some frustrating, some were mostly me wondering why the code worked five minutes ago.</p>
         </div>
-
-        <div class="timeline">
-            <div class="timeline-item reveal" style="transition-delay:0ms">
-                <div class="timeline-dot"></div>
-                <div class="timeline-phase">PHASE / 01</div>
+        <div class="tl">
+            <div class="tl-line"></div>
+            <div class="tl-i vis" style="transition-delay:0ms">
+                <div class="tl-d"></div>
+                <div class="tl-ph">Phase 01</div>
                 <h3>Curiosity</h3>
                 <p>It started with wanting to understand how things worked. No plan, just hands-on tinkering.</p>
             </div>
-
-            <div class="timeline-item reveal" style="transition-delay:100ms">
-                <div class="timeline-dot"></div>
-                <div class="timeline-phase">PHASE / 02</div>
+            <div class="tl-i vis" style="transition-delay:80ms">
+                <div class="tl-d"></div>
+                <div class="tl-ph">Phase 02</div>
                 <h3>Building</h3>
                 <p>Ideas became projects. Projects became experiments. Experiments became lessons I actually remembered.</p>
             </div>
-
-            <div class="timeline-item reveal" style="transition-delay:200ms">
-                <div class="timeline-dot"></div>
-                <div class="timeline-phase">PHASE / 03</div>
+            <div class="tl-i vis" style="transition-delay:160ms">
+                <div class="tl-d"></div>
+                <div class="tl-ph">Phase 03</div>
                 <h3>Learning</h3>
                 <p>Every mistake, bug and failed attempt became part of the experience. The errors taught me more than the successes.</p>
             </div>
-
-            <div class="timeline-item reveal" style="transition-delay:300ms">
-                <div class="timeline-dot"></div>
-                <div class="timeline-phase">PHASE / 04</div>
+            <div class="tl-i vis" style="transition-delay:240ms">
+                <div class="tl-d"></div>
+                <div class="tl-ph">Phase 04</div>
                 <h3>Arrival</h3>
-                <p>After all those steps, I finally reached high school. A new environment, a new beginning.</p>
+                <p>After all those steps, I finally reached high school. A new environment. A new beginning.</p>
             </div>
         </div>
     </div>
 </section>
 
+<!-- PORTAL -->
+<section id="secPrt">
+    <div class="w">
+        <div class="portal vis">
+            <h2>This isn't the <span>end</span>.</h2>
+            <p>High school is where the next part begins. More to learn, more to build, more to create — and probably several thousand bugs waiting to ruin my afternoon.</p>
+            <p class="ret">I'll be back. With updates, new projects, and a lot more experience.</p>
 
-<!-- ============================================================
-     03 — COMING BACK
-     ============================================================ -->
-
-<section>
-    <div class="container">
-        <div class="portal-card reveal">
-            <h2>This isn't the <span class="accent">end</span>.</h2>
-            <p>
-                High school is where the next part begins. There's more to learn, more to build,
-                more to create — and probably several thousand bugs waiting to ruin my afternoon.
-                But that's fine. That's the point.
-            </p>
-            <p class="return-msg">I'll be back. With updates, new projects, and a lot more experience.</p>
-
-            <button class="discord-copier" onclick="copyDiscord()" id="discordBtn">
+            <button class="dbtn" id="dBtn" onclick="copyDsc()">
                 <i class="fa-brands fa-discord"></i>
-                <span>for_david_k</span>
-                <i class="fa-regular fa-copy copy-icon" id="copyIcon"></i>
-                <span class="copied-text" id="copiedText">copied!</span>
+                <span class="tag">for_david_k</span>
+                <i class="fa-regular fa-copy cp-icon"></i>
+                <span class="cp-label">copied!</span>
             </button>
         </div>
     </div>
 </section>
 
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-
+<!-- FOOTER -->
 <footer>
-    <div class="container footer-inner">
-        <div class="footer-brand">FALCON / DAVID</div>
-        <div class="footer-meta">
-            &copy; <span id="year"></span> &mdash; CHAPTER CLOSING &mdash; NOT FOREVER
-        </div>
+    <div class="w ftr">
+        <span class="fb">FALCON / DAVID</span>
+        <span class="fm">CHAPTER CLOSING — NOT FOREVER &copy; <span id="yr"></span></span>
     </div>
 </footer>
 
-
 <script>
+// Progress
+const prog = document.getElementById("prog");
+window.addEventListener("scroll", () => {
+    const m = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.transform = `scaleX(${m ? window.scrollY / m : 0})`;
+}, { passive: true });
 
-/* ============================================================
-   CONFIG
-   ============================================================ */
-const CONFIG = {
-    rawBase: "https://raw.githubusercontent.com/kibrisky1/Falcon/main/",
-    repoAPI: "https://api.github.com/repos/kibrisky1/Falcon/contents/?ref=main",
-};
-
-/* ============================================================
-   DOM
-   ============================================================ */
-const progress = document.getElementById("progress");
-const year = document.getElementById("year");
-const messagesGrid = document.getElementById("messagesGrid");
-const typingText = document.getElementById("typingText");
-year.textContent = new Date().getFullYear();
-
-/* ============================================================
-   TYPEWRITER
-   ============================================================ */
-const typingWords = ["closing the chapter", "not forever", "see you soon"];
-let typingIdx = 0, typingPos = 0, deleting = false;
-
-function typeWriter() {
-    const word = typingWords[typingIdx];
-    if (!deleting) {
-        typingPos++;
-        typingText.textContent = word.slice(0, typingPos);
-        if (typingPos >= word.length) { deleting = true; setTimeout(typeWriter, 1400); return; }
-    } else {
-        typingPos--;
-        typingText.textContent = word.slice(0, typingPos);
-        if (typingPos <= 0) { deleting = false; typingIdx = (typingIdx + 1) % typingWords.length; }
-    }
-    setTimeout(typeWriter, deleting ? 30 : 65);
+// Particles
+const C = document.getElementById("P"), X = C.getContext("2d");
+let pts = [];
+function resize() {
+    const d = window.devicePixelRatio;
+    C.width = innerWidth * d; C.height = innerHeight * d;
+    C.style.width = innerWidth + "px"; C.style.height = innerHeight + "px";
+    X.setTransform(d, 0, 0, d, 0, 0);
 }
-typeWriter();
-
-/* ============================================================
-   SCROLL PROGRESS
-   ============================================================ */
-function updateScroll() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-}
-window.addEventListener("scroll", updateScroll, { passive: true });
-updateScroll();
-
-/* ============================================================
-   PARTICLES — FLOATING EMBERS
-   ============================================================ */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-let particles = [];
-
-function resizeParticles() {
-    canvas.width = window.innerWidth * window.devicePixelRatio;
-    canvas.height = window.innerHeight * window.devicePixelRatio;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-}
-
-function createParticles() {
-    particles = [];
-    const count = window.innerWidth < 700 ? 28 : 60;
-    for (let i = 0; i < count; i++) {
-        particles.push({
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            r: Math.random() * 1.3 + .3,
-            speed: Math.random() * .22 + .04,
-            opacity: Math.random() * .3 + .05,
-            hue: Math.random() * 60 + 20
+function init() {
+    pts = [];
+    for (let i = 0, n = innerWidth < 700 ? 20 : 45; i < n; i++) {
+        pts.push({
+            x: Math.random() * innerWidth,
+            y: Math.random() * innerHeight,
+            r: Math.random() * 1.2 + .2,
+            s: Math.random() * .18 + .02,
+            o: Math.random() * .2 + .04,
+            h: Math.random() * 60 + 20
         });
     }
 }
-
-function animateParticles() {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    particles.forEach(p => {
-        p.y -= p.speed;
-        if (p.y < -10) { p.y = window.innerHeight + 10; p.x = Math.random() * window.innerWidth; }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue},85%,65%,${p.opacity})`;
-        ctx.fill();
+function draw() {
+    X.clearRect(0, 0, innerWidth, innerHeight);
+    pts.forEach(p => {
+        p.y -= p.s;
+        if (p.y < -10) { p.y = innerHeight + 10; p.x = Math.random() * innerWidth; }
+        X.beginPath();
+        X.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        X.fillStyle = `hsla(${p.h},70%,60%,${p.o})`;
+        X.fill();
     });
-    requestAnimationFrame(animateParticles);
+    requestAnimationFrame(draw);
 }
+resize(); init(); draw();
+addEventListener("resize", () => { resize(); init(); });
 
-resizeParticles();
-createParticles();
-animateParticles();
-window.addEventListener("resize", () => { resizeParticles(); createParticles(); });
-
-/* ============================================================
-   CURSOR
-   ============================================================ */
-const cursorDot = document.querySelector(".cursor-dot");
-const cursorRing = document.querySelector(".cursor-ring");
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-document.addEventListener("pointermove", e => {
-    mouseX = e.clientX; mouseY = e.clientY;
-    if (cursorDot) { cursorDot.style.left = mouseX + "px"; cursorDot.style.top = mouseY + "px"; }
-});
-
-function cursorLoop() {
-    ringX += (mouseX - ringX) * .15;
-    ringY += (mouseY - ringY) * .15;
-    if (cursorRing) { cursorRing.style.left = ringX + "px"; cursorRing.style.top = ringY + "px"; }
-    requestAnimationFrame(cursorLoop);
+// Typewriter
+const words = ["closing the chapter", "not forever", "see you soon"];
+let wi = 0, wp = 0, del = false;
+const tt = document.getElementById("t");
+function tw() {
+    const w = words[wi];
+    if (!del) {
+        wp++; tt.textContent = w.slice(0, wp);
+        if (wp >= w.length) { del = true; setTimeout(tw, 1400); return; }
+    } else {
+        wp--; tt.textContent = w.slice(0, wp);
+        if (wp <= 0) { del = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(tw, del ? 30 : 65);
 }
-cursorLoop();
+tw();
 
-document.querySelectorAll("a,button,.message-card").forEach(el => {
-    el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
-    el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
-});
+// Year
+document.getElementById("yr").textContent = new Date().getFullYear();
 
-/* ============================================================
-   REVEAL OBSERVER — clean fade + slide, NO blur
-   ============================================================ */
-const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("visible"); revealObs.unobserve(entry.target); } });
-}, { threshold: .1 });
-document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
+// Scroll reveal
+const ro = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) { x.target.classList.add("show"); ro.unobserve(x.target); } });
+}, { threshold: .08 });
+document.querySelectorAll(".vis").forEach(e => ro.observe(e));
 
-/* ============================================================
-   DISCORD COPY
-   ============================================================ */
-function copyDiscord() {
+// Discord copy
+function copyDsc() {
     navigator.clipboard.writeText("for_david_k").then(() => {
-        const btn = document.getElementById("discordBtn");
-        btn.classList.add("copied");
-        setTimeout(() => btn.classList.remove("copied"), 2000);
+        const b = document.getElementById("dBtn");
+        b.classList.add("ok");
+        setTimeout(() => b.classList.remove("ok"), 2000);
     });
 }
 
-/* ============================================================
-   MESSAGE LOADER — TXT FILES
-   ============================================================ */
-function generateAvatarColor(name) {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    const h = Math.abs(hash) % 360;
-    return `hsl(${h},60%,50%)`;
+// Message loader
+function hc(n) {
+    let h = 0;
+    for (let i = 0; i < n.length; i++) h = n.charCodeAt(i) + ((h << 5) - h);
+    return `hsl(${Math.abs(h) % 360},50%,48%)`;
+}
+function esc(s) {
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 }
 
-function escapeHTML(str) {
-    return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-}
-
-async function loadMessages() {
+async function loadMsgs() {
     try {
-        const resp = await fetch(CONFIG.repoAPI, { cache: "no-store" });
-        if (!resp.ok) throw new Error("API " + resp.status);
-        const files = await resp.json();
+        const r = await fetch("https://api.github.com/repos/kibrisky1/Falcon/contents/?ref=main", { cache: "no-store" });
+        if (!r.ok) throw r.status;
+        const files = await r.json();
+        const tx = files.filter(f => f.type === "file" && f.name.toLowerCase().endsWith(".txt") && f.name.toLowerCase() !== "index.html");
+        const grid = document.getElementById("mGrid");
+        if (!tx.length) return;
 
-        const msgFiles = files.filter(f =>
-            f.type === "file" &&
-            f.name.toLowerCase().endsWith(".txt") &&
-            f.name.toLowerCase() !== "index.html"
-        );
-
-        messagesGrid.innerHTML = "";
-
-        if (msgFiles.length === 0) {
-            messagesGrid.innerHTML = `
-                <div class="message-card reveal visible" style="text-align:center; color:var(--dim); padding:40px;">
-                    <i class="fa-regular fa-envelope" style="font-size:24px; color:var(--amber); margin-bottom:10px; display:block;"></i>
-                    No messages yet.<br>Add a .txt file to the repository to leave one.
-                </div>`;
-            return;
-        }
-
-        for (const file of msgFiles) {
+        for (const file of tx) {
             try {
-                const contentResp = await fetch(CONFIG.rawBase + encodeURIComponent(file.name), { cache: "no-store" });
-                const text = await contentResp.text();
-                const lines = text.trim().split("\n");
-                const author = lines[0] || "anonymous";
-                const messageText = lines.slice(1).join("\n") || "a quiet goodbye";
+                const cr = await fetch("https://raw.githubusercontent.com/kibrisky1/Falcon/main/" + encodeURIComponent(file.name), { cache: "no-store" });
+                const text = await cr.text();
+                const lines = text.trim().split("\n").filter(l => l.trim());
+                if (!lines.length) continue;
+                const author = lines[0].trim();
+                const body = lines.slice(1).join("\n").trim();
+                if (!author || !body) continue;
 
                 const card = document.createElement("div");
-                card.className = "message-card reveal";
-                const hue = generateAvatarColor(author);
-                const initial = author.charAt(0).toUpperCase();
+                card.className = "mc vis";
+                const hue = hc(author);
+                const init = author.charAt(0).toUpperCase();
 
                 card.innerHTML = `
-                    <div class="message-author">
-                        <div class="message-avatar" style="background:${hue}">${initial}</div>
-                        <div class="message-name">${escapeHTML(author)}</div>
+                    <div class="mc-header">
+                        <div class="mc-avatar" style="background:${hue}">${init}</div>
+                        <div class="mc-info">
+                            <div class="mc-name">${esc(author)}</div>
+                            <div class="mc-from">from ${esc(file.name.replace(".txt", ""))}</div>
+                        </div>
                     </div>
-                    <div class="message-text">${escapeHTML(messageText)}</div>
-                    <div class="message-date">from ${escapeHTML(file.name.replace(".txt",""))}</div>
+                    <div class="mc-body">${esc(body)}</div>
                 `;
-                messagesGrid.appendChild(card);
-                revealObs.observe(card);
-            } catch (e) {
-                console.warn("Could not load", file.name, e);
-            }
+                grid.appendChild(card);
+                ro.observe(card);
+            } catch (e) { console.warn("Skip", file.name); }
         }
-    } catch (e) {
-        console.error("Message loader error:", e);
-        messagesGrid.innerHTML = `
-            <div class="message-card reveal visible" style="text-align:center; color:var(--dim); padding:40px;">
-                <i class="fa-solid fa-triangle-exclamation" style="font-size:24px; color:var(--amber); margin-bottom:10px; display:block;"></i>
-                Could not load messages.
-            </div>`;
-    }
+
+        if (!grid.children.length) document.getElementById("secMsg").style.display = "none";
+    } catch (e) { console.error(e); }
 }
-
-loadMessages();
-
+loadMsgs();
 </script>
 </body>
 </html>
